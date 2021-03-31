@@ -313,16 +313,6 @@ export default {
 </script>
 
 <style scoped>
-.btn-new {
-  width: 120px;
-  margin-right: 5px;
-}
-
-.btn-icon {
-  margin-left: 0px;
-  margin-right: 5px;
-}
-
 .v-chip.v-size--default {
   width: 100px;
   display: inline-block !important;
