@@ -9,23 +9,24 @@
       </v-layout>
 
       <v-divider></v-divider>
-
       <v-list>
         <v-list-item
           v-for="item in items"
-          :key="item.title"
+          :key="item.id"
           router
           :to="item.route"
           active-class="menu-active"
         >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item-content>
+          <template>
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </template>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -39,12 +40,29 @@ export default {
   data: () => ({
     drawer: true,
     items: [
-      { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
-      { title: "Driver", icon: "mdi-account", route: "/driver" },
       {
+        id: 1,
+        title: "Dashboard",
+        icon: "mdi-view-dashboard",
+        route: "/",
+      },
+      {
+        id: 2,
+        title: "Driver",
+        icon: "mdi-account",
+        route: "/driver",
+      },
+      {
+        id: 3,
         title: "Queue",
         icon: "queue",
         route: "/queue",
+      },
+      {
+        id: 4,
+        title: "Template",
+        icon: "table_chart",
+        route: "/template",
       },
     ],
   }),

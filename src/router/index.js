@@ -4,6 +4,7 @@ import Dashboard from '../views/Dashboard.vue'
 import Home from '../views/Home.vue'
 import Driver from '../views/Drivers/ListDriver.vue'
 import Queue from '../views/Queue/ListQueue.vue'
+import Template from '../views/Templates/ListTemplate.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/queue',
     name: 'Queue',
     component: Queue
+  },
+  {
+    path: '/template',
+    name: 'Template',
+    component: Template
   },
   {
     path: '/about',

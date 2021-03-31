@@ -1,16 +1,16 @@
 <template>
-  <v-app><Title v-bind:title="title" /></v-app>
+  <v-app id="list-template"><Title v-bind:title="title" /></v-app>
 </template>
 
 <script>
 import Title from '@/components/ViewTitle.vue'
 
 export default {
-  name: "ListDriver",
+  name: "ListTemplate",
   components: {Title},
   data() {
     return {
-      title: "List Driver"
+      title: "List Template"
     }
   },
 
