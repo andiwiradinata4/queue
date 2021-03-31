@@ -85,7 +85,7 @@ video {
   border: 0;
   font-size: 100%;
   font: inherit;
-  vertical-align: baseline;
+  /* vertical-align: inherit; */
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -144,7 +144,7 @@ table {
 /* List Title Style */
 .list-title {
   margin: 20px 0px 20px 20px;
-  color: #304457;
+  color: #566b80;
   font-size: 1.55rem;
   font-weight: 500;
 }

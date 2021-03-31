@@ -3,15 +3,9 @@
     <Title v-bind:title="title" />
 
     <v-container>
-      <v-row class="mt-0">
-        <v-col cols="12">
-          <template>
-            <Button :callback="pNew" :button="btnNew" />
-            <Button :callback="pDetail" :button="btnDetail" />
-            <Button :callback="pDelete" :button="btnDelete" />
-          </template>
-        </v-col>
-      </v-row>
+      <template>
+        <Button :callback="pNew" :button="btnNew" />
+      </template>
 
       <v-row class="mt-0">
         <v-col cols="12">
@@ -26,11 +20,30 @@
                   hide-details
                 ></v-text-field>
               </v-card-title>
-              <v-data-table
-                :headers="headers"
-                :items="desserts"
-                :search="search"
-              ></v-data-table>
+              <template>
+                <v-data-table
+                  :headers="headers"
+                  :items="itemDataTable"
+                  :search="search"
+                  multi-sort
+                >
+                  <template v-slot:item.status="{ item }">
+                    <v-chip
+                      class="status-chip ma-2"
+                      :color="pSetColor(item.status)"
+                      dark
+                    >
+                      {{ item.status }}
+                    </v-chip>
+                  </template>
+
+                  <template v-slot:item.action="{ item }">
+                    <v-btn icon @click="pView(item.id)">
+                      <v-icon small color="#304457">fas fa-edit</v-icon>
+                    </v-btn>
+                  </template>
+                </v-data-table>
+              </template>
             </v-card>
           </template>
         </v-col>
@@ -64,114 +77,236 @@ export default {
         text: "Delete",
         color: "primary",
       },
-      search: '',
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
-        ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
-        ],
-      
+      search: "",
+      headers: [
+        { text: "#", value: "action", align: "center", sortable: false },
+        {
+          text: "DESSERT (100G SERVING)",
+          value: "name",
+        },
+        { text: "CALORIES", value: "calories" },
+        { text: "FAT (G)", value: "fat" },
+        { text: "CARBS (G)", value: "carbs" },
+        { text: "PROTEIN (G)", value: "protein" },
+        { text: "IRON (%)", value: "iron" },
+        { text: "STATUS", value: "status" },
+      ],
+      itemDataTable: [
+        {
+          id: 1,
+          name: "Frozen Yogurt",
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: "1%",
+          status: "IN-ACTIVE",
+        },
+        {
+          id: 2,
+          name: "Ice cream sandwich",
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: "1%",
+          status: "BLACKLIST",
+        },
+        {
+          id: 3,
+          name: "Eclair",
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: "7%",
+          status: "ACTIVE",
+        },
+        {
+          id: 4,
+          name: "Cupcake",
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: "8%",
+          status: "ACTIVE",
+        },
+        {
+          id: 5,
+          name: "Gingerbread",
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: "16%",
+          status: "ACTIVE",
+        },
+        {
+          id: 6,
+          name: "Jelly bean",
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: "0%",
+          status: "ACTIVE",
+        },
+        {
+          id: 7,
+          name: "Lollipop",
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: "2%",
+          status: "ACTIVE",
+        },
+        {
+          id: 8,
+          name: "Honeycomb",
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: "45%",
+          status: "ACTIVE",
+        },
+        {
+          id: 9,
+          name: "Donut",
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: "22%",
+          status: "ACTIVE",
+        },
+        {
+          id: 10,
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: "6%",
+          status: "ACTIVE",
+        },
+
+        {
+          id: 1,
+          name: "Frozen Yogurt",
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: "1%",
+          status: "IN-ACTIVE",
+        },
+        {
+          id: 2,
+          name: "Ice cream sandwich",
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: "1%",
+          status: "BLACKLIST",
+        },
+        {
+          id: 3,
+          name: "Eclair",
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: "7%",
+          status: "ACTIVE",
+        },
+        {
+          id: 4,
+          name: "Cupcake",
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: "8%",
+          status: "ACTIVE",
+        },
+        {
+          id: 5,
+          name: "Gingerbread",
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: "16%",
+          status: "ACTIVE",
+        },
+        {
+          id: 6,
+          name: "Jelly bean",
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: "0%",
+          status: "ACTIVE",
+        },
+        {
+          id: 7,
+          name: "Lollipop",
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: "2%",
+          status: "ACTIVE",
+        },
+        {
+          id: 8,
+          name: "Honeycomb",
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: "45%",
+          status: "ACTIVE",
+        },
+        {
+          id: 9,
+          name: "Donut",
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: "22%",
+          status: "ACTIVE",
+        },
+        {
+          id: 10,
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: "6%",
+          status: "ACTIVE",
+        },
+      ],
     };
   },
   methods: {
     pNew() {
       console.log("Press new");
     },
-    pDetail() {
-      console.log("Press detail");
+    pView(data) {
+      console.log("Press detail " + data);
     },
-    pDelete() {
-      console.log("Press delete");
+    pSetColor(data) {
+      if (data == "IN-ACTIVE") return "pink";
+      if (data == "BLACKLIST") return "normal";
+      else return "success";
     },
   },
 };
@@ -186,5 +321,11 @@ export default {
 .btn-icon {
   margin-left: 0px;
   margin-right: 5px;
+}
+
+.v-chip.v-size--default {
+  width: 100px;
+  display: inline-block !important;
+  text-align: center;
 }
 </style>

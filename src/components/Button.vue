@@ -1,6 +1,6 @@
 <template>
   <v-btn @click="execute" class="btn-new" :color="button.color">
-    <v-icon class="btn-icon">
+    <v-icon class="btn-icon mr-2">
       {{ button.icon }} 
     </v-icon>
     {{ button.text }}
@@ -11,7 +11,6 @@
 export default {
   name: "Button",
   props: ['callback', 'button'],
-  // { callback: { type: Function } }
   methods: {
     execute() {
       if (this.callback) {
@@ -34,4 +33,5 @@ export default {
   margin-left: 0px;
   margin-right: 5px;
 }
+
 </style>

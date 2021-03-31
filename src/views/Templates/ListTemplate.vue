@@ -10,7 +10,7 @@ export default {
   components: {Title},
   data() {
     return {
-      title: "List Template"
+      title: "Template"
     }
   },
 
