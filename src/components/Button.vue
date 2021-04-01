@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="execute" class="custom-btn" :color="properties.color">
+  <v-btn @click="execute" class="custom-btn" :color="properties.color" :outlined="properties.outlined">
     <v-icon class="btn-icon mr-2">
       {{ properties.icon }} 
     </v-icon>

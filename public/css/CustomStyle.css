@@ -149,3 +149,9 @@ table {
   font-weight: 500;
 }
 /* End of List Title Style */
+
+/* Card Text */
+.v-card__text {
+  color: black !important;
+}
+/* End of Card Text */

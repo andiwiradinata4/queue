@@ -2,7 +2,6 @@
     <v-snackbar
       v-model="properties.isActive"
       :color="properties.color"
-      bottom="false"
     >
       {{ properties.text }}
 

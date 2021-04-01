@@ -7,6 +7,7 @@
         <v-row id="btn-driver" class="d-flex flex-row-reverse">
           <Button :callback="pRefresh" :properties="btnRefresh" />
           <Button :callback="pNew" :properties="btnNew" />
+          <Button :callback="pNew" :properties="btnNew" />
         </v-row>
       </template>
 
@@ -55,29 +56,106 @@
 
     <Snackbar v-bind:properties="snackbar" />
 
-    <v-dialog v-model="dialog" width="500">
-
+    <v-dialog v-model="dialog" fullscreen persistent scrollable>
       <v-card>
-        <v-card-title class="headline grey lighten-2">
-          Privacy Policy
-        </v-card-title>
+        <v-card-title class="headline blue-grey lighten-5">
+          Create New Driver
+          <v-spacer></v-spacer>
 
-        <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </v-card-text>
+          <Button :callback="pNew" :properties="btnSave" />
+          <Button :callback="pClose" :properties="btnClose" />
+        </v-card-title>
 
         <v-divider></v-divider>
 
+        <v-card-text class="mt-2">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non eos
+          architecto fugit mollitia unde maxime sapiente nihil sunt quod velit
+          facere, quos ipsa in, veritatis magni quidem blanditiis adipisci
+          laborum.
+          <br />
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit,
+          officia expedita rerum pariatur sint suscipit quo, amet voluptates
+          culpa repellendus magni excepturi! Est dolores dicta illo distinctio
+          possimus in mollitia!
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
+          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
+          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
+          harum!
+        </v-card-text>
+
+        <!-- <v-divider></v-divider>
+
         <v-card-actions>
+          <Button :callback="pNew" :properties="btnSave" />
+          <Button :callback="pClose" :properties="btnClose" />
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
         </v-card-actions>
+        <v-card-actions>
+          <Button :callback="pNew" :properties="btnSave" />
+          <Button :callback="pClose" :properties="btnClose" />
+          <v-spacer></v-spacer>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-app>
@@ -114,6 +192,17 @@ export default {
         icon: "refresh",
         text: "Refresh",
         color: "primary",
+      },
+      btnSave: {
+        icon: "done",
+        text: "Save",
+        color: "primary",
+      },
+      btnClose: {
+        icon: "close",
+        text: "Close",
+        color: "normal",
+        outlined: true,
       },
       search: "",
       headers: [
@@ -336,8 +425,6 @@ export default {
   },
   methods: {
     pNew() {
-      // this.snackbar.isActive = true;
-      // this.snackbar.text = "Press new";
       this.dialog = true;
     },
     pView(data) {
@@ -346,6 +433,9 @@ export default {
     pRefresh() {
       this.snackbar.isActive = true;
       this.snackbar.text = "Press refresh";
+    },
+    pClose() {
+      this.dialog = false;
     },
     pSetColor(data) {
       if (data == "IN-ACTIVE") return "pink";

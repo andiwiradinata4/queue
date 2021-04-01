@@ -6,6 +6,8 @@ import Driver from '../views/Drivers/ListDriver.vue'
 import Queue from '../views/Queue/ListQueue.vue'
 import Template from '../views/Templates/ListTemplate.vue'
 
+import DriverDetail from '../views/Drivers/DriverDetail.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +25,11 @@ const routes = [
     path: '/driver',
     name: 'Driver',
     component: Driver
+  },
+  {
+    path: '/driver-detail',
+    name: 'DriverDetail',
+    component: DriverDetail
   },
   {
     path: '/queue',
