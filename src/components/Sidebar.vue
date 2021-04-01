@@ -3,7 +3,7 @@
     <v-navigation-drawer permanent v-model="drawer" app>
       <v-layout column align-center>
         <v-flex class="mt-3 mb-3">
-          <v-list-item-title class="title"> QMS </v-list-item-title>
+          <v-list-item-title class="title">QMS</v-list-item-title>
           <v-list-item-subtitle> Queue Management System </v-list-item-subtitle>
         </v-flex>
       </v-layout>

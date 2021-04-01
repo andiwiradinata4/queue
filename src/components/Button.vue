@@ -1,16 +1,16 @@
 <template>
-  <v-btn @click="execute" class="btn-new" :color="button.color">
+  <v-btn @click="execute" class="custom-btn" :color="properties.color">
     <v-icon class="btn-icon mr-2">
-      {{ button.icon }} 
+      {{ properties.icon }} 
     </v-icon>
-    {{ button.text }}
+    {{ properties.text }}
   </v-btn>
 </template>
 
 <script>
 export default {
   name: "Button",
-  props: ['callback', 'button'],
+  props: ['callback', 'properties'],
   methods: {
     execute() {
       if (this.callback) {
@@ -23,10 +23,11 @@ export default {
 </script>
 
 <style scoped>
-.btn-new {
-  width: 120px;
+.custom-btn {
+  min-width: 120px !important;
   margin-right: 5px;
   margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .btn-icon { 

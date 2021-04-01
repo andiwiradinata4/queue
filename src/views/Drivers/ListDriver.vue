@@ -4,7 +4,10 @@
 
     <v-container>
       <template>
-        <Button :callback="pNew" :button="btnNew" />
+        <v-row id="btn-driver" class="d-flex flex-row-reverse">
+          <Button :callback="pRefresh" :properties="btnRefresh" />
+          <Button :callback="pNew" :properties="btnNew" />
+        </v-row>
       </template>
 
       <v-row class="mt-0">
@@ -49,19 +52,54 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <Snackbar v-bind:properties="snackbar" />
+
+    <v-dialog v-model="dialog" width="500">
+
+      <v-card>
+        <v-card-title class="headline grey lighten-2">
+          Privacy Policy
+        </v-card-title>
+
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
 import Title from "@/components/ViewTitle.vue";
 import Button from "@/components/Button.vue";
+import Snackbar from "@/components/Snackbar.vue";
 
 export default {
   name: "ListDriver",
-  components: { Title, Button },
+  components: { Title, Button, Snackbar },
   data() {
     return {
       title: "Driver",
+      dialog: false,
+      snackbar: {
+        isActive: false,
+        text: "",
+        color: "primary",
+      },
       btnNew: {
         icon: "add_circle_outline",
         text: "New",
@@ -72,9 +110,9 @@ export default {
         text: "Edit",
         color: "primary",
       },
-      btnDelete: {
-        icon: "delete",
-        text: "Delete",
+      btnRefresh: {
+        icon: "refresh",
+        text: "Refresh",
         color: "primary",
       },
       search: "",
@@ -298,10 +336,16 @@ export default {
   },
   methods: {
     pNew() {
-      console.log("Press new");
+      // this.snackbar.isActive = true;
+      // this.snackbar.text = "Press new";
+      this.dialog = true;
     },
     pView(data) {
       console.log("Press detail " + data);
+    },
+    pRefresh() {
+      this.snackbar.isActive = true;
+      this.snackbar.text = "Press refresh";
     },
     pSetColor(data) {
       if (data == "IN-ACTIVE") return "pink";
@@ -317,5 +361,8 @@ export default {
   width: 100px;
   display: inline-block !important;
   text-align: center;
+}
+#btn-driver {
+  margin: 2px;
 }
 </style>
