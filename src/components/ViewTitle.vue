@@ -16,9 +16,5 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  margin-top: 10px;
-  margin-left: 10px;
-  color: #304457;
-}
+
 </style>

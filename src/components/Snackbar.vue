@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "Snackbar",
-  props: { properties: Array },
+  props: { properties: Object },
   components: {},
 };
 </script>

@@ -25,7 +25,7 @@ export default {
   // },
   props: {
     callBack: Function,
-    properties: Array,
+    properties: Object,
   },
   data: function () {
     return { clickMe: this.callBack };

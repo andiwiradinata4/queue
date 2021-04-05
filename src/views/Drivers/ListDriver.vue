@@ -1,15 +1,21 @@
 <template>
   <v-app>
-    <Title v-bind:title="title" />
+    <!-- <Title v-bind:title="title" /> -->
+    <div id="btn-driver" class="d-flex flex-row">
+      <div class="list-title">
+        {{ title }}
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <div id="btn-driver">
+        <Button :callBack="pNew" :properties="btnNew" />
+        <Button :callBack="pRefresh" :properties="btnRefresh" />
+      </div>
+    </div>
+    <v-divider></v-divider>
 
     <v-container>
-      <template>
-        <v-row id="btn-driver" class="d-flex flex-row-reverse">
-          <Button :callBack="pRefresh" :properties="btnRefresh" />
-          <Button :callBack="pNew" :properties="btnNew" />
-        </v-row>
-      </template>
-
       <v-row class="mt-0">
         <v-col cols="12">
           <template>
@@ -61,115 +67,189 @@
       <v-card>
         <v-card-title class="headline blue-grey lighten-5">
           Create New Driver
-          <v-spacer></v-spacer>
-
-          <Button :callBack="pNew" :properties="btnSave" />
-          <Button :callBack="pClose" :properties="btnClose" />
         </v-card-title>
 
         <v-divider></v-divider>
 
-        <v-card-text class="mt-2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non eos
-          architecto fugit mollitia unde maxime sapiente nihil sunt quod velit
-          facere, quos ipsa in, veritatis magni quidem blanditiis adipisci
-          laborum.
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit,
-          officia expedita rerum pariatur sint suscipit quo, amet voluptates
-          culpa repellendus magni excepturi! Est dolores dicta illo distinctio
-          possimus in mollitia!
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
+        <v-card-text>
+          <v-form v-model="driver.isValid" lazy-validation>
+            <v-container fluid>
+              <v-row class="mb-0 mt-2">
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="driver.idCard"
+                    :counter="16"
+                    :rules="driver.idCardRules"
+                    :placeholder="driver.idCardPlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.idCardLabel"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="8">
+                  <v-text-field
+                    v-model="driver.fullName"
+                    :rules="driver.fullNameRules"
+                    :placeholder="driver.fullNamePlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.fullNameLabel"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
 
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
+              <v-row class="mt-0">
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="driver.placeOfBirth"
+                    :rules="driver.placeOfBirthRules"
+                    :placeholder="driver.placeOfBirthPlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.placeOfBirthLabel"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="driver.birthDate"
+                    :rules="driver.birthDateRules"
+                    :placeholder="driver.birthDatePlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.birthDateLabel"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.gender"
+                    :items="itemsGender"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.genderRules"
+                    :label="driver.genderLabel"
+                    outlined
+                    clearable
+                    required
+                  ></v-select>
+                </v-col>
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.bloodType"
+                    :items="itemsBloodType"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.bloodTypeRules"
+                    :label="driver.bloodTypeLabel"
+                    outlined
+                    clearable
+                    required
+                  ></v-select>
+                </v-col>
+              </v-row>
 
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab excepturi
-          fugit corporis molestias, fugiat rerum illum distinctio rem, deleniti
-          nihil quidem tempora sint dolorem alias eum, natus assumenda ducimus
-          harum!
+              <v-row class="mt-0">
+                <v-col cols="4">
+                  <v-textarea
+                    v-model="driver.address"
+                    :rules="driver.addressRules"
+                    :placeholder="driver.addressPlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.addressLabel"
+                    counter="250"
+                    rows="1"
+                    auto-grow
+                    required
+                  ></v-textarea>
+                </v-col>
+
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.religion"
+                    :items="itemsReligion"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.religionRules"
+                    :label="driver.religionLabel"
+                    outlined
+                    clearable
+                    required
+                  ></v-select>
+                </v-col>
+                
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.maritalStatus"
+                    :items="itemsMaritalStatus"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.maritalStatusRules"
+                    :label="driver.maritalStatusLabel"
+                    outlined
+                    clearable
+                    required
+                  ></v-select>
+                </v-col>
+                
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.nationality"
+                    :items="itemsNationality"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.nationalityRules"
+                    :label="driver.nationalityLabel"
+                    outlined
+                    clearable
+                    required
+                    return-object
+                  ></v-select>
+                </v-col>
+                
+                <v-col cols="2">
+                  <v-text-field
+                    v-model="driver.occuption"
+                    :counter="20"
+                    :rules="driver.occuptionRules"
+                    :placeholder="driver.occuptionPlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.occuptionLabel"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
 
-        <!-- <v-divider></v-divider>
+        <v-divider></v-divider>
 
         <v-card-actions>
-          <Button :callback="pNew" :properties="btnSave" />
-          <Button :callback="pClose" :properties="btnClose" />
           <v-spacer></v-spacer>
+          <Button :callBack="pNew" :properties="btnSave" />
+          <Button :callBack="pClose" :properties="btnClose" />
         </v-card-actions>
-        <v-card-actions>
-          <Button :callback="pNew" :properties="btnSave" />
-          <Button :callback="pClose" :properties="btnClose" />
-          <v-spacer></v-spacer>
-        </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-app>
 </template>
 
 <script>
-import Title from "@/components/ViewTitle.vue";
 import Button from "@/components/Button.vue";
 import Snackbar from "@/components/Snackbar.vue";
 
 export default {
   name: "ListDriver",
-  components: { Title, Button, Snackbar },
+  components: {
+    // Title,
+    Button,
+    Snackbar,
+  },
   data() {
     return {
       title: "Driver",
@@ -428,6 +508,92 @@ export default {
           status: "ACTIVE",
         },
       ],
+      itemsComLocDivSubDivSubSivID: [
+        { id: 0, name: "Musim Mas" },
+        { id: 1, name: "Sukajadi Sawitmekar" },
+      ],
+      itemsGender: [
+        { id: 1, name: "Male" },
+        { id: 2, name: "Female" },
+      ],
+      itemsBloodType: [
+        { id: 1, name: "-" },
+        { id: 2, name: "A" },
+        { id: 3, name: "B" },
+        { id: 4, name: "O" },
+        { id: 5, name: "AB" },
+      ],
+      itemsReligion: [
+        { id: 1, name: "Islam" },
+        { id: 2, name: "Buddha" },
+        { id: 3, name: "Kristen" },
+        { id: 4, name: "Hindu" },
+        { id: 5, name: "Konghuchu" },
+      ],
+      itemsMaritalStatus: [
+        { id: 1, name: "Single" },
+        { id: 2, name: "Married" },
+      ],
+      itemsNationality: [
+        { id: 1, name: "WNI" },
+        { id: 2, name: "WNA" },
+      ],
+      driver: {
+        isValid: true,
+        selectedComLocDivSubDivSubSivID: { id: 1, name: "Sukajadi Sawitmekar" },
+        idCard: "",
+        idCardPlaceHolder: "ID card driver",
+        idCardLabel: "ID Card",
+        idCardRules: [
+          (v) => !!v || "ID Card is required!",
+          (v) => (v && v.length == 16) || "ID Card must be equal 16 characters",
+        ],
+        fullName: "",
+        fullNamePlaceHolder: "Full name driver",
+        fullNameLabel: "Full Name",
+        fullNameRules: [(v) => !!v || "Full name is required!"],
+
+        placeOfBirth: "",
+        placeOfBirthPlaceHolder: "Place of birth driver",
+        placeOfBirthLabel: "Place of Birth",
+        placeOfBirthRules: [(v) => !!v || "Place of birth is required!"],
+
+        birthDate: "2021-01-01",
+        birthDatePlaceHolder: "Date of birth driver",
+        birthDateLabel: "Date of Birth",
+        birthDateRules: [(v) => !!v || "Birth date is required!"],
+
+        gender: {id: 1, name: "Male"},
+        genderLabel: "Gender",
+        genderRules: [(v) => !!v || "Gender is required!"],
+
+        bloodType: {id: 1, name: "-"},
+        bloodTypeLabel: "Blood Type",
+        bloodTypeRules: [(v) => !!v || "Blood of Type is required!"],
+
+        address: "",
+        addressPlaceHolder: "Address of driver",
+        addressLabel: "Address",
+        addressRules: [(v) => !!v || "Address is required!"],
+        
+        religion: {id: 1, name: "Islam"},
+        religionLabel: "Religion",
+        religionRules: [(v) => !!v || "Religion is required!"],
+
+        maritalStatus: {id: 1, name: "Single"},
+        maritalStatusLabel: "Marital Status",
+        maritalStatusRules: [(v) => !!v || "Marital Status is required!"],
+
+        nationality: {id: 1, name: "WNI"},
+        nationalityLabel: "Nationality",
+        nationalityRules: [(v) => !!v || "Nationality is required!"],
+
+        occuption: "",
+        occuptionPlaceHolder: "Occuption driver",
+        occuptionLabel: "Occuption",
+        occuptionRules: [(v) => !!v || "Occuption is required!"],
+
+      },
     };
   },
   methods: {
@@ -456,9 +622,11 @@ export default {
         case "xs":
           return 220;
         case "sm":
-          return 400;
+          return 300;
         case "md":
-          return 500;
+          return 300;
+        case "lg":
+          return 350;
         default:
           return 600;
       }
@@ -475,5 +643,6 @@ export default {
 }
 #btn-driver {
   margin: 2px;
+  margin-top: 10px;
 }
 </style>
