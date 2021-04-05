@@ -1,7 +1,12 @@
 <template>
-  <v-btn @click="execute" class="custom-btn" :color="properties.color" :outlined="properties.outlined">
+  <v-btn
+    @click="clickMe"
+    class="custom-btn"
+    :color="properties.color"
+    :outlined="properties.outlined"
+  >
     <v-icon class="btn-icon mr-2">
-      {{ properties.icon }} 
+      {{ properties.icon }}
     </v-icon>
     {{ properties.text }}
   </v-btn>
@@ -10,13 +15,20 @@
 <script>
 export default {
   name: "Button",
-  props: ['callback', 'properties'],
-  methods: {
-    execute() {
-      if (this.callback) {
-        this.callback();
-      }
-    },
+  // props: ['callback', 'properties'],
+  // methods: {
+  //   execute() {
+  //     if (this.callback) {
+  //       this.callback();
+  //     }
+  //   },
+  // },
+  props: {
+    callBack: Function,
+    properties: Array,
+  },
+  data: function () {
+    return { clickMe: this.callBack };
   },
   components: {},
 };
@@ -30,9 +42,8 @@ export default {
   margin-top: 5px;
 }
 
-.btn-icon { 
+.btn-icon {
   margin-left: 0px;
   margin-right: 5px;
 }
-
 </style>

@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "Dashboard",
-  props: ["title"],
+  props: { title: String, buttons: Array },
   components: {},
 };
 </script>

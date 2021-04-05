@@ -5,9 +5,8 @@
     <v-container>
       <template>
         <v-row id="btn-driver" class="d-flex flex-row-reverse">
-          <Button :callback="pRefresh" :properties="btnRefresh" />
-          <Button :callback="pNew" :properties="btnNew" />
-          <Button :callback="pNew" :properties="btnNew" />
+          <Button :callBack="pRefresh" :properties="btnRefresh" />
+          <Button :callBack="pNew" :properties="btnNew" />
         </v-row>
       </template>
 
@@ -30,6 +29,8 @@
                   :items="itemDataTable"
                   :search="search"
                   multi-sort
+                  fixed-header
+                  :height="tableHeight"
                 >
                   <template v-slot:item.status="{ item }">
                     <v-chip
@@ -62,8 +63,8 @@
           Create New Driver
           <v-spacer></v-spacer>
 
-          <Button :callback="pNew" :properties="btnSave" />
-          <Button :callback="pClose" :properties="btnClose" />
+          <Button :callBack="pNew" :properties="btnSave" />
+          <Button :callBack="pClose" :properties="btnClose" />
         </v-card-title>
 
         <v-divider></v-divider>
@@ -173,6 +174,12 @@ export default {
     return {
       title: "Driver",
       dialog: false,
+      buttons: [
+        {
+          id: 1,
+          properties: { icon: "refresh", text: "Refresh", color: "primary" },
+        },
+      ],
       snackbar: {
         isActive: false,
         text: "",
@@ -321,7 +328,7 @@ export default {
         },
 
         {
-          id: 1,
+          id: 11,
           name: "Frozen Yogurt",
           calories: 159,
           fat: 6.0,
@@ -331,7 +338,7 @@ export default {
           status: "IN-ACTIVE",
         },
         {
-          id: 2,
+          id: 12,
           name: "Ice cream sandwich",
           calories: 237,
           fat: 9.0,
@@ -341,7 +348,7 @@ export default {
           status: "BLACKLIST",
         },
         {
-          id: 3,
+          id: 13,
           name: "Eclair",
           calories: 262,
           fat: 16.0,
@@ -351,7 +358,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 4,
+          id: 14,
           name: "Cupcake",
           calories: 305,
           fat: 3.7,
@@ -361,7 +368,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 5,
+          id: 15,
           name: "Gingerbread",
           calories: 356,
           fat: 16.0,
@@ -371,7 +378,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 6,
+          id: 16,
           name: "Jelly bean",
           calories: 375,
           fat: 0.0,
@@ -381,7 +388,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 7,
+          id: 17,
           name: "Lollipop",
           calories: 392,
           fat: 0.2,
@@ -391,7 +398,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 8,
+          id: 18,
           name: "Honeycomb",
           calories: 408,
           fat: 3.2,
@@ -401,7 +408,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 9,
+          id: 19,
           name: "Donut",
           calories: 452,
           fat: 25.0,
@@ -411,7 +418,7 @@ export default {
           status: "ACTIVE",
         },
         {
-          id: 10,
+          id: 20,
           name: "KitKat",
           calories: 518,
           fat: 26.0,
@@ -441,6 +448,20 @@ export default {
       if (data == "IN-ACTIVE") return "pink";
       if (data == "BLACKLIST") return "normal";
       else return "success";
+    },
+  },
+  computed: {
+    tableHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return 220;
+        case "sm":
+          return 400;
+        case "md":
+          return 500;
+        default:
+          return 600;
+      }
     },
   },
 };
