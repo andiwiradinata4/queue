@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <!-- <Title v-bind:title="title" /> -->
-    <div id="btn-driver" class="d-flex flex-row">
+    <div id="btn-driver" class="d-flex flex-row btn-header">
       <div class="list-title">
         {{ title }}
       </div>
@@ -246,7 +245,6 @@ import Snackbar from "@/components/Snackbar.vue";
 export default {
   name: "ListDriver",
   components: {
-    // Title,
     Button,
     Snackbar,
   },
@@ -641,8 +639,5 @@ export default {
   display: inline-block !important;
   text-align: center;
 }
-#btn-driver {
-  margin: 2px;
-  margin-top: 10px;
-}
+
 </style>
