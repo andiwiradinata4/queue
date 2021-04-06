@@ -30,8 +30,8 @@
               </v-card-title>
               <template>
                 <v-data-table
-                  :headers="headers"
-                  :items="itemDataTable"
+                  :headers="itemDataTable.headers"
+                  :items="itemDataTable.data"
                   :search="search"
                   multi-sort
                   fixed-header
@@ -62,228 +62,240 @@
 
     <Snackbar v-bind:properties="snackbar" />
 
-    <v-dialog v-model="dialog" fullscreen persistent scrollable>
+    <v-dialog v-model="dialog" persistent scrollable>
       <v-card>
         <v-card-title class="headline blue-grey lighten-5">
           Create New Driver
+          <v-tabs v-model="tab" fixed-tabs background-color="transparent">
+            <v-tabs-slider></v-tabs-slider>
+            <v-tab href="#information" class="primary--text">
+              Information
+            </v-tab>
+            <v-tab href="#image" class="primary--text">
+              <v-icon>mdi-phone</v-icon>
+            </v-tab>
+          </v-tabs>
         </v-card-title>
 
+        <v-tabs-items v-model="tab">
+          <v-tab-item value="information">
+            <v-card-text>
+              <v-form v-model="driver.isValid" lazy-validation>
+                <v-container fluid>
+                  <v-row class="mb-0 mt-2">
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="driver.idCard"
+                        :counter="16"
+                        :rules="driver.idCardRules"
+                        :placeholder="driver.idCardPlaceHolder"
+                        outlined
+                        clearable
+                        :label="driver.idCardLabel"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="8">
+                      <v-text-field
+                        v-model="driver.fullName.value"
+                        :rules="driver.fullName.rules"
+                        :placeholder="driver.fullName.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.fullName.label"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-row class="mt-0">
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="driver.placeOfBirth.value"
+                        :rules="driver.placeOfBirth.rules"
+                        :placeholder="driver.placeOfBirth.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.placeOfBirth.label"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="driver.birthDate.value"
+                        :rules="driver.birthDate.rules"
+                        :placeholder="driver.birthDate.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.birthDate.label"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.gender.value"
+                        :items="itemsGender"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.gender.rules"
+                        :label="driver.gender.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.bloodType.value"
+                        :items="itemsBloodType"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.bloodType.rules"
+                        :label="driver.bloodType.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+
+                  <v-row class="mt-0">
+                    <v-col cols="4">
+                      <v-textarea
+                        v-model="driver.address.value"
+                        :rules="driver.address.rules"
+                        :placeholder="driver.address.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.address.label"
+                        counter="250"
+                        rows="1"
+                        auto-grow
+                        required
+                      ></v-textarea>
+                    </v-col>
+
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.religion.value"
+                        :items="itemsReligion"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.religion.rules"
+                        :label="driver.religion.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.maritalStatus.value"
+                        :items="itemsMaritalStatus"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.maritalStatus.rules"
+                        :label="driver.maritalStatus.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.nationality.value"
+                        :items="itemsNationality"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.nationality.rules"
+                        :label="driver.nationality.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="2">
+                      <v-text-field
+                        v-model="driver.occuption.value"
+                        :rules="driver.occuption.rules"
+                        :placeholder="driver.occuption.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.occuption.label"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-row class="mt-0">
+                    <v-col cols="2">
+                      <v-text-field
+                        v-model="driver.validThru.value"
+                        :rules="driver.validThru.rules"
+                        :placeholder="driver.validThru.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.validThru.label"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.cardTypeID.value"
+                        :items="itemsCardTypeID"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.cardTypeID.rules"
+                        :label="driver.cardTypeID.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="2">
+                      <v-select
+                        v-model="driver.statusID.value"
+                        :items="itemsStatusID"
+                        item-text="name"
+                        item-value="id"
+                        :rules="driver.statusID.rules"
+                        :label="driver.statusID.label"
+                        outlined
+                        clearable
+                        required
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="6">
+                      <v-textarea
+                        v-model="driver.internalRemarks.value"
+                        :rules="driver.internalRemarks.rules"
+                        :placeholder="driver.internalRemarks.placeHolder"
+                        outlined
+                        clearable
+                        :label="driver.internalRemarks.label"
+                        counter="250"
+                        rows="1"
+                        auto-grow
+                        required
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-card-text>
+          </v-tab-item>
+          <v-tab-item value="image">
+            <h1>Image</h1>
+          </v-tab-item>
+        </v-tabs-items>
+
         <v-divider></v-divider>
-
-        <v-card-text>
-          <v-form v-model="driver.isValid" lazy-validation>
-            <v-container fluid>
-              <v-row class="mb-0 mt-2">
-                <v-col cols="4">
-                  <v-text-field
-                    v-model="driver.idCard"
-                    :counter="16"
-                    :rules="driver.idCardRules"
-                    :placeholder="driver.idCardPlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.idCardLabel"
-                    required
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="driver.fullName"
-                    :rules="driver.fullNameRules"
-                    :placeholder="driver.fullNamePlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.fullNameLabel"
-                    required
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-row class="mt-0">
-                <v-col cols="4">
-                  <v-text-field
-                    v-model="driver.placeOfBirth"
-                    :rules="driver.placeOfBirthRules"
-                    :placeholder="driver.placeOfBirthPlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.placeOfBirthLabel"
-                    required
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4">
-                  <v-text-field
-                    v-model="driver.birthDate"
-                    :rules="driver.birthDateRules"
-                    :placeholder="driver.birthDatePlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.birthDateLabel"
-                    required
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.gender"
-                    :items="itemsGender"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.genderRules"
-                    :label="driver.genderLabel"
-                    outlined
-                    clearable
-                    required
-                  ></v-select>
-                </v-col>
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.bloodType"
-                    :items="itemsBloodType"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.bloodTypeRules"
-                    :label="driver.bloodTypeLabel"
-                    outlined
-                    clearable
-                    required
-                  ></v-select>
-                </v-col>
-              </v-row>
-
-              <v-row class="mt-0">
-                <v-col cols="4">
-                  <v-textarea
-                    v-model="driver.address"
-                    :rules="driver.addressRules"
-                    :placeholder="driver.addressPlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.addressLabel"
-                    counter="250"
-                    rows="1"
-                    auto-grow
-                    required
-                  ></v-textarea>
-                </v-col>
-
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.religion"
-                    :items="itemsReligion"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.religionRules"
-                    :label="driver.religionLabel"
-                    outlined
-                    clearable
-                    required
-                  ></v-select>
-                </v-col>
-
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.maritalStatus"
-                    :items="itemsMaritalStatus"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.maritalStatusRules"
-                    :label="driver.maritalStatusLabel"
-                    outlined
-                    clearable
-                    required
-                  ></v-select>
-                </v-col>
-
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.nationality"
-                    :items="itemsNationality"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.nationalityRules"
-                    :label="driver.nationalityLabel"
-                    outlined
-                    clearable
-                    required
-                    return-object
-                  ></v-select>
-                </v-col>
-
-                <v-col cols="2">
-                  <v-text-field
-                    v-model="driver.occuption"
-                    :counter="20"
-                    :rules="driver.occuptionRules"
-                    :placeholder="driver.occuptionPlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.occuptionLabel"
-                    required
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-row class="mt-0">
-                <v-col cols="2">
-                  <v-text-field
-                    v-model="driver.validThru"
-                    :rules="driver.validThruRules"
-                    :placeholder="driver.validThruPlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.validThruLabel"
-                    counter="50"
-                    required
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.cardTypeID"
-                    :items="itemsCardType"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.cardTypeIDRules"
-                    :label="driver.cardTypeIDLabel"
-                    outlined
-                    clearable
-                    required
-                  ></v-select>
-                </v-col>
-
-                <v-col cols="2">
-                  <v-select
-                    v-model="driver.statusID"
-                    :items="itemsStatus"
-                    item-text="name"
-                    item-value="id"
-                    :rules="driver.statusIDRules"
-                    :label="driver.statusIDLabel"
-                    outlined
-                    clearable
-                    required
-                  ></v-select>
-                </v-col>
-
-                <v-col cols="6">
-                  <v-textarea
-                    v-model="driver.internalRemarks"
-                    :placeholder="driver.internalRemarksPlaceHolder"
-                    outlined
-                    clearable
-                    :label="driver.internalRemarksLabel"
-                    counter="250"
-                    rows="3"
-                    auto-grow
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-card-text>
-
-        <v-divider></v-divider>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <Button :callBack="pNew" :properties="btnSave" />
@@ -346,222 +358,226 @@ export default {
         outlined: true,
       },
       search: "",
-      headers: [
-        { text: "#", value: "action", align: "center", sortable: false },
-        {
-          text: "DESSERT (100G SERVING)",
-          value: "name",
-        },
-        { text: "CALORIES", value: "calories" },
-        { text: "FAT (G)", value: "fat" },
-        { text: "CARBS (G)", value: "carbs" },
-        { text: "PROTEIN (G)", value: "protein" },
-        { text: "IRON (%)", value: "iron" },
-        { text: "STATUS", value: "status" },
-      ],
-      itemDataTable: [
-        {
-          id: 1,
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%",
-          status: "IN-ACTIVE",
-        },
-        {
-          id: 2,
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-          status: "BLACKLIST",
-        },
-        {
-          id: 3,
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-          status: "ACTIVE",
-        },
-        {
-          id: 4,
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-          status: "ACTIVE",
-        },
-        {
-          id: 5,
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-          status: "ACTIVE",
-        },
-        {
-          id: 6,
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-          status: "ACTIVE",
-        },
-        {
-          id: 7,
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-          status: "ACTIVE",
-        },
-        {
-          id: 8,
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-          status: "ACTIVE",
-        },
-        {
-          id: 9,
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-          status: "ACTIVE",
-        },
-        {
-          id: 10,
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-          status: "ACTIVE",
-        },
+      tabItems: ["Information", "Image"],
+      tab: null,
+      itemDataTable: {
+        headers: [
+          { text: "#", value: "action", align: "center", sortable: false },
+          {
+            text: "DESSERT (100G SERVING)",
+            value: "name",
+          },
+          { text: "CALORIES", value: "calories" },
+          { text: "FAT (G)", value: "fat" },
+          { text: "CARBS (G)", value: "carbs" },
+          { text: "PROTEIN (G)", value: "protein" },
+          { text: "IRON (%)", value: "iron" },
+          { text: "STATUS", value: "status" },
+        ],
+        data: [
+          {
+            id: 1,
+            name: "Frozen Yogurt",
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: "1%",
+            status: "IN-ACTIVE",
+          },
+          {
+            id: 2,
+            name: "Ice cream sandwich",
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: "1%",
+            status: "BLACKLIST",
+          },
+          {
+            id: 3,
+            name: "Eclair",
+            calories: 262,
+            fat: 16.0,
+            carbs: 23,
+            protein: 6.0,
+            iron: "7%",
+            status: "ACTIVE",
+          },
+          {
+            id: 4,
+            name: "Cupcake",
+            calories: 305,
+            fat: 3.7,
+            carbs: 67,
+            protein: 4.3,
+            iron: "8%",
+            status: "ACTIVE",
+          },
+          {
+            id: 5,
+            name: "Gingerbread",
+            calories: 356,
+            fat: 16.0,
+            carbs: 49,
+            protein: 3.9,
+            iron: "16%",
+            status: "ACTIVE",
+          },
+          {
+            id: 6,
+            name: "Jelly bean",
+            calories: 375,
+            fat: 0.0,
+            carbs: 94,
+            protein: 0.0,
+            iron: "0%",
+            status: "ACTIVE",
+          },
+          {
+            id: 7,
+            name: "Lollipop",
+            calories: 392,
+            fat: 0.2,
+            carbs: 98,
+            protein: 0,
+            iron: "2%",
+            status: "ACTIVE",
+          },
+          {
+            id: 8,
+            name: "Honeycomb",
+            calories: 408,
+            fat: 3.2,
+            carbs: 87,
+            protein: 6.5,
+            iron: "45%",
+            status: "ACTIVE",
+          },
+          {
+            id: 9,
+            name: "Donut",
+            calories: 452,
+            fat: 25.0,
+            carbs: 51,
+            protein: 4.9,
+            iron: "22%",
+            status: "ACTIVE",
+          },
+          {
+            id: 10,
+            name: "KitKat",
+            calories: 518,
+            fat: 26.0,
+            carbs: 65,
+            protein: 7,
+            iron: "6%",
+            status: "ACTIVE",
+          },
 
-        {
-          id: 11,
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%",
-          status: "IN-ACTIVE",
-        },
-        {
-          id: 12,
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-          status: "BLACKLIST",
-        },
-        {
-          id: 13,
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-          status: "ACTIVE",
-        },
-        {
-          id: 14,
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-          status: "ACTIVE",
-        },
-        {
-          id: 15,
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-          status: "ACTIVE",
-        },
-        {
-          id: 16,
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-          status: "ACTIVE",
-        },
-        {
-          id: 17,
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-          status: "ACTIVE",
-        },
-        {
-          id: 18,
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-          status: "ACTIVE",
-        },
-        {
-          id: 19,
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-          status: "ACTIVE",
-        },
-        {
-          id: 20,
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-          status: "ACTIVE",
-        },
-      ],
+          {
+            id: 11,
+            name: "Frozen Yogurt",
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: "1%",
+            status: "IN-ACTIVE",
+          },
+          {
+            id: 12,
+            name: "Ice cream sandwich",
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: "1%",
+            status: "BLACKLIST",
+          },
+          {
+            id: 13,
+            name: "Eclair",
+            calories: 262,
+            fat: 16.0,
+            carbs: 23,
+            protein: 6.0,
+            iron: "7%",
+            status: "ACTIVE",
+          },
+          {
+            id: 14,
+            name: "Cupcake",
+            calories: 305,
+            fat: 3.7,
+            carbs: 67,
+            protein: 4.3,
+            iron: "8%",
+            status: "ACTIVE",
+          },
+          {
+            id: 15,
+            name: "Gingerbread",
+            calories: 356,
+            fat: 16.0,
+            carbs: 49,
+            protein: 3.9,
+            iron: "16%",
+            status: "ACTIVE",
+          },
+          {
+            id: 16,
+            name: "Jelly bean",
+            calories: 375,
+            fat: 0.0,
+            carbs: 94,
+            protein: 0.0,
+            iron: "0%",
+            status: "ACTIVE",
+          },
+          {
+            id: 17,
+            name: "Lollipop",
+            calories: 392,
+            fat: 0.2,
+            carbs: 98,
+            protein: 0,
+            iron: "2%",
+            status: "ACTIVE",
+          },
+          {
+            id: 18,
+            name: "Honeycomb",
+            calories: 408,
+            fat: 3.2,
+            carbs: 87,
+            protein: 6.5,
+            iron: "45%",
+            status: "ACTIVE",
+          },
+          {
+            id: 19,
+            name: "Donut",
+            calories: 452,
+            fat: 25.0,
+            carbs: 51,
+            protein: 4.9,
+            iron: "22%",
+            status: "ACTIVE",
+          },
+          {
+            id: 20,
+            name: "KitKat",
+            calories: 518,
+            fat: 26.0,
+            carbs: 65,
+            protein: 7,
+            iron: "6%",
+            status: "ACTIVE",
+          },
+        ],
+      },
       itemsComLocDivSubDivSubSivID: [
         { id: 0, name: "Musim Mas" },
         { id: 1, name: "Sukajadi Sawitmekar" },
@@ -611,67 +627,95 @@ export default {
           (v) => !!v || "ID Card is required!",
           (v) => (v && v.length == 16) || "ID Card must be equal 16 characters",
         ],
-        fullName: "",
-        fullNamePlaceHolder: "Full name driver",
-        fullNameLabel: "Full Name",
-        fullNameRules: [(v) => !!v || "Full name is required!"],
+        fullName: {
+          value: "",
+          placeHolder: "Full name driver",
+          label: "Full Name",
+          rules: [(v) => !!v || "Full name is required!"],
+        },
+        placeOfBirth: {
+          value: "",
+          placeHolder: "Place of birth driver",
+          label: "Place of Birth",
+          rules: [(v) => !!v || "Place of birth is required!"],
+        },
 
-        placeOfBirth: "",
-        placeOfBirthPlaceHolder: "Place of birth driver",
-        placeOfBirthLabel: "Place of Birth",
-        placeOfBirthRules: [(v) => !!v || "Place of birth is required!"],
+        birthDate: {
+          value: "2021-01-31",
+          placeHolder: "Date of birth driver",
+          label: "Date of Birth",
+          rules: [(v) => !!v || "Birth of birth is required!"],
+        },
 
-        birthDate: "2021-01-01",
-        birthDatePlaceHolder: "Date of birth driver",
-        birthDateLabel: "Date of Birth",
-        birthDateRules: [(v) => !!v || "Birth date is required!"],
+        gender: {
+          value: { id: 1, name: "Male" },
+          label: "Gender",
+          rules: [(v) => !!v || "Gender is required!"],
+        },
 
-        gender: { id: 1, name: "Male" },
-        genderLabel: "Gender",
-        genderRules: [(v) => !!v || "Gender is required!"],
+        bloodType: {
+          value: { id: 1, name: "-" },
+          label: "Blood Type",
+          rules: [(v) => !!v || "Blood type is required!"],
+        },
 
-        bloodType: { id: 1, name: "-" },
-        bloodTypeLabel: "Blood Type",
-        bloodTypeRules: [(v) => !!v || "Blood of Type is required!"],
+        address: {
+          value: "",
+          placeHolder: "Address",
+          label: "Address",
+          rules: [(v) => !!v || "Address is required!"],
+        },
 
-        address: "",
-        addressPlaceHolder: "Address of driver",
-        addressLabel: "Address",
-        addressRules: [(v) => !!v || "Address is required!"],
+        religion: {
+          value: { id: 1, name: "Islam" },
+          label: "Religion",
+          rules: [(v) => !!v || "Religion is required!"],
+        },
 
-        religion: { id: 1, name: "Islam" },
-        religionLabel: "Religion",
-        religionRules: [(v) => !!v || "Religion is required!"],
+        maritalStatus: {
+          value: { id: 1, name: "Single" },
+          label: "Marital Status",
+          rules: [(v) => !!v || "Marital status is required!"],
+        },
 
-        maritalStatus: { id: 1, name: "Single" },
-        maritalStatusLabel: "Marital Status",
-        maritalStatusRules: [(v) => !!v || "Marital Status is required!"],
+        nationality: {
+          value: { id: 1, name: "WNI" },
+          label: "Nationality",
+          rules: [(v) => !!v || "Nationality is required!"],
+        },
 
-        nationality: { id: 1, name: "WNI" },
-        nationalityLabel: "Nationality",
-        nationalityRules: [(v) => !!v || "Nationality is required!"],
+        occuption: {
+          value: "",
+          placeHolder: "Occuption driver",
+          label: "Occuption",
+          rules: [(v) => !!v || "Occuption is required!"],
+        },
 
-        occuption: "",
-        occuptionPlaceHolder: "Occuption driver",
-        occuptionLabel: "Occuption",
-        occuptionRules: [(v) => !!v || "Occuption is required!"],
+        validThru: {
+          value: "",
+          placeHolder: "Valid thru",
+          label: "Valid Thru",
+          rules: [(v) => !!v || "Valid thru is required!"],
+        },
 
-        validThru: "",
-        validThruPlaceHolder: "Valid thru",
-        validThruLabel: "Valid Thru",
-        validThruRules: [(v) => !!v || "Valid thru is required!"],
+        cardTypeID: {
+          value: { id: 1, name: "KTP" },
+          label: "Card Type",
+          rules: [(v) => !!v || "Card type is required!"],
+        },
 
-        cardTypeID: { id: 1, name: "KTP" },
-        cardTypeIDLabel: "Card Type",
-        cardTypeIDRules: [(v) => !!v || "Card type is required!"],
+        statusID: {
+          value: { id: 0, name: "ACTIVE" },
+          label: "Status",
+          rules: [(v) => !!v || "Status is required!"],
+        },
 
-        statusID: { id: 0, name: "ACTIVE" },
-        statusIDLabel: "Status",
-        statusIDRules: [(v) => !!v || "Card type is required!"],
-
-        internalRemarks: "",
-        internalRemarksPlaceHolder: "Internal remarks",
-        internalRemarksLabel: "Internal Remarks",
+        internalRemarks: {
+          value: "",
+          placeHolder: "Internal remarks",
+          label: "Internal Remarks",
+          rules: [(v) => !!v || "Internal remarks is required!"],
+        },
       },
     };
   },
