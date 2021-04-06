@@ -4,11 +4,13 @@
       <div class="list-title">
         {{ title }}
       </div>
-
+      
       <v-spacer></v-spacer>
 
       <div id="btn-driver">
-        <Button :callBack="pNew" :properties="btnNew" />
+        <router-link to="/driver-detail">
+          <Button :callBack="pNew" :properties="btnNew" />
+        </router-link>
         <Button :callBack="pRefresh" :properties="btnRefresh" />
       </div>
     </div>
@@ -61,7 +63,7 @@
     </v-container>
 
     <Snackbar v-bind:properties="snackbar" />
-
+<!-- 
     <v-dialog v-model="dialog" persistent scrollable>
       <v-card>
         <v-card-title class="headline blue-grey lighten-5">
@@ -71,9 +73,7 @@
             <v-tab href="#information" class="primary--text">
               Information
             </v-tab>
-            <v-tab href="#image" class="primary--text">
-              <v-icon>mdi-phone</v-icon>
-            </v-tab>
+            <v-tab href="#image" class="primary--text"> Image </v-tab>
           </v-tabs>
         </v-card-title>
 
@@ -291,7 +291,52 @@
             </v-card-text>
           </v-tab-item>
           <v-tab-item value="image">
-            <h1>Image</h1>
+            <v-card-text scrollable>
+              <v-form v-model="driver.isValid" lazy-validation>
+                <v-container fluid>
+                  <v-row class="mb-0 mt-2"> </v-row>
+                  <v-col cols="4">
+                    <v-img
+                      lazy-src="https://picsum.photos/id/11/10/6"
+                      aspect-ratio="1.7"
+                      contain
+                      max-height="600"
+                      max-width="300"
+                      src="https://picsum.photos/id/11/500/300"
+                    ></v-img>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-img
+                      lazy-src="https://picsum.photos/id/11/10/6"
+                      max-height="600"
+                      max-width="300"
+                      src="https://picsum.photos/id/11/500/300"
+                    ></v-img>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-img
+                      lazy-src="https://picsum.photos/id/11/10/6"
+                      max-height="600"
+                      max-width="300"
+                      src="https://picsum.photos/id/11/500/300"
+                    ></v-img>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-img
+                      lazy-src="https://picsum.photos/id/11/10/6"
+                      max-height="600"
+                      max-width="300"
+                      src="https://picsum.photos/id/11/500/300"
+                    ></v-img>
+                  </v-col>
+                  <v-row class="mt-0"> </v-row>
+
+                  <v-row class="mt-0"> </v-row>
+
+                  <v-row class="mt-0"> </v-row>
+                </v-container>
+              </v-form>
+            </v-card-text>
           </v-tab-item>
         </v-tabs-items>
 
@@ -302,7 +347,7 @@
           <Button :callBack="pClose" :properties="btnClose" />
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-app>
 </template>
 
@@ -319,7 +364,7 @@ export default {
   data() {
     return {
       title: "Driver",
-      dialog: false,
+      // dialog: false,
       buttons: [
         {
           id: 1,
@@ -721,7 +766,7 @@ export default {
   },
   methods: {
     pNew() {
-      this.dialog = true;
+      // this.dialog = true;
     },
     pView(data) {
       console.log("Press detail " + data);
