@@ -179,7 +179,7 @@
                     required
                   ></v-select>
                 </v-col>
-                
+
                 <v-col cols="2">
                   <v-select
                     v-model="driver.maritalStatus"
@@ -193,7 +193,7 @@
                     required
                   ></v-select>
                 </v-col>
-                
+
                 <v-col cols="2">
                   <v-select
                     v-model="driver.nationality"
@@ -208,7 +208,7 @@
                     return-object
                   ></v-select>
                 </v-col>
-                
+
                 <v-col cols="2">
                   <v-text-field
                     v-model="driver.occuption"
@@ -220,6 +220,62 @@
                     :label="driver.occuptionLabel"
                     required
                   ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <v-row class="mt-0">
+                <v-col cols="2">
+                  <v-text-field
+                    v-model="driver.validThru"
+                    :rules="driver.validThruRules"
+                    :placeholder="driver.validThruPlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.validThruLabel"
+                    counter="50"
+                    required
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.cardTypeID"
+                    :items="itemsCardType"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.cardTypeIDRules"
+                    :label="driver.cardTypeIDLabel"
+                    outlined
+                    clearable
+                    required
+                  ></v-select>
+                </v-col>
+
+                <v-col cols="2">
+                  <v-select
+                    v-model="driver.statusID"
+                    :items="itemsStatus"
+                    item-text="name"
+                    item-value="id"
+                    :rules="driver.statusIDRules"
+                    :label="driver.statusIDLabel"
+                    outlined
+                    clearable
+                    required
+                  ></v-select>
+                </v-col>
+
+                <v-col cols="6">
+                  <v-textarea
+                    v-model="driver.internalRemarks"
+                    :placeholder="driver.internalRemarksPlaceHolder"
+                    outlined
+                    clearable
+                    :label="driver.internalRemarksLabel"
+                    counter="250"
+                    rows="3"
+                    auto-grow
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -536,6 +592,15 @@ export default {
         { id: 1, name: "WNI" },
         { id: 2, name: "WNA" },
       ],
+      itemsCardType: [
+        { id: 1, name: "KTP" },
+        { id: 2, name: "SIM" },
+      ],
+      itemsStatus: [
+        { id: 0, name: "ACTIVE" },
+        { id: 1, name: "IN-ACTIVE" },
+        { id: 2, name: "BLACKLIST" },
+      ],
       driver: {
         isValid: true,
         selectedComLocDivSubDivSubSivID: { id: 1, name: "Sukajadi Sawitmekar" },
@@ -561,11 +626,11 @@ export default {
         birthDateLabel: "Date of Birth",
         birthDateRules: [(v) => !!v || "Birth date is required!"],
 
-        gender: {id: 1, name: "Male"},
+        gender: { id: 1, name: "Male" },
         genderLabel: "Gender",
         genderRules: [(v) => !!v || "Gender is required!"],
 
-        bloodType: {id: 1, name: "-"},
+        bloodType: { id: 1, name: "-" },
         bloodTypeLabel: "Blood Type",
         bloodTypeRules: [(v) => !!v || "Blood of Type is required!"],
 
@@ -573,16 +638,16 @@ export default {
         addressPlaceHolder: "Address of driver",
         addressLabel: "Address",
         addressRules: [(v) => !!v || "Address is required!"],
-        
-        religion: {id: 1, name: "Islam"},
+
+        religion: { id: 1, name: "Islam" },
         religionLabel: "Religion",
         religionRules: [(v) => !!v || "Religion is required!"],
 
-        maritalStatus: {id: 1, name: "Single"},
+        maritalStatus: { id: 1, name: "Single" },
         maritalStatusLabel: "Marital Status",
         maritalStatusRules: [(v) => !!v || "Marital Status is required!"],
 
-        nationality: {id: 1, name: "WNI"},
+        nationality: { id: 1, name: "WNI" },
         nationalityLabel: "Nationality",
         nationalityRules: [(v) => !!v || "Nationality is required!"],
 
@@ -591,6 +656,22 @@ export default {
         occuptionLabel: "Occuption",
         occuptionRules: [(v) => !!v || "Occuption is required!"],
 
+        validThru: "",
+        validThruPlaceHolder: "Valid thru",
+        validThruLabel: "Valid Thru",
+        validThruRules: [(v) => !!v || "Valid thru is required!"],
+
+        cardTypeID: { id: 1, name: "KTP" },
+        cardTypeIDLabel: "Card Type",
+        cardTypeIDRules: [(v) => !!v || "Card type is required!"],
+
+        statusID: { id: 0, name: "ACTIVE" },
+        statusIDLabel: "Status",
+        statusIDRules: [(v) => !!v || "Card type is required!"],
+
+        internalRemarks: "",
+        internalRemarksPlaceHolder: "Internal remarks",
+        internalRemarksLabel: "Internal Remarks",
       },
     };
   },
@@ -639,5 +720,4 @@ export default {
   display: inline-block !important;
   text-align: center;
 }
-
 </style>
