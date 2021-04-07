@@ -4,11 +4,11 @@
       <div class="list-title">
         {{ title }}
       </div>
-      
+
       <v-spacer></v-spacer>
 
       <div id="btn-driver">
-        <router-link to="/driver-detail">
+        <router-link to="/driver-detail/0">
           <Button :callBack="pNew" :properties="btnNew" />
         </router-link>
         <Button :callBack="pRefresh" :properties="btnRefresh" />
@@ -35,24 +35,28 @@
                   :headers="itemDataTable.headers"
                   :items="itemDataTable.data"
                   :search="search"
+                  :height="tableHeight"
                   multi-sort
                   fixed-header
-                  :height="tableHeight"
+                  dense
                 >
-                  <template v-slot:item.status="{ item }">
+                  <template v-slot:item.Status="{ item }">
                     <v-chip
                       class="status-chip ma-2"
-                      :color="pSetColor(item.status)"
+                      :color="pSetColor(item.Status)"
                       dark
                     >
-                      {{ item.status }}
+                      {{ item.Status }}
                     </v-chip>
                   </template>
 
                   <template v-slot:item.action="{ item }">
-                    <v-btn icon @click="pView(item.id)">
+                    <router-link :to="'/driver-detail/' + item.id" >
+                      <v-btn icon @click="pView(item.id)">
                       <v-icon small color="#304457">fas fa-edit</v-icon>
                     </v-btn>
+                    </router-link>
+                    
                   </template>
                 </v-data-table>
               </template>
@@ -63,7 +67,8 @@
     </v-container>
 
     <Snackbar v-bind:properties="snackbar" />
-<!-- 
+
+    <!-- 
     <v-dialog v-model="dialog" persistent scrollable>
       <v-card>
         <v-card-title class="headline blue-grey lighten-5">
@@ -365,12 +370,6 @@ export default {
     return {
       title: "Driver",
       // dialog: false,
-      buttons: [
-        {
-          id: 1,
-          properties: { icon: "refresh", text: "Refresh", color: "primary" },
-        },
-      ],
       snackbar: {
         isActive: false,
         text: "",
@@ -381,386 +380,232 @@ export default {
         text: "New",
         color: "primary",
       },
-      btnDetail: {
-        icon: "mode_edit",
-        text: "Edit",
-        color: "primary",
-      },
       btnRefresh: {
         icon: "refresh",
         text: "Refresh",
         color: "primary",
       },
-      btnSave: {
-        icon: "done",
-        text: "Save",
-        color: "primary",
-      },
-      btnClose: {
-        icon: "close",
-        text: "Close",
-        color: "normal",
-        outlined: true,
-      },
       search: "",
-      tabItems: ["Information", "Image"],
-      tab: null,
       itemDataTable: {
         headers: [
-          { text: "#", value: "action", align: "center", sortable: false },
-          {
-            text: "DESSERT (100G SERVING)",
-            value: "name",
-          },
-          { text: "CALORIES", value: "calories" },
-          { text: "FAT (G)", value: "fat" },
-          { text: "CARBS (G)", value: "carbs" },
-          { text: "PROTEIN (G)", value: "protein" },
-          { text: "IRON (%)", value: "iron" },
-          { text: "STATUS", value: "status" },
+          { text: "#", value: "action", align: "center", sortable: false, width: "80" },
+
+          { text: "ID Card", value: "IDCard" },
+          { text: "Full Name", value: "FullName", width: "200" },
+          { text: "Place of Birth", value: "PlaceOfBirth", width: "150"},
+          { text: "Date of Birth ", value: "DateOfBirth", width: "150"},
+          { text: "Gender", value: "Gender", width: "120"},
+          { text: "Blood Type", value: "BloodType", width: "120", align: "center" },
+          { text: "Address", value: "Address", width: "500" },
+          { text: "Religion", value: "Religion" },
+          { text: "Marital Status", value: "MaritalStatus" },
+          { text: "Nationality", value: "Nationality", width: "120" },
+          { text: "Occupation", value: "Occupation", width: "180" },
+          { text: "Valid Thru", value: "ValidThru", width: "180" },
+          { text: "Card Type", value: "CardType", width: "120" },
+          { text: "Internal Remarks", value: "InternalRemarks", width: "200" },
+          { text: "Status", value: "Status", align: "center" },
         ],
         data: [
           {
             id: 1,
-            name: "Frozen Yogurt",
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: "1%",
-            status: "IN-ACTIVE",
+            IDCard: "1218022911980001",
+            FullName: "Budiman Aja",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/12/1998",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Single",
+            Nationality: "WNI",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "KTP",
+            InternalRemarks: "",
+            Status: "ACTIVE",
           },
           {
             id: 2,
-            name: "Ice cream sandwich",
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: "1%",
-            status: "BLACKLIST",
+            IDCard: "1218022911980002",
+            FullName: "Driver 1",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "KTP",
+            InternalRemarks: "",
+            Status: "IN-ACTIVE",
           },
           {
             id: 3,
-            name: "Eclair",
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: "7%",
-            status: "ACTIVE",
+            IDCard: "1218022911980003",
+            FullName: "Driver 2",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "31/03/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "KTP",
+            InternalRemarks: "",
+            Status: "ACTIVE",
           },
           {
             id: 4,
-            name: "Cupcake",
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: "8%",
-            status: "ACTIVE",
+            IDCard: "1218022911980004",
+            FullName: "Driver 3",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "31/01/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "SIM",
+            InternalRemarks: "",
+            Status: "ACTIVE",
           },
           {
             id: 5,
-            name: "Gingerbread",
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: "16%",
-            status: "ACTIVE",
+            IDCard: "1218022911980005",
+            FullName: "Driver 4",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "SIM",
+            InternalRemarks: "",
+            Status: "BLACKLIST",
           },
           {
             id: 6,
-            name: "Jelly bean",
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: "0%",
-            status: "ACTIVE",
+            IDCard: "1218022911980005",
+            FullName: "Driver 5",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "A",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Buddha",
+            MaritalStatus: "Single",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "SIM",
+            InternalRemarks: "",
+            Status: "ACTIVE",
           },
           {
             id: 7,
-            name: "Lollipop",
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: "2%",
-            status: "ACTIVE",
+            IDCard: "1218022911980007",
+            FullName: "Driver 7",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "O",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Hindu",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "KTP",
+            InternalRemarks: "",
+            Status: "IN-ACTIVE",
           },
           {
             id: 8,
-            name: "Honeycomb",
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: "45%",
-            status: "ACTIVE",
+            IDCard: "1218022911980008",
+            FullName: "Driver 8",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "AB",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Konghucu",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "KTP",
+            InternalRemarks: "",
+            Status: "ACTIVE",
           },
           {
             id: 9,
-            name: "Donut",
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: "22%",
-            status: "ACTIVE",
+            IDCard: "1218022911980009",
+            FullName: "Driver 9",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "SIM",
+            InternalRemarks: "",
+            Status: "ACTIVE",
           },
           {
             id: 10,
-            name: "KitKat",
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: "6%",
-            status: "ACTIVE",
+            IDCard: "1218022911980010",
+            FullName: "Driver 9",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "SIM",
+            InternalRemarks: "",
+            Status: "BLACKLIST",
           },
-
           {
             id: 11,
-            name: "Frozen Yogurt",
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: "1%",
-            status: "IN-ACTIVE",
-          },
-          {
-            id: 12,
-            name: "Ice cream sandwich",
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: "1%",
-            status: "BLACKLIST",
-          },
-          {
-            id: 13,
-            name: "Eclair",
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: "7%",
-            status: "ACTIVE",
-          },
-          {
-            id: 14,
-            name: "Cupcake",
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: "8%",
-            status: "ACTIVE",
-          },
-          {
-            id: 15,
-            name: "Gingerbread",
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: "16%",
-            status: "ACTIVE",
-          },
-          {
-            id: 16,
-            name: "Jelly bean",
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: "0%",
-            status: "ACTIVE",
-          },
-          {
-            id: 17,
-            name: "Lollipop",
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: "2%",
-            status: "ACTIVE",
-          },
-          {
-            id: 18,
-            name: "Honeycomb",
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: "45%",
-            status: "ACTIVE",
-          },
-          {
-            id: 19,
-            name: "Donut",
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: "22%",
-            status: "ACTIVE",
-          },
-          {
-            id: 20,
-            name: "KitKat",
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: "6%",
-            status: "ACTIVE",
+            IDCard: "1218022911980011",
+            FullName: "Driver 10",
+            PlaceOfBirth: "Medan",
+            DateOfBirth: "01/03/1988",
+            Gender: "Male",
+            BloodType: "-",
+            Address: "Jl. Abcd No. 1A, Sitirejo I, Medan Kota",
+            Religion: "Islam",
+            MaritalStatus: "Married",
+            Nationality: "WNA",
+            Occupation: "General Employees",
+            ValidThru: "No Expired",
+            CardType: "SIM",
+            InternalRemarks: "",
+            Status: "BLACKLIST",
           },
         ],
-      },
-      itemsComLocDivSubDivSubSivID: [
-        { id: 0, name: "Musim Mas" },
-        { id: 1, name: "Sukajadi Sawitmekar" },
-      ],
-      itemsGender: [
-        { id: 1, name: "Male" },
-        { id: 2, name: "Female" },
-      ],
-      itemsBloodType: [
-        { id: 1, name: "-" },
-        { id: 2, name: "A" },
-        { id: 3, name: "B" },
-        { id: 4, name: "O" },
-        { id: 5, name: "AB" },
-      ],
-      itemsReligion: [
-        { id: 1, name: "Islam" },
-        { id: 2, name: "Buddha" },
-        { id: 3, name: "Kristen" },
-        { id: 4, name: "Hindu" },
-        { id: 5, name: "Konghuchu" },
-      ],
-      itemsMaritalStatus: [
-        { id: 1, name: "Single" },
-        { id: 2, name: "Married" },
-      ],
-      itemsNationality: [
-        { id: 1, name: "WNI" },
-        { id: 2, name: "WNA" },
-      ],
-      itemsCardType: [
-        { id: 1, name: "KTP" },
-        { id: 2, name: "SIM" },
-      ],
-      itemsStatus: [
-        { id: 0, name: "ACTIVE" },
-        { id: 1, name: "IN-ACTIVE" },
-        { id: 2, name: "BLACKLIST" },
-      ],
-      driver: {
-        isValid: true,
-        selectedComLocDivSubDivSubSivID: { id: 1, name: "Sukajadi Sawitmekar" },
-        idCard: "",
-        idCardPlaceHolder: "ID card driver",
-        idCardLabel: "ID Card",
-        idCardRules: [
-          (v) => !!v || "ID Card is required!",
-          (v) => (v && v.length == 16) || "ID Card must be equal 16 characters",
-        ],
-        fullName: {
-          value: "",
-          placeHolder: "Full name driver",
-          label: "Full Name",
-          rules: [(v) => !!v || "Full name is required!"],
-        },
-        placeOfBirth: {
-          value: "",
-          placeHolder: "Place of birth driver",
-          label: "Place of Birth",
-          rules: [(v) => !!v || "Place of birth is required!"],
-        },
-
-        birthDate: {
-          value: "2021-01-31",
-          placeHolder: "Date of birth driver",
-          label: "Date of Birth",
-          rules: [(v) => !!v || "Birth of birth is required!"],
-        },
-
-        gender: {
-          value: { id: 1, name: "Male" },
-          label: "Gender",
-          rules: [(v) => !!v || "Gender is required!"],
-        },
-
-        bloodType: {
-          value: { id: 1, name: "-" },
-          label: "Blood Type",
-          rules: [(v) => !!v || "Blood type is required!"],
-        },
-
-        address: {
-          value: "",
-          placeHolder: "Address",
-          label: "Address",
-          rules: [(v) => !!v || "Address is required!"],
-        },
-
-        religion: {
-          value: { id: 1, name: "Islam" },
-          label: "Religion",
-          rules: [(v) => !!v || "Religion is required!"],
-        },
-
-        maritalStatus: {
-          value: { id: 1, name: "Single" },
-          label: "Marital Status",
-          rules: [(v) => !!v || "Marital status is required!"],
-        },
-
-        nationality: {
-          value: { id: 1, name: "WNI" },
-          label: "Nationality",
-          rules: [(v) => !!v || "Nationality is required!"],
-        },
-
-        occuption: {
-          value: "",
-          placeHolder: "Occuption driver",
-          label: "Occuption",
-          rules: [(v) => !!v || "Occuption is required!"],
-        },
-
-        validThru: {
-          value: "",
-          placeHolder: "Valid thru",
-          label: "Valid Thru",
-          rules: [(v) => !!v || "Valid thru is required!"],
-        },
-
-        cardTypeID: {
-          value: { id: 1, name: "KTP" },
-          label: "Card Type",
-          rules: [(v) => !!v || "Card type is required!"],
-        },
-
-        statusID: {
-          value: { id: 0, name: "ACTIVE" },
-          label: "Status",
-          rules: [(v) => !!v || "Status is required!"],
-        },
-
-        internalRemarks: {
-          value: "",
-          placeHolder: "Internal remarks",
-          label: "Internal Remarks",
-          rules: [(v) => !!v || "Internal remarks is required!"],
-        },
       },
     };
   },

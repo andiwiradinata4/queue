@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <div id="btn-driver" class="d-flex flex-row btn-header">
-      <div v-if="id == null" class="list-title">
+      <div v-if="id == 0" class="list-title">
         {{ title }}
       </div>
-      <div v-else class="list-title">View Driver [ ID : {{ id }} ]</div>
+      <div v-else class="list-title">View Queue Position [ ID : {{ id }} ]</div>
 
       <v-spacer></v-spacer>
     </div>
@@ -15,13 +15,16 @@
         <v-col cols="12">
           <template>
             <v-card>
-              <v-card-title class="headline blue-grey lighten-5">
-                <v-tabs v-model="tab" fixed-tabs background-color="transparent">
-                  <v-tabs-slider></v-tabs-slider>
-                  <v-tab href="#information" class="primary--text">
-                    Information
-                  </v-tab>
-                  <v-tab href="#image" class="primary--text"> Image </v-tab>
+              <v-card-title class="headline">
+                <v-tabs
+                  v-model="tab"
+                  fixed-tabs
+                  background-color="teal darken-3"
+                  dark
+                >
+                  <v-tabs-slider color="yellow accent-4"></v-tabs-slider>
+                  <v-tab href="#information"> Information </v-tab>
+                  <v-tab href="#image"> Image </v-tab>
                 </v-tabs>
               </v-card-title>
 
@@ -245,12 +248,13 @@
                         <v-row class="mb-0 mt-2" justify="center">
                           <v-col cols="4">
                             <v-img
-                              lazy-src="https://picsum.photos/id/11/10/6"
+                              lazy-src=""
                               aspect-ratio="1.7"
                               contain
                               max-height="600"
                               max-width="300"
-                              src="https://picsum.photos/id/11/500/300"
+                              src=""
+                              alt="Card Image"
                             ></v-img>
                             <v-file-input
                               show-size
@@ -264,12 +268,13 @@
 
                           <v-col cols="4">
                             <v-img
-                              lazy-src="https://picsum.photos/id/11/10/6"
+                              lazy-src=""
                               aspect-ratio="1.7"
                               contain
                               max-height="600"
                               max-width="300"
-                              src="https://picsum.photos/id/11/500/300"
+                              src=""
+                              alt="Face Recognation"
                             ></v-img>
                             <v-file-input
                               show-size
@@ -282,12 +287,13 @@
 
                           <v-col cols="4">
                             <v-img
-                              lazy-src="https://picsum.photos/id/11/10/6"
+                              lazy-src=""
                               aspect-ratio="1.7"
                               contain
                               max-height="600"
                               max-width="300"
-                              src="https://picsum.photos/id/11/500/300"
+                              src=""
+                              alt="Finger Print"
                             ></v-img>
                             <v-file-input
                               show-size
@@ -327,7 +333,7 @@ import Button from "@/components/Button.vue";
 import Snackbar from "@/components/Snackbar.vue";
 
 export default {
-  name: "DriverDetail",
+  name: "QueuePositionDetail",
   components: {
     Button,
     Snackbar,
@@ -335,8 +341,7 @@ export default {
   props: { id: String },
   data() {
     return {
-      title: "Create New Driver",
-      dialog: false,
+      title: "Create Queue Position",
       snackbar: {
         isActive: false,
         text: "",
@@ -351,7 +356,7 @@ export default {
         icon: "arrow_back",
         text: "Back",
         color: "primary",
-        // outlined: true,
+        outlined: true,
       },
       tab: null,
 
@@ -496,7 +501,7 @@ export default {
 
         cardImage: {
           id: 1,
-          value: '',
+          value: "",
           preview: [],
           errorImage: "url of an image to use to indicate an error",
         },
@@ -525,11 +530,3 @@ export default {
   computed: {},
 };
 </script>
-
-<style scoped>
-.v-chip.v-size--default {
-  width: 100px;
-  display: inline-block !important;
-  text-align: center;
-}
-</style>

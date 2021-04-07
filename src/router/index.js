@@ -2,11 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Home from '../views/Home.vue'
-import Driver from '../views/Drivers/ListDriver.vue'
-import Queue from '../views/Queue/ListQueue.vue'
-import Template from '../views/Templates/ListTemplate.vue'
 
-import DriverDetail from '../views/Drivers/DriverDetail.vue'
+// Master
+import Driver from '../views/Master/Drivers/ListDriver.vue'
+import DriverDetail from '../views/Master/Drivers/DriverDetail.vue'
+import QueuePosition from '../views/Master/QueuePosition/ListQueuePosition.vue'
+import QueuePositionDetail from '../views/Master/QueuePosition/QueuePositionDetail.vue'
+import Template from '../views/Master/Templates/ListTemplate.vue'
+
+// Transaction
+import Queue from '../views/Transaction/Queue/ListQueue.vue'
+
 
 Vue.use(VueRouter)
 
@@ -21,26 +27,44 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // Master
   {
     path: '/driver',
     name: 'Driver',
     component: Driver
   },
   {
-    path: '/driver-detail',
+    path: '/driver-detail/:id',
+    props: true,
     name: 'DriverDetail',
     component: DriverDetail
   },
   {
-    path: '/queue',
-    name: 'Queue',
-    component: Queue
+    path: '/queue-position',
+    name: 'QueuePosition',
+    component: QueuePosition
+  },
+  {
+    path: '/queue-position-detail/:id',
+    props: true,
+    name: 'QueuePositionDetail',
+    component: QueuePositionDetail
   },
   {
     path: '/template',
     name: 'Template',
     component: Template
   },
+  // Transaction
+  {
+    path: '/queue',
+    name: 'Queue',
+    component: Queue
+  },
+
+
+
+
   {
     path: '/about',
     name: 'About',
