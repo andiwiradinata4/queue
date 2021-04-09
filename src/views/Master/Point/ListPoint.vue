@@ -1,5 +1,5 @@
 <template>
-  <v-app id="list-queue">
+  <v-app id="list-point">
     <div id="btn-queue" class="d-flex flex-row btn-header">
       <div class="list-title">
         {{ title }}
@@ -7,8 +7,8 @@
 
       <v-spacer></v-spacer>
 
-      <div id="btn-queue-position">
-        <router-link to="/queue-position-detail/0">
+      <div id="btn-point">
+        <router-link to="/point-detail/0">
           <Button :callBack="pNew" :properties="btnNew" />
         </router-link>
         <Button :callBack="pRefresh" :properties="btnRefresh" />
@@ -68,15 +68,22 @@
 
 <script>
 import Button from "@/components/Button.vue";
+import Snackbar from "@/components/Snackbar.vue";
 
 export default {
-  name: "ListQueuePosition",
+  name: "ListPoint",
   components: {
     Button,
+    Snackbar,
   },
   data() {
     return {
-      title: "Queue Position",
+      title: "Point",
+      snackbar: {
+        isActive: false,
+        text: "",
+        color: "primary",
+      },
       btnNew: {
         icon: "add_circle_outline",
         text: "New",

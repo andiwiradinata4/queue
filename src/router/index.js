@@ -6,8 +6,12 @@ import Home from '../views/Home.vue'
 // Master
 import Driver from '../views/Master/Drivers/ListDriver.vue'
 import DriverDetail from '../views/Master/Drivers/DriverDetail.vue'
-import QueuePosition from '../views/Master/QueuePosition/ListQueuePosition.vue'
-import QueuePositionDetail from '../views/Master/QueuePosition/QueuePositionDetail.vue'
+import Point from '../views/Master/Point/ListPoint.vue'
+import PointDetail from '../views/Master/Point/PointDetail.vue'
+import PointSub from '../views/Master/PointSub/ListPointSub.vue'
+import PointSubDetail from '../views/Master/PointSub/PointSubDetail.vue'
+
+
 import Template from '../views/Master/Templates/ListTemplate.vue'
 
 // Transaction
@@ -40,15 +44,26 @@ const routes = [
     component: DriverDetail
   },
   {
-    path: '/queue-position',
-    name: 'QueuePosition',
-    component: QueuePosition
+    path: '/point',
+    name: 'Point',
+    component: Point
   },
   {
-    path: '/queue-position-detail/:id',
+    path: '/point-detail/:id',
     props: true,
-    name: 'QueuePositionDetail',
-    component: QueuePositionDetail
+    name: 'PointDetail',
+    component: PointDetail
+  },
+  {
+    path: '/pointsub',
+    name: 'PointSub',
+    component: PointSub
+  },
+  {
+    path: '/pointsub-detail/:id',
+    props: true,
+    name: 'PointSubDetail',
+    component: PointSubDetail
   },
   {
     path: '/template',

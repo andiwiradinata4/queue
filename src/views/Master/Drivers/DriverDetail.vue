@@ -16,11 +16,14 @@
           <template>
             <v-card>
               <v-card-title class="headline">
-                <v-tabs v-model="tab" fixed-tabs background-color="teal darken-3" dark>
+                <v-tabs
+                  v-model="tab"
+                  fixed-tabs
+                  background-color="teal darken-3"
+                  dark
+                >
                   <v-tabs-slider color="yellow accent-4"></v-tabs-slider>
-                  <v-tab href="#information">
-                    Information
-                  </v-tab>
+                  <v-tab href="#information"> Information </v-tab>
                   <v-tab href="#image"> Image </v-tab>
                 </v-tabs>
               </v-card-title>
@@ -28,29 +31,29 @@
               <v-tabs-items v-model="tab">
                 <v-tab-item value="information">
                   <v-card-text>
-                    <v-form v-model="driver.isValid" lazy-validation>
+                    <v-form v-model="field.isValid" lazy-validation>
                       <v-container fluid>
                         <v-row class="mb-0 mt-2">
                           <v-col cols="4">
                             <v-text-field
-                              v-model="driver.idCard"
+                              v-model="field.idCard.value"
                               :counter="16"
-                              :rules="driver.idCardRules"
-                              :placeholder="driver.idCardPlaceHolder"
+                              :rules="field.idCard.rules"
+                              :placeholder="field.idCard.placeHolder"
                               outlined
                               clearable
-                              :label="driver.idCardLabel"
+                              :label="field.idCard.label"
                               required
                             ></v-text-field>
                           </v-col>
                           <v-col cols="8">
                             <v-text-field
-                              v-model="driver.fullName.value"
-                              :rules="driver.fullName.rules"
-                              :placeholder="driver.fullName.placeHolder"
+                              v-model="field.fullName.value"
+                              :rules="field.fullName.rules"
+                              :placeholder="field.fullName.placeHolder"
                               outlined
                               clearable
-                              :label="driver.fullName.label"
+                              :label="field.fullName.label"
                               required
                             ></v-text-field>
                           </v-col>
@@ -59,34 +62,34 @@
                         <v-row class="mt-0">
                           <v-col cols="4">
                             <v-text-field
-                              v-model="driver.placeOfBirth.value"
-                              :rules="driver.placeOfBirth.rules"
-                              :placeholder="driver.placeOfBirth.placeHolder"
+                              v-model="field.placeOfBirth.value"
+                              :rules="field.placeOfBirth.rules"
+                              :placeholder="field.placeOfBirth.placeHolder"
                               outlined
                               clearable
-                              :label="driver.placeOfBirth.label"
+                              :label="field.placeOfBirth.label"
                               required
                             ></v-text-field>
                           </v-col>
                           <v-col cols="4">
                             <v-text-field
-                              v-model="driver.birthDate.value"
-                              :rules="driver.birthDate.rules"
-                              :placeholder="driver.birthDate.placeHolder"
+                              v-model="field.birthDate.value"
+                              :rules="field.birthDate.rules"
+                              :placeholder="field.birthDate.placeHolder"
                               outlined
                               clearable
-                              :label="driver.birthDate.label"
+                              :label="field.birthDate.label"
                               required
                             ></v-text-field>
                           </v-col>
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.gender.value"
+                              v-model="field.gender.value"
                               :items="itemsGender"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.gender.rules"
-                              :label="driver.gender.label"
+                              :rules="field.gender.rules"
+                              :label="field.gender.label"
                               outlined
                               clearable
                               required
@@ -94,12 +97,12 @@
                           </v-col>
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.bloodType.value"
+                              v-model="field.bloodType.value"
                               :items="itemsBloodType"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.bloodType.rules"
-                              :label="driver.bloodType.label"
+                              :rules="field.bloodType.rules"
+                              :label="field.bloodType.label"
                               outlined
                               clearable
                               required
@@ -110,12 +113,12 @@
                         <v-row class="mt-0">
                           <v-col cols="4">
                             <v-textarea
-                              v-model="driver.address.value"
-                              :rules="driver.address.rules"
-                              :placeholder="driver.address.placeHolder"
+                              v-model="field.address.value"
+                              :rules="field.address.rules"
+                              :placeholder="field.address.placeHolder"
                               outlined
                               clearable
-                              :label="driver.address.label"
+                              :label="field.address.label"
                               counter="250"
                               rows="1"
                               auto-grow
@@ -125,12 +128,12 @@
 
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.religion.value"
+                              v-model="field.religion.value"
                               :items="itemsReligion"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.religion.rules"
-                              :label="driver.religion.label"
+                              :rules="field.religion.rules"
+                              :label="field.religion.label"
                               outlined
                               clearable
                               required
@@ -139,12 +142,12 @@
 
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.maritalStatus.value"
+                              v-model="field.maritalStatus.value"
                               :items="itemsMaritalStatus"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.maritalStatus.rules"
-                              :label="driver.maritalStatus.label"
+                              :rules="field.maritalStatus.rules"
+                              :label="field.maritalStatus.label"
                               outlined
                               clearable
                               required
@@ -153,12 +156,12 @@
 
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.nationality.value"
+                              v-model="field.nationality.value"
                               :items="itemsNationality"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.nationality.rules"
-                              :label="driver.nationality.label"
+                              :rules="field.nationality.rules"
+                              :label="field.nationality.label"
                               outlined
                               clearable
                               required
@@ -167,12 +170,12 @@
 
                           <v-col cols="2">
                             <v-text-field
-                              v-model="driver.occuption.value"
-                              :rules="driver.occuption.rules"
-                              :placeholder="driver.occuption.placeHolder"
+                              v-model="field.occuption.value"
+                              :rules="field.occuption.rules"
+                              :placeholder="field.occuption.placeHolder"
                               outlined
                               clearable
-                              :label="driver.occuption.label"
+                              :label="field.occuption.label"
                               required
                             ></v-text-field>
                           </v-col>
@@ -181,24 +184,24 @@
                         <v-row class="mt-0">
                           <v-col cols="2">
                             <v-text-field
-                              v-model="driver.validThru.value"
-                              :rules="driver.validThru.rules"
-                              :placeholder="driver.validThru.placeHolder"
+                              v-model="field.validThru.value"
+                              :rules="field.validThru.rules"
+                              :placeholder="field.validThru.placeHolder"
                               outlined
                               clearable
-                              :label="driver.validThru.label"
+                              :label="field.validThru.label"
                               required
                             ></v-text-field>
                           </v-col>
 
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.cardTypeID.value"
+                              v-model="field.cardTypeID.value"
                               :items="itemsCardType"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.cardTypeID.rules"
-                              :label="driver.cardTypeID.label"
+                              :rules="field.cardTypeID.rules"
+                              :label="field.cardTypeID.label"
                               outlined
                               clearable
                               required
@@ -207,12 +210,12 @@
 
                           <v-col cols="2">
                             <v-select
-                              v-model="driver.statusID.value"
+                              v-model="field.statusID.value"
                               :items="itemsStatus"
                               item-text="name"
                               item-value="id"
-                              :rules="driver.statusID.rules"
-                              :label="driver.statusID.label"
+                              :rules="field.statusID.rules"
+                              :label="field.statusID.label"
                               outlined
                               clearable
                               required
@@ -221,12 +224,12 @@
 
                           <v-col cols="6">
                             <v-textarea
-                              v-model="driver.internalRemarks.value"
-                              :rules="driver.internalRemarks.rules"
-                              :placeholder="driver.internalRemarks.placeHolder"
+                              v-model="field.internalRemarks.value"
+                              :rules="field.internalRemarks.rules"
+                              :placeholder="field.internalRemarks.placeHolder"
                               outlined
                               clearable
-                              :label="driver.internalRemarks.label"
+                              :label="field.internalRemarks.label"
                               counter="250"
                               rows="1"
                               auto-grow
@@ -240,64 +243,99 @@
                 </v-tab-item>
                 <v-tab-item value="image">
                   <v-card-text scrollable>
-                    <v-form v-model="driver.isValid" lazy-validation>
+                    <v-form v-model="field.isValid" lazy-validation>
                       <v-container fluid>
                         <v-row class="mb-0 mt-2" justify="center">
                           <v-col cols="4">
-                            <v-img
-                              lazy-src=""
-                              aspect-ratio="1.7"
-                              contain
-                              max-height="600"
-                              max-width="300"
-                              src=""
-                              alt="Card Image"
-                            ></v-img>
+                            <div v-if="field.cardImage.path == ''">
+                              <v-card class="mx-auto" height="400" width="auto">
+                                <v-container fluid>
+                                  <div class="cardtype-text">Card Image</div>
+                                </v-container>
+                              </v-card>
+                            </div>
+                            <div v-else>
+                              <v-img
+                                :lazy-src="field.cardImage.path"
+                                aspect-ratio="1.7"
+                                contain
+                                height="400"
+                                width="auto"
+                                :src="field.cardImage.path"
+                                alt="Card Image"
+                              ></v-img>
+                            </div>
+
                             <v-file-input
                               show-size
                               counter
                               prepend-icon="image"
                               label="Card image"
                               accept="image/*"
-                              @change="getCardImage"
+                              @change="chooseCardImage"
                             ></v-file-input>
                           </v-col>
 
                           <v-col cols="4">
-                            <v-img
-                              lazy-src=""
-                              aspect-ratio="1.7"
-                              contain
-                              max-height="600"
-                              max-width="300"
-                              src=""
-                              alt="Face Recognation"
-                            ></v-img>
+                            <div v-if="field.faceRecognationImage.path == ''">
+                              <v-card class="mx-auto" height="400" width="auto">
+                                <v-container fluid>
+                                  <div class="facerecognation-text">
+                                    Face Recognation Image
+                                  </div>
+                                </v-container>
+                              </v-card>
+                            </div>
+                            <div v-else>
+                              <v-img
+                                :lazy-src="field.faceRecognationImage.path"
+                                aspect-ratio="1.7"
+                                contain
+                                height="400"
+                                width="auto"
+                                :src="field.faceRecognationImage.path"
+                                alt="Face Recognation"
+                              ></v-img>
+                            </div>
                             <v-file-input
                               show-size
                               counter
                               prepend-icon="face"
                               label="Face recognation"
                               accept="image/*"
+                              @change="chooseFaceRecognationImage"
                             ></v-file-input>
                           </v-col>
 
                           <v-col cols="4">
-                            <v-img
-                              lazy-src=""
-                              aspect-ratio="1.7"
-                              contain
-                              max-height="600"
-                              max-width="300"
-                              src=""
-                              alt="Finger Print"
-                            ></v-img>
+                            <div v-if="field.fingerPrintImage.path == ''">
+                              <v-card class="mx-auto" height="400" width="auto">
+                                <v-container fluid>
+                                  <div class="fingerprint-text">
+                                    Finger Print Image
+                                  </div>
+                                </v-container>
+                              </v-card>
+                            </div>
+                            <div v-else>
+                              <v-img
+                                :lazy-src="field.fingerPrintImage.path"
+                                aspect-ratio="1.7"
+                                contain
+                                height="400"
+                                width="auto"
+                                :src="field.fingerPrintImage.path"
+                                alt="Finger Print"
+                              ></v-img>
+                            </div>
+
                             <v-file-input
                               show-size
                               counter
                               prepend-icon="fingerprint"
                               label="Finger Print"
                               accept="image/*"
+                              @change="chooseFingerPrintImage"
                             ></v-file-input>
                           </v-col>
                         </v-row>
@@ -396,16 +434,18 @@ export default {
         { id: 1, name: "IN-ACTIVE" },
         { id: 2, name: "BLACKLIST" },
       ],
-      driver: {
+      field: {
         isValid: true,
-        selectedComLocDivSubDivSubSivID: { id: 1, name: "Sukajadi Sawitmekar" },
-        idCard: "",
-        idCardPlaceHolder: "ID card driver",
-        idCardLabel: "ID Card",
-        idCardRules: [
-          (v) => !!v || "ID Card is required!",
-          (v) => (v && v.length == 16) || "ID Card must be equal 16 characters",
-        ],
+        idCard: {
+          value: "",
+          placeHolder: "ID card driver",
+          label: "ID Card",
+          rules: [
+            (v) => !!v || "ID Card is required!",
+            (v) =>
+              (v && v.length == 16) || "ID Card must be equal 16 characters",
+          ],
+        },
         fullName: {
           value: "",
           placeHolder: "Full name driver",
@@ -498,30 +538,58 @@ export default {
 
         cardImage: {
           id: 1,
-          value: '',
-          preview: [],
+          path: "",
+          value: null,
           errorImage: "url of an image to use to indicate an error",
         },
 
         faceRecognationImage: {
           id: 2,
-          value: [],
+          path: "",
+          value: null,
+          errorImage: "url of an image to use to indicate an error",
         },
 
         fingerPrintImage: {
           id: 3,
-          value: [],
+          path: "",
+          value: null,
+          errorImage: "url of an image to use to indicate an error",
         },
       },
     };
   },
   methods: {
     pSave() {
-      console.log(this.driver.cardImage.value);
+      console.log(this.field.cardImage.value);
     },
     pBack() {},
-    getCardImage(files) {
-      console.log(files);
+    chooseCardImage(e) {
+      if (e == null) {
+        this.field.cardImage.path = "";
+        this.field.cardImage.value = null;
+      } else {
+        this.field.cardImage.path = URL.createObjectURL(e);
+        this.field.cardImage.value = e;
+      }
+    },
+    chooseFaceRecognationImage(e) {
+      if (e == null) {
+        this.field.faceRecognationImage.path = "";
+        this.field.faceRecognationImage.value = null;
+      } else {
+        this.field.faceRecognationImage.path = URL.createObjectURL(e);
+        this.field.faceRecognationImage.value = e;
+      }
+    },
+    chooseFingerPrintImage(e) {
+      if (e == null) {
+        this.field.fingerPrintImage.path = "";
+        this.field.fingerPrintImage.value = null;
+      } else {
+        this.field.fingerPrintImage.path = URL.createObjectURL(e);
+        this.field.fingerPrintImage.value = e;
+      }
     },
   },
   computed: {},
@@ -529,18 +597,40 @@ export default {
 </script>
 
 <style scoped>
- .v-card__title {
-   padding: 0px;
- }
+.v-card__title {
+  padding: 0px;
+}
 .v-chip.v-size--default {
   width: 100px;
   display: inline-block !important;
   text-align: center;
 }
-
 .container {
   padding-top: 0;
 }
 
-
+.cardtype-text {
+  font-size: 1.4rem;
+  padding-top: 170px;
+  padding-left: 75px;
+  padding-right: 70px;
+  color: #566b80;
+  text-align: center;
+}
+.facerecognation-text {
+  font-size: 1.4rem;
+  padding-top: 170px;
+  padding-left: 75px;
+  padding-right: 70px;
+  color: #566b80;
+  text-align: center;
+}
+.fingerprint-text {
+  font-size: 1.4rem;
+  padding-top: 170px;
+  padding-left: 75px;
+  padding-right: 70px;
+  color: #566b80;
+  text-align: center;
+}
 </style>

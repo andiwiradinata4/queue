@@ -97,12 +97,18 @@ export default {
       { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
       {
         id: 2,
-        title: "Queue Position",
+        title: "Point",
         icon: "place",
-        route: "/queue-position",
+        route: "/point",
       },
       {
         id: 3,
+        title: "Point Sub",
+        icon: "place",
+        route: "/pointsub",
+      },
+      {
+        id: 4,
         title: "Template",
         icon: "table_chart",
         route: "/template",
