@@ -1,25 +1,44 @@
 <template>
   <v-app>
-    <div id="btn-driver" class="d-flex flex-row btn-header">
-      <div v-if="id == 0" class="list-title">
-        {{ title }}
-      </div>
-      <div v-else class="list-title">View Point Sub [ ID : {{ id }} ]</div>
-
-      <v-spacer></v-spacer>
-    </div>
-    <v-divider></v-divider>
-
     <v-container>
-      <v-row class="mt-0">
-        <v-col cols="12">
+      <div v-if="id == 0" class="list-title ml-5 pb-5 mt-2">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-5 mt-2">View Point Sub [ ID : {{ id }} ]</div>
+
+      <v-row class="pt-0">
+        <v-col cols="12" class="pt-0">
           <template>
             <v-card>
               <v-card-text>
                 <v-form v-model="field.isValid" lazy-validation>
                   <v-container fluid>
                     <v-row class="mb-0 mt-0">
-                      <v-col cols="12">
+                      <v-col cols="6">
+                        <v-select
+                          v-model="field.company.value"
+                          :items="itemsCompany"
+                          item-text="name"
+                          item-value="id"
+                          :rules="field.company.rules"
+                          :label="field.company.label"
+                          outlined
+                          required
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-select
+                          v-model="field.location.value"
+                          :items="itemsLocation"
+                          item-text="name"
+                          item-value="id"
+                          :rules="field.location.rules"
+                          :label="field.location.label"
+                          outlined
+                          required
+                        ></v-select>
+                      </v-col>
+                    </v-row>
+                    <v-row class="mb-0 mt-0">
+                      <v-col cols="12" class="pt-0">
                         <v-select
                           v-model="field.point.value"
                           :items="itemsPoint"
@@ -28,13 +47,12 @@
                           :rules="field.point.rules"
                           :label="field.point.label"
                           outlined
-                          clearable
                           required
                         ></v-select>
                       </v-col>
                     </v-row>
                     <v-row class="mb-0 mt-0">
-                      <v-col cols="12">
+                      <v-col cols="12" class="pt-0">
                         <v-textarea
                           v-model="field.pointSubDescription.value"
                           :rules="field.pointSubDescription.rules"
@@ -42,7 +60,6 @@
                             field.pointSubDescription.placeHolder
                           "
                           outlined
-                          clearable
                           :label="field.pointSubDescription.label"
                           counter="250"
                           rows="5"
@@ -51,7 +68,19 @@
                       </v-col>
                     </v-row>
                     <v-row class="mt-0">
-                      <v-col cols="3">
+                      <v-col cols="8" class="pt-0">
+                        <v-textarea
+                          v-model="field.Remarks.value"
+                          :rules="field.Remarks.rules"
+                          :placeholder="field.Remarks.placeHolder"
+                          outlined
+                          :label="field.Remarks.label"
+                          counter="250"
+                          rows="1"
+                          auto-grow
+                        ></v-textarea>
+                      </v-col>
+                      <v-col cols="3" class="pt-0">
                         <v-select
                           v-model="field.statusID.value"
                           :items="itemsStatus"
@@ -60,7 +89,6 @@
                           :rules="field.statusID.rules"
                           :label="field.statusID.label"
                           outlined
-                          clearable
                           required
                         ></v-select>
                       </v-col>
@@ -94,7 +122,7 @@ export default {
   name: "PointDetail",
   components: {
     Button,
-    Snackbar,
+    Snackbar
   },
   props: { id: String },
   data() {
@@ -103,65 +131,102 @@ export default {
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary",
+        color: "primary"
       },
       btnSave: {
         icon: "done",
         text: "Save",
-        color: "primary",
+        color: "primary"
       },
       btnBack: {
         icon: "arrow_back",
         text: "Back",
         color: "primary",
-        outlined: true,
+        outlined: true
       },
       itemsPoint: [
         {
           id: 1,
-          name: "Park Area",
+          name: "Park Area"
         },
         {
           id: 2,
-          name: "Security",
+          name: "Security"
         },
         {
           id: 3,
-          name: "Weighbridge",
+          name: "Weighbridge"
         },
         {
           id: 4,
-          name: "Laboratory",
+          name: "Laboratory"
         },
         {
           id: 5,
-          name: "Unloading Station",
-        },
+          name: "Unloading Station"
+        }
       ],
       itemsStatus: [
         { id: 0, name: "ACTIVE" },
         { id: 1, name: "IN-ACTIVE" },
-        { id: 2, name: "BLACKLIST" },
+        { id: 2, name: "BLACKLIST" }
+      ],
+      itemsCompany: [
+        { id: "MM", name: "MUSIM MAS, PT" },
+        { id: "AGR", name: "AGROWIRATAMA, PT" },
+        { id: "GIN", name: "GUNTUNG IDAMANNUSA, PT." }
+      ],
+      itemsLocation: [
+        { id: "MDN-KIM1", name: "MEDAN KIM 1" },
+        { id: "MDN-KIM2", name: "MEDAN KIM 2" },
+        { id: "MDN-KIM3", name: "MEDAN KIM 3" }
       ],
       field: {
         isValid: true,
+        company: {
+          value: { id: "", name: "" },
+          placeHolder: "Company",
+          label: "Company",
+          rules: [v => !!v || "Company is required!"]
+        },
+        location: {
+          value: { id: "", name: "" },
+          placeHolder: "Location",
+          label: "Location",
+          rules: [v => !!v || "Location is required!"]
+        },
         point: {
           value: { id: 0, name: "" },
-          label: "Point Sub",
-          rules: [(v) => !!v || "Point sub is required!"],
+          label: "Point",
+          rules: [v => v.id != 0 || "Point is required!"]
         },
         pointSubDescription: {
           value: "",
           placeHolder: "Point Sub Description",
           label: "Point Sub Description",
-          rules: [(v) => !!v || "Point sub description is required!"],
+          rules: [
+            v => !!v || "Point sub description is required!",
+            v =>
+              v.length <= 250 ||
+              "Character of description must below or be equal of 250!"
+          ]
+        },
+        Remarks: {
+          value: "",
+          placeHolder: "Remarks",
+          label: "Remarks",
+          rules: [
+            v =>
+              v.length <= 250 ||
+              "Character of remarks must below or be equal of 250!"
+          ]
         },
         statusID: {
           value: { id: 0, name: "ACTIVE" },
           label: "Status",
-          rules: [(v) => !!v || "Status is required!"],
-        },
-      },
+          rules: [v => !!v || "Status is required!"]
+        }
+      }
     };
   },
   methods: {
@@ -169,8 +234,17 @@ export default {
       this.snackbar.isActive = true;
       this.snackbar.text = "Press save";
     },
-    pBack() {},
+    pBack() {
+      window.scrollTo(0, 0);
+    }
   },
-  computed: {},
+  computed: {}
 };
 </script>
+
+<style scoped>
+.container {
+  max-width: 100%;
+  padding: 0 !important;
+}
+</style>>

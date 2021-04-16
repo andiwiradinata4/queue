@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
-import Home from '../views/Home.vue'
 
 // Master
 import Driver from '../views/Master/Drivers/ListDriver.vue'
@@ -14,23 +13,37 @@ import PointSubDetail from '../views/Master/PointSub/PointSubDetail.vue'
 
 import Template from '../views/Master/Templates/ListTemplate.vue'
 
+// System
+import Login from '../views/System/Login/Login.vue';
+
 // Transaction
 import Queue from '../views/Transaction/Queue/ListQueue.vue'
+import QueueDetail from '../views/Transaction/Queue/QueueDetail.vue'
+
+// Testing
+import Testing from '../views/Testing.vue';
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path: '/',
+  //   redirect: {
+  //     name: "Login"
+  //   }
+  // },
+  {
+    path: '/testing',
+    name: 'Testing',
+    component: Testing
+  },
   {
     path: '/',
     name: 'Dashboard',
     component: Dashboard
   },
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home
-  },
+
   // Master
   {
     path: '/driver',
@@ -70,13 +83,26 @@ const routes = [
     name: 'Template',
     component: Template
   },
+
+  // System
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+
   // Transaction
   {
     path: '/queue',
     name: 'Queue',
     component: Queue
   },
-
+  {
+    path: '/queue-detail/:id',
+    props: true,
+    name: 'QueueDetail',
+    component: QueueDetail
+  },
 
 
 

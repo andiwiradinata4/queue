@@ -1,30 +1,18 @@
 <template>
   <v-app>
-    <div id="btn-driver" class="d-flex flex-row btn-header">
-      <div v-if="id == 0" class="list-title">
-        {{ title }}
-      </div>
-      <div v-else class="list-title">View Driver [ ID : {{ id }} ]</div>
-
-      <v-spacer></v-spacer>
-    </div>
-    <v-divider></v-divider>
-
     <v-container>
-      <v-row class="mt-0">
-        <v-col cols="12">
+      <div v-if="id == 0" class="list-title ml-5 pb-5 mt-2">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-5 mt-2">View Driver [ ID : {{ id }} ]</div>
+
+      <v-row class="pt-0">
+        <v-col cols="12" class="pt-0">
           <template>
             <v-card>
               <v-card-title class="headline">
-                <v-tabs
-                  v-model="tab"
-                  fixed-tabs
-                  background-color="teal darken-3"
-                  dark
-                >
-                  <v-tabs-slider color="yellow accent-4"></v-tabs-slider>
-                  <v-tab href="#information"> Information </v-tab>
-                  <v-tab href="#image"> Image </v-tab>
+                <v-tabs v-model="tab" left background-color="transparent">
+                  <v-tabs-slider color="teal darken-3"></v-tabs-slider>
+                  <v-tab href="#information">Information</v-tab>
+                  <v-tab href="#image">Image</v-tab>
                 </v-tabs>
               </v-card-title>
 
@@ -33,7 +21,7 @@
                   <v-card-text>
                     <v-form v-model="field.isValid" lazy-validation>
                       <v-container fluid>
-                        <v-row class="mb-0 mt-2">
+                        <v-row class="mb-0 mt-0">
                           <v-col cols="4">
                             <v-text-field
                               v-model="field.idCard.value"
@@ -41,7 +29,6 @@
                               :rules="field.idCard.rules"
                               :placeholder="field.idCard.placeHolder"
                               outlined
-                              clearable
                               :label="field.idCard.label"
                               required
                             ></v-text-field>
@@ -52,37 +39,36 @@
                               :rules="field.fullName.rules"
                               :placeholder="field.fullName.placeHolder"
                               outlined
-                              clearable
                               :label="field.fullName.label"
+                              counter="250"
                               required
                             ></v-text-field>
                           </v-col>
                         </v-row>
 
                         <v-row class="mt-0">
-                          <v-col cols="4">
+                          <v-col cols="4" class="pt-0">
                             <v-text-field
                               v-model="field.placeOfBirth.value"
                               :rules="field.placeOfBirth.rules"
                               :placeholder="field.placeOfBirth.placeHolder"
                               outlined
-                              clearable
                               :label="field.placeOfBirth.label"
+                              counter="20"
                               required
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="4">
+                          <v-col cols="4" class="pt-0">
                             <v-text-field
                               v-model="field.birthDate.value"
                               :rules="field.birthDate.rules"
                               :placeholder="field.birthDate.placeHolder"
                               outlined
-                              clearable
                               :label="field.birthDate.label"
                               required
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="2">
+                          <v-col cols="2" class="pt-0">
                             <v-select
                               v-model="field.gender.value"
                               :items="itemsGender"
@@ -91,11 +77,10 @@
                               :rules="field.gender.rules"
                               :label="field.gender.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
-                          <v-col cols="2">
+                          <v-col cols="2" class="pt-0">
                             <v-select
                               v-model="field.bloodType.value"
                               :items="itemsBloodType"
@@ -104,20 +89,18 @@
                               :rules="field.bloodType.rules"
                               :label="field.bloodType.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
                         </v-row>
 
                         <v-row class="mt-0">
-                          <v-col cols="4">
+                          <v-col cols="4" class="pt-0">
                             <v-textarea
                               v-model="field.address.value"
                               :rules="field.address.rules"
                               :placeholder="field.address.placeHolder"
                               outlined
-                              clearable
                               :label="field.address.label"
                               counter="250"
                               rows="1"
@@ -126,7 +109,7 @@
                             ></v-textarea>
                           </v-col>
 
-                          <v-col cols="2">
+                          <v-col cols="2" class="pt-0">
                             <v-select
                               v-model="field.religion.value"
                               :items="itemsReligion"
@@ -135,12 +118,11 @@
                               :rules="field.religion.rules"
                               :label="field.religion.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
 
-                          <v-col cols="2">
+                          <v-col cols="2" class="pt-0">
                             <v-select
                               v-model="field.maritalStatus.value"
                               :items="itemsMaritalStatus"
@@ -149,12 +131,11 @@
                               :rules="field.maritalStatus.rules"
                               :label="field.maritalStatus.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
 
-                          <v-col cols="2">
+                          <v-col cols="2" class="pt-0">
                             <v-select
                               v-model="field.nationality.value"
                               :items="itemsNationality"
@@ -163,38 +144,37 @@
                               :rules="field.nationality.rules"
                               :label="field.nationality.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
 
-                          <v-col cols="2">
+                          <v-col cols="2" class="pt-0">
                             <v-text-field
                               v-model="field.occuption.value"
                               :rules="field.occuption.rules"
                               :placeholder="field.occuption.placeHolder"
                               outlined
-                              clearable
                               :label="field.occuption.label"
+                              counter="20"
                               required
                             ></v-text-field>
                           </v-col>
                         </v-row>
 
                         <v-row class="mt-0">
-                          <v-col cols="2">
+                          <v-col cols="4" class="pt-0">
                             <v-text-field
                               v-model="field.validThru.value"
                               :rules="field.validThru.rules"
                               :placeholder="field.validThru.placeHolder"
                               outlined
-                              clearable
                               :label="field.validThru.label"
+                              counter="50"
                               required
                             ></v-text-field>
                           </v-col>
 
-                          <v-col cols="2">
+                          <v-col cols="4" class="pt-0">
                             <v-select
                               v-model="field.cardTypeID.value"
                               :items="itemsCardType"
@@ -203,12 +183,11 @@
                               :rules="field.cardTypeID.rules"
                               :label="field.cardTypeID.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
 
-                          <v-col cols="2">
+                          <v-col cols="4" class="pt-0">
                             <v-select
                               v-model="field.statusID.value"
                               :items="itemsStatus"
@@ -217,23 +196,34 @@
                               :rules="field.statusID.rules"
                               :label="field.statusID.label"
                               outlined
-                              clearable
                               required
                             ></v-select>
                           </v-col>
+                        </v-row>
 
-                          <v-col cols="6">
+                        <v-row class="mt-0">
+                          <v-col cols="4" class="pt-0">
+                            <v-textarea
+                              v-model="field.remarks.value"
+                              :rules="field.remarks.rules"
+                              :placeholder="field.remarks.placeHolder"
+                              outlined
+                              :label="field.remarks.label"
+                              counter="250"
+                              rows="1"
+                              auto-grow
+                            ></v-textarea>
+                          </v-col>
+                          <v-col cols="8" class="pt-0">
                             <v-textarea
                               v-model="field.internalRemarks.value"
                               :rules="field.internalRemarks.rules"
                               :placeholder="field.internalRemarks.placeHolder"
                               outlined
-                              clearable
                               :label="field.internalRemarks.label"
                               counter="250"
                               rows="1"
                               auto-grow
-                              required
                             ></v-textarea>
                           </v-col>
                         </v-row>
@@ -242,10 +232,10 @@
                   </v-card-text>
                 </v-tab-item>
                 <v-tab-item value="image">
-                  <v-card-text scrollable>
+                  <v-card-text>
                     <v-form v-model="field.isValid" lazy-validation>
                       <v-container fluid>
-                        <v-row class="mb-0 mt-2" justify="center">
+                        <v-row class="mb-0 mt-0" justify="center">
                           <v-col cols="4">
                             <div v-if="field.cardImage.path == ''">
                               <v-card class="mx-auto" height="400" width="auto">
@@ -280,9 +270,7 @@
                             <div v-if="field.faceRecognationImage.path == ''">
                               <v-card class="mx-auto" height="400" width="auto">
                                 <v-container fluid>
-                                  <div class="facerecognation-text">
-                                    Face Recognation Image
-                                  </div>
+                                  <div class="facerecognation-text">Face Recognation Image</div>
                                 </v-container>
                               </v-card>
                             </div>
@@ -311,9 +299,7 @@
                             <div v-if="field.fingerPrintImage.path == ''">
                               <v-card class="mx-auto" height="400" width="auto">
                                 <v-container fluid>
-                                  <div class="fingerprint-text">
-                                    Finger Print Image
-                                  </div>
+                                  <div class="fingerprint-text">Finger Print Image</div>
                                 </v-container>
                               </v-card>
                             </div>
@@ -371,7 +357,7 @@ export default {
   name: "DriverDetail",
   components: {
     Button,
-    Snackbar,
+    Snackbar
   },
   props: { id: String },
   data() {
@@ -380,59 +366,55 @@ export default {
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary",
+        color: "primary"
       },
       btnSave: {
         icon: "done",
         text: "Save",
-        color: "primary",
+        color: "primary"
       },
       btnBack: {
         icon: "arrow_back",
         text: "Back",
         color: "primary",
-        outlined: true,
+        outlined: true
       },
       tab: null,
 
-      itemsComLocDivSubDivSubSivID: [
-        { id: 0, name: "Musim Mas" },
-        { id: 1, name: "Sukajadi Sawitmekar" },
-      ],
       itemsGender: [
         { id: 1, name: "Male" },
-        { id: 2, name: "Female" },
+        { id: 2, name: "Female" }
       ],
       itemsBloodType: [
         { id: 1, name: "-" },
         { id: 2, name: "A" },
         { id: 3, name: "B" },
         { id: 4, name: "O" },
-        { id: 5, name: "AB" },
+        { id: 5, name: "AB" }
       ],
       itemsReligion: [
         { id: 1, name: "Islam" },
         { id: 2, name: "Buddha" },
         { id: 3, name: "Kristen" },
         { id: 4, name: "Hindu" },
-        { id: 5, name: "Konghuchu" },
+        { id: 5, name: "Konghuchu" }
       ],
       itemsMaritalStatus: [
         { id: 1, name: "Single" },
-        { id: 2, name: "Married" },
+        { id: 2, name: "Married" }
       ],
       itemsNationality: [
         { id: 1, name: "WNI" },
-        { id: 2, name: "WNA" },
+        { id: 2, name: "WNA" }
       ],
       itemsCardType: [
-        { id: 1, name: "KTP" },
-        { id: 2, name: "SIM" },
+        { id: 1, name: "Identity Card" },
+        { id: 2, name: "Driving License" }
       ],
       itemsStatus: [
         { id: 0, name: "ACTIVE" },
         { id: 1, name: "IN-ACTIVE" },
-        { id: 2, name: "BLACKLIST" },
+        { id: 2, name: "BLACKLIST" }
       ],
       field: {
         isValid: true,
@@ -441,129 +423,170 @@ export default {
           placeHolder: "ID card driver",
           label: "ID Card",
           rules: [
-            (v) => !!v || "ID Card is required!",
-            (v) =>
-              (v && v.length == 16) || "ID Card must be equal 16 characters",
-          ],
+            v => !!v || "ID Card is required!",
+            v => (v && v.length == 16) || "ID Card must be equal 16 characters"
+          ]
         },
         fullName: {
           value: "",
           placeHolder: "Full name driver",
           label: "Full Name",
-          rules: [(v) => !!v || "Full name is required!"],
+          rules: [
+            v => !!v || "Full name is required!",
+            v =>
+              v.length <= 250 ||
+              "Character of full name must below or be equal of 250!"
+          ]
         },
         placeOfBirth: {
           value: "",
           placeHolder: "Place of birth driver",
           label: "Place of Birth",
-          rules: [(v) => !!v || "Place of birth is required!"],
+          rules: [
+            v => !!v || "Place of birth is required!",
+            v =>
+              v.length <= 20 ||
+              "Character of full name must below or be equal of 20!"
+          ]
         },
 
         birthDate: {
           value: "31/01/1992",
           placeHolder: "Date of birth driver",
           label: "Date of Birth",
-          rules: [(v) => !!v || "Birth of birth is required!"],
+          rules: [v => !!v || "Birth of birth is required!"]
         },
 
         gender: {
           value: { id: 1, name: "Male" },
           label: "Gender",
-          rules: [(v) => !!v || "Gender is required!"],
+          rules: [v => !!v || "Gender is required!"]
         },
 
         bloodType: {
           value: { id: 1, name: "-" },
           label: "Blood Type",
-          rules: [(v) => !!v || "Blood type is required!"],
+          rules: [v => !!v || "Blood type is required!"]
         },
 
         address: {
           value: "",
           placeHolder: "Address",
           label: "Address",
-          rules: [(v) => !!v || "Address is required!"],
+          rules: [
+            v => !!v || "Address is required!",
+            v =>
+              v.length <= 250 ||
+              "Character of address must below or be equal of 250!"
+          ]
         },
 
         religion: {
           value: { id: 1, name: "Islam" },
           label: "Religion",
-          rules: [(v) => !!v || "Religion is required!"],
+          rules: [v => !!v || "Religion is required!"]
         },
 
         maritalStatus: {
           value: { id: 1, name: "Single" },
           label: "Marital Status",
-          rules: [(v) => !!v || "Marital status is required!"],
+          rules: [v => !!v || "Marital status is required!"]
         },
 
         nationality: {
           value: { id: 1, name: "WNI" },
           label: "Nationality",
-          rules: [(v) => !!v || "Nationality is required!"],
+          rules: [v => !!v || "Nationality is required!"]
         },
 
         occuption: {
           value: "",
           placeHolder: "Occuption driver",
           label: "Occuption",
-          rules: [(v) => !!v || "Occuption is required!"],
+          rules: [
+            v => !!v || "Occuption is required!",
+            v =>
+              v.length <= 20 ||
+              "Character of occuption must below or be equal of 20!"
+          ]
         },
 
         validThru: {
           value: "",
           placeHolder: "Valid thru",
           label: "Valid Thru",
-          rules: [(v) => !!v || "Valid thru is required!"],
+          rules: [
+            v => !!v || "Valid thru is required!",
+            v =>
+              v.length <= 50 ||
+              "Character of valid thru must below or be equal of 50!"
+          ]
         },
 
         cardTypeID: {
-          value: { id: 1, name: "KTP" },
+          value: { id: 1, name: "Identity Card" },
           label: "Card Type",
-          rules: [(v) => !!v || "Card type is required!"],
+          rules: [v => !!v || "Card type is required!"]
         },
 
         statusID: {
           value: { id: 0, name: "ACTIVE" },
           label: "Status",
-          rules: [(v) => !!v || "Status is required!"],
+          rules: [v => !!v || "Status is required!"]
+        },
+
+        remarks: {
+          value: "",
+          placeHolder: "Remarks",
+          label: "Remarks",
+          rules: [
+            v =>
+              v.length <= 250 ||
+              "Character of remarks must below or be equal of 250!"
+          ]
         },
 
         internalRemarks: {
           value: "",
           placeHolder: "Internal remarks",
           label: "Internal Remarks",
-          rules: [(v) => !!v || "Internal remarks is required!"],
+          rules: [
+            v =>
+              v.length <= 250 ||
+              "Character of internal remarks must below or be equal of 250!"
+          ]
         },
 
         cardImage: {
           id: 1,
           path: "",
           value: null,
-          errorImage: "url of an image to use to indicate an error",
+          errorImage: "url of an image to use to indicate an error"
         },
 
         faceRecognationImage: {
           id: 2,
           path: "",
           value: null,
-          errorImage: "url of an image to use to indicate an error",
+          errorImage: "url of an image to use to indicate an error"
         },
 
         fingerPrintImage: {
           id: 3,
           path: "",
           value: null,
-          errorImage: "url of an image to use to indicate an error",
-        },
-      },
+          errorImage: "url of an image to use to indicate an error"
+        }
+      }
     };
   },
   methods: {
     pSave() {
       console.log(this.field.cardImage.value);
     },
-    pBack() {},
+    pBack() {
+      window.scrollTo(0, 0);
+    },
     chooseCardImage(e) {
       if (e == null) {
         this.field.cardImage.path = "";
@@ -590,13 +613,18 @@ export default {
         this.field.fingerPrintImage.path = URL.createObjectURL(e);
         this.field.fingerPrintImage.value = e;
       }
-    },
+    }
   },
-  computed: {},
+  computed: {}
 };
 </script>
 
 <style scoped>
+.container {
+  max-width: 100%;
+  padding: 0 !important;
+}
+
 .v-card__title {
   padding: 0px;
 }
@@ -605,8 +633,11 @@ export default {
   display: inline-block !important;
   text-align: center;
 }
-.container {
-  padding-top: 0;
+
+.v-tab {
+  display: block;
+  line-height: inherit;
+  padding-top: 8px;
 }
 
 .cardtype-text {

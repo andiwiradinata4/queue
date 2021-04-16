@@ -4,7 +4,7 @@
       <v-layout column align-center>
         <v-flex class="mt-3 mb-3">
           <v-list-item-title class="title">QMS</v-list-item-title>
-          <v-list-item-subtitle> Queue Management System </v-list-item-subtitle>
+          <v-list-item-subtitle>Queue Management System</v-list-item-subtitle>
         </v-flex>
       </v-layout>
 
@@ -24,9 +24,7 @@
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>
-                {{ item.title }}
-              </v-list-item-title>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </template>
         </v-list-item>
@@ -34,18 +32,12 @@
         <!-- Master -->
         <v-list-group value="false">
           <template v-slot:activator>
-            <v-icon class="mr-8">source</v-icon>
+            <v-icon class="mr-11">source</v-icon>
 
             <v-list-item-title>Master</v-list-item-title>
           </template>
 
-          <v-list-item
-            v-for="item in menuMaster"
-            :key="item.id"
-            link
-            :to="item.route"
-            class="ml-2"
-          >
+          <v-list-item v-for="item in menuMaster" :key="item.id" link :to="item.route" class="ml-2">
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -56,7 +48,7 @@
         <!-- Transaction -->
         <v-list-group value="false">
           <template v-slot:activator>
-            <v-icon class="mr-8">sticky_note_2</v-icon>
+            <v-icon class="mr-11">sticky_note_2</v-icon>
 
             <v-list-item-title>Transaction</v-list-item-title>
           </template>
@@ -90,8 +82,8 @@ export default {
         id: 1,
         title: "Dashboard",
         icon: "mdi-view-dashboard",
-        route: "/",
-      },
+        route: "/"
+      }
     ],
     menuMaster: [
       { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
@@ -99,52 +91,52 @@ export default {
         id: 2,
         title: "Point",
         icon: "place",
-        route: "/point",
+        route: "/point"
       },
       {
         id: 3,
         title: "Point Sub",
         icon: "place",
-        route: "/pointsub",
+        route: "/pointsub"
       },
       {
         id: 4,
         title: "Template",
         icon: "table_chart",
-        route: "/template",
-      },
+        route: "/template"
+      }
     ],
     menuTransaction: [
-      { id: 1, title: "Queue", icon: "queue", route: "/queue" },
+      { id: 1, title: "Queue", icon: "queue", route: "/queue" }
     ],
     items: [
       {
         id: 1,
         title: "Dashboard",
         icon: "mdi-view-dashboard",
-        route: "/",
+        route: "/"
       },
       {
         id: 2,
         title: "Driver",
         icon: "mdi-account",
-        route: "/driver",
+        route: "/driver"
       },
       {
         id: 3,
         title: "Queue",
         icon: "queue",
-        route: "/queue",
+        route: "/queue"
       },
       {
         id: 4,
         title: "Template",
         icon: "table_chart",
-        route: "/template",
-      },
-    ],
+        route: "/template"
+      }
+    ]
   }),
-  methods: {},
+  methods: {}
 };
 </script>
 <style scoped>

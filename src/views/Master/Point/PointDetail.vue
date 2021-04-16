@@ -1,32 +1,50 @@
 <template>
   <v-app>
-    <div id="btn-driver" class="d-flex flex-row btn-header">
-      <div v-if="id == 0" class="list-title">
-        {{ title }}
-      </div>
-      <div v-else class="list-title">View Point [ ID : {{ id }} ]</div>
-
-      <v-spacer></v-spacer>
-    </div>
-    <v-divider></v-divider>
-
     <v-container>
-      <v-row class="mt-0">
-        <v-col cols="12">
+      <div v-if="id == 0" class="list-title ml-5 pb-5 mt-2">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-5 mt-2">View Point [ ID : {{ id }} ]</div>
+
+      <v-row class="pt-0">
+        <v-col cols="12" class="pt-0">
           <template>
             <v-card>
               <v-card-text>
                 <v-form v-model="field.isValid" lazy-validation>
                   <v-container fluid>
                     <v-row class="mb-0 mt-0">
-                      <v-col cols="12">
-                        <v-textarea
-                          v-model="field.description.value"
-                          :rules="field.description.rules"
-                          :placeholder="field.description.placeHolder"
+                      <v-col cols="6">
+                        <v-select
+                          v-model="field.Company.value"
+                          :items="itemsCompany"
+                          item-text="name"
+                          item-value="id"
+                          :rules="field.Company.rules"
+                          :label="field.Company.label"
                           outlined
-                          clearable
-                          :label="field.description.label"
+                          required
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-select
+                          v-model="field.Location.value"
+                          :items="itemsLocation"
+                          item-text="name"
+                          item-value="id"
+                          :rules="field.Location.rules"
+                          :label="field.Location.label"
+                          outlined
+                          required
+                        ></v-select>
+                      </v-col>
+                    </v-row>
+                    <v-row class="mb-0 mt-0">
+                      <v-col cols="12" class="pt-0">
+                        <v-textarea
+                          v-model="field.Description.value"
+                          :rules="field.Description.rules"
+                          :placeholder="field.Description.placeHolder"
+                          outlined
+                          :label="field.Description.label"
                           counter="250"
                           rows="5"
                           required
@@ -34,16 +52,27 @@
                       </v-col>
                     </v-row>
                     <v-row class="mt-0">
-                      <v-col cols="3">
+                      <v-col cols="8" class="pt-0">
+                        <v-textarea
+                          v-model="field.Remarks.value"
+                          :rules="field.Remarks.rules"
+                          :placeholder="field.Remarks.placeHolder"
+                          outlined
+                          :label="field.Remarks.label"
+                          counter="250"
+                          rows="1"
+                          auto-grow
+                        ></v-textarea>
+                      </v-col>
+                      <v-col cols="4" class="pt-0">
                         <v-select
-                          v-model="field.statusID.value"
+                          v-model="field.StatusID.value"
                           :items="itemsStatus"
                           item-text="name"
                           item-value="id"
-                          :rules="field.statusID.rules"
-                          :label="field.statusID.label"
+                          :rules="field.StatusID.rules"
+                          :label="field.StatusID.label"
                           outlined
-                          clearable
                           required
                         ></v-select>
                       </v-col>
@@ -77,7 +106,7 @@ export default {
   name: "PointDetail",
   components: {
     Button,
-    Snackbar,
+    Snackbar
   },
   props: { id: String },
   data() {
@@ -86,38 +115,76 @@ export default {
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary",
+        color: "primary"
       },
       btnSave: {
         icon: "done",
         text: "Save",
-        color: "primary",
+        color: "primary"
       },
       btnBack: {
         icon: "arrow_back",
         text: "Back",
         color: "primary",
-        outlined: true,
+        outlined: true
       },
       itemsStatus: [
         { id: 0, name: "ACTIVE" },
         { id: 1, name: "IN-ACTIVE" },
-        { id: 2, name: "BLACKLIST" },
+        { id: 2, name: "BLACKLIST" }
+      ],
+      itemsCompany: [
+        { id: "MM", name: "MUSIM MAS, PT" },
+        { id: "AGR", name: "AGROWIRATAMA, PT" },
+        { id: "GIN", name: "GUNTUNG IDAMANNUSA, PT." }
+      ],
+      itemsLocation: [
+        { id: "MDN-KIM1", name: "MEDAN KIM 1" },
+        { id: "MDN-KIM2", name: "MEDAN KIM 2" },
+        { id: "MDN-KIM3", name: "MEDAN KIM 3" }
       ],
       field: {
         isValid: true,
-        description: {
+        Company: {
+          value: { id: "", name: "" },
+          placeHolder: "Company",
+          label: "Company",
+          rules: [v => !!v || "Company is required!"]
+        },
+        Location: {
+          value: { id: "", name: "" },
+          placeHolder: "Location",
+          label: "Location",
+          rules: [v => !!v || "Location is required!"]
+        },
+        Description: {
           value: "",
           placeHolder: "Description",
           label: "Description",
-          rules: [(v) => !!v || "Description is required!"],
+          rules: [
+            v => !!v || "Description is required!",
+            v =>
+              v.length <= 250 ||
+              "Character of description must below or be equal of 250!"
+          ]
         },
-        statusID: {
+        Remarks: {
+          value: "",
+          placeHolder: "Remarks",
+          label: "Remarks",
+          rules: [
+            v =>
+              v.length <= 250 ||
+              "Character of remarks must below or be equal of 250!"
+          ]
+        },
+
+        StatusID: {
           value: { id: 0, name: "ACTIVE" },
           label: "Status",
-          rules: [(v) => !!v || "Status is required!"],
-        },
-      },
+          rules: [v => !!v || "Status is required!"]
+        }
+      }
     };
   },
   methods: {
@@ -125,8 +192,17 @@ export default {
       this.snackbar.isActive = true;
       this.snackbar.text = "Press save";
     },
-    pBack() {},
+    pBack() {
+      window.scrollTo(0, 0);
+    }
   },
-  computed: {},
+  computed: {}
 };
 </script>
+
+<style scoped>
+.container {
+  max-width: 100%;
+  padding: 0 !important;
+}
+</style>>

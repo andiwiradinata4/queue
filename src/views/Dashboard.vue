@@ -1,28 +1,17 @@
 <template>
-  <v-app id="list-dashboard">
-    <div id="btn-dashboard" class="d-flex flex-row btn-header">
-      <div class="list-title">
-        {{ title }}
-      </div>
-
-      <!-- <v-spacer></v-spacer>
-
-      <div id="btn-driver">
-        <Button :callBack="pNew" :properties="btnNew" />
-        <Button :callBack="pRefresh" :properties="btnRefresh" />
-      </div> -->
-    </div>
-    <v-divider></v-divider>
+  <v-app>
+    <v-container class="pa-0 ml-0 mr-0">
+      <!-- <div class="list-title ml-5 mb-2 pb-0 mt-2">{{ title }}</div> -->
+    </v-container>
   </v-app>
 </template>
 
 <script>
-// import Button from "@/components/Button.vue";
-
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Dashboard",
   components: {
-    // Button,
+    // Button
   },
   data() {
     return {
@@ -30,48 +19,54 @@ export default {
       buttons: [
         {
           id: 1,
-          properties: { icon: "refresh", text: "Refresh", color: "primary" },
-        },
+          properties: { icon: "refresh", text: "Refresh", color: "primary" }
+        }
       ],
       btnNew: {
         icon: "add_circle_outline",
         text: "New",
-        color: "primary",
+        color: "primary"
       },
       btnDetail: {
         icon: "mode_edit",
         text: "Edit",
-        color: "primary",
+        color: "primary"
       },
       btnRefresh: {
         icon: "refresh",
         text: "Refresh",
-        color: "primary",
+        color: "primary"
       },
       btnSave: {
         icon: "done",
         text: "Save",
-        color: "primary",
+        color: "primary"
       },
       btnClose: {
         icon: "close",
         text: "Close",
         color: "normal",
-        outlined: true,
-      },
+        outlined: true
+      }
     };
   },
   methods: {
+    // ...mapActions(["setIncrement"]),
+    ...mapActions({ pRefresh: "setIncrement" }),
     pNew() {
       this.dialog = true;
     },
     pView(data) {
       console.log("Press detail " + data);
     },
-    pRefresh() {
-      this.snackbar.isActive = true;
-      this.snackbar.text = "Press refresh";
-    },
+    // pRefresh() {
+    //   // this.snackbar.isActive = true;
+    //   // this.snackbar.text = "Press refresh";
+    //   this.$store.dispatch("setIncrement");
+    //   // this.setIncrement();
+    //   // this.count = this.$store.getters.getCount;
+    //   console.log(this.$store.getters.getCount);
+    // },
     pClose() {
       this.dialog = false;
     },
@@ -79,9 +74,11 @@ export default {
       if (data == "IN-ACTIVE") return "pink";
       if (data == "BLACKLIST") return "normal";
       else return "success";
-    },
+    }
   },
   computed: {
+    ...mapGetters({ count: "getCount" }),
+
     tableHeight() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":
@@ -95,16 +92,30 @@ export default {
         default:
           return 600;
       }
-    },
+    }
+    // count() {
+    //   // return this.$store.getters.getCount;
+    //   // return this.getCount;
+    // },
   },
+  mounted() {
+    // this.count = this.$store.getters.getCount;
+    // this.setIncrement();
+  }
 };
 </script>
 
 <style scoped>
+/* Container */
+.container {
+  max-width: 100%;
+  max-height: 50%;
+}
+
+/* chip of status */
 .v-chip.v-size--default {
   width: 100px;
   display: inline-block !important;
   text-align: center;
 }
-
 </style>

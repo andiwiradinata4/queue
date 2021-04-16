@@ -1,62 +1,134 @@
 <template>
   <v-app>
-    <div id="btn-driver" class="d-flex flex-row btn-header">
-      <div class="list-title">
+    <v-container class="pa-0 ml-0 mr-0">
+      <div class="list-title ml-5 pb-2 mt-2">
         {{ title }}
+        <FloatButton :callBack="pFilter" :properties="btnFilter" />
+        <FloatButton :callBack="pNew" :properties="btnNew" />
+        <FloatButton :callBack="pRefresh" :properties="btnRefresh" />
       </div>
 
-      <v-spacer></v-spacer>
+      <v-dialog
+        transition="dialog-top-transition"
+        persistent
+        max-width="600px"
+        v-model="filter.value"
+        scrollable
+      >
+        <v-card>
+          <v-card-title class="pt-5 pb-0">
+            <div class="headline">Query Data By</div>
+          </v-card-title>
 
-      <div id="btn-driver">
-        <router-link to="/driver-detail/0">
-          <Button :callBack="pNew" :properties="btnNew" />
-        </router-link>
-        <Button :callBack="pRefresh" :properties="btnRefresh" />
-      </div>
-    </div>
-    <v-divider></v-divider>
+          <v-card-text>
+            <v-container fluid>
+              <v-row class="pt-0">
+                <v-col cols="6" class="pb-0 pt-1">
+                  <v-text-field
+                    v-model="filter.field.company.value"
+                    clearable
+                    :label="filter.field.company.label"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" class="pb-0 pt-1">
+                  <v-text-field
+                    v-model="filter.field.location.value"
+                    clearable
+                    :label="filter.field.location.label"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="mt-0">
+                <v-col cols="6" class="pb-0 pt-1">
+                  <v-text-field
+                    v-model="filter.field.division.value"
+                    clearable
+                    :label="filter.field.division.label"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" class="pb-0 pt-1">
+                  <v-text-field
+                    v-model="filter.field.subdivision.value"
+                    clearable
+                    :label="filter.field.subdivision.label"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="mt-0">
+                <v-col cols="6" class="pb-0 pt-1">
+                  <v-text-field
+                    v-model="filter.field.idCard.value"
+                    clearable
+                    :label="filter.field.idCard.label"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" class="pb-0 pt-1">
+                  <v-text-field
+                    v-model="filter.field.fullName.value"
+                    clearable
+                    :label="filter.field.fullName.label"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
 
-    <v-container>
-      <v-row class="mt-0">
+          <v-card-actions class="pt-0">
+            <v-spacer></v-spacer>
+            <Button :callBack="pSaveFilter" :properties="btnSaveFilter" />
+            <Button :callBack="pCloseFilter" :properties="btnCloseFilter" />
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-row class="pt-0">
         <v-col cols="12">
           <template>
-            <v-card>
-              <v-card-title>
+            <v-card elevation="2">
+              <v-card-title class="pt-0 pb-2">
                 <v-text-field
                   v-model="search"
                   append-icon="mdi-magnify"
-                  label="Search"
-                  single-line
+                  placeholder="Search"
                   hide-details
                 ></v-text-field>
               </v-card-title>
               <template>
                 <v-data-table
+                  :height="tableHeight"
                   :headers="itemDataTable.headers"
                   :items="itemDataTable.data"
                   :search="search"
-                  :height="tableHeight"
-                  multi-sort
                   fixed-header
-                  dense
+                  multi-sort
                 >
                   <template v-slot:item.Status="{ item }">
                     <v-chip
                       class="status-chip ma-2"
                       :color="pSetColor(item.Status)"
                       dark
-                    >
-                      {{ item.Status }}
-                    </v-chip>
+                    >{{ item.Status }}</v-chip>
                   </template>
 
-                  <template v-slot:item.action="{ item }">
-                    <router-link :to="'/driver-detail/' + item.id" >
-                      <v-btn icon @click="pView(item.id)">
-                      <v-icon small color="#304457">fas fa-edit</v-icon>
-                    </v-btn>
-                    </router-link>
-                    
+                  <template v-slot:item.IDCard="{ item }">
+                    <v-menu transition="slide-y-transition" bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn outlined v-bind="attrs" v-on="on"  class="pl-2 pr-1">
+                          {{item.IDCard}}
+                          <v-icon>expand_more</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                      <v-list-item link :to="'/driver-detail/' + item.id">
+                        <v-list-item-title><v-icon class="mr-5">edit</v-icon>Detail</v-list-item-title>
+                      </v-list-item>
+
+                      <v-list-item link to="#">
+                        <v-list-item-title><v-icon class="mr-5">delete</v-icon>Delete</v-list-item-title>
+                      </v-list-item>
+                      </v-list>
+                    </v-menu>
                   </template>
                 </v-data-table>
               </template>
@@ -67,345 +139,112 @@
     </v-container>
 
     <Snackbar v-bind:properties="snackbar" />
-
-    <!-- 
-    <v-dialog v-model="dialog" persistent scrollable>
-      <v-card>
-        <v-card-title class="headline blue-grey lighten-5">
-          Create New Driver
-          <v-tabs v-model="tab" fixed-tabs background-color="transparent">
-            <v-tabs-slider></v-tabs-slider>
-            <v-tab href="#information" class="primary--text">
-              Information
-            </v-tab>
-            <v-tab href="#image" class="primary--text"> Image </v-tab>
-          </v-tabs>
-        </v-card-title>
-
-        <v-tabs-items v-model="tab">
-          <v-tab-item value="information">
-            <v-card-text>
-              <v-form v-model="driver.isValid" lazy-validation>
-                <v-container fluid>
-                  <v-row class="mb-0 mt-2">
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="driver.idCard"
-                        :counter="16"
-                        :rules="driver.idCardRules"
-                        :placeholder="driver.idCardPlaceHolder"
-                        outlined
-                        clearable
-                        :label="driver.idCardLabel"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="8">
-                      <v-text-field
-                        v-model="driver.fullName.value"
-                        :rules="driver.fullName.rules"
-                        :placeholder="driver.fullName.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.fullName.label"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-
-                  <v-row class="mt-0">
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="driver.placeOfBirth.value"
-                        :rules="driver.placeOfBirth.rules"
-                        :placeholder="driver.placeOfBirth.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.placeOfBirth.label"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="driver.birthDate.value"
-                        :rules="driver.birthDate.rules"
-                        :placeholder="driver.birthDate.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.birthDate.label"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.gender.value"
-                        :items="itemsGender"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.gender.rules"
-                        :label="driver.gender.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.bloodType.value"
-                        :items="itemsBloodType"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.bloodType.rules"
-                        :label="driver.bloodType.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-                  </v-row>
-
-                  <v-row class="mt-0">
-                    <v-col cols="4">
-                      <v-textarea
-                        v-model="driver.address.value"
-                        :rules="driver.address.rules"
-                        :placeholder="driver.address.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.address.label"
-                        counter="250"
-                        rows="1"
-                        auto-grow
-                        required
-                      ></v-textarea>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.religion.value"
-                        :items="itemsReligion"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.religion.rules"
-                        :label="driver.religion.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.maritalStatus.value"
-                        :items="itemsMaritalStatus"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.maritalStatus.rules"
-                        :label="driver.maritalStatus.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.nationality.value"
-                        :items="itemsNationality"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.nationality.rules"
-                        :label="driver.nationality.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-text-field
-                        v-model="driver.occuption.value"
-                        :rules="driver.occuption.rules"
-                        :placeholder="driver.occuption.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.occuption.label"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-
-                  <v-row class="mt-0">
-                    <v-col cols="2">
-                      <v-text-field
-                        v-model="driver.validThru.value"
-                        :rules="driver.validThru.rules"
-                        :placeholder="driver.validThru.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.validThru.label"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.cardTypeID.value"
-                        :items="itemsCardTypeID"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.cardTypeID.rules"
-                        :label="driver.cardTypeID.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-select
-                        v-model="driver.statusID.value"
-                        :items="itemsStatusID"
-                        item-text="name"
-                        item-value="id"
-                        :rules="driver.statusID.rules"
-                        :label="driver.statusID.label"
-                        outlined
-                        clearable
-                        required
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="6">
-                      <v-textarea
-                        v-model="driver.internalRemarks.value"
-                        :rules="driver.internalRemarks.rules"
-                        :placeholder="driver.internalRemarks.placeHolder"
-                        outlined
-                        clearable
-                        :label="driver.internalRemarks.label"
-                        counter="250"
-                        rows="1"
-                        auto-grow
-                        required
-                      ></v-textarea>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-            </v-card-text>
-          </v-tab-item>
-          <v-tab-item value="image">
-            <v-card-text scrollable>
-              <v-form v-model="driver.isValid" lazy-validation>
-                <v-container fluid>
-                  <v-row class="mb-0 mt-2"> </v-row>
-                  <v-col cols="4">
-                    <v-img
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      aspect-ratio="1.7"
-                      contain
-                      max-height="600"
-                      max-width="300"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-img
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      max-height="600"
-                      max-width="300"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-img
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      max-height="600"
-                      max-width="300"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-img
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      max-height="600"
-                      max-width="300"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </v-col>
-                  <v-row class="mt-0"> </v-row>
-
-                  <v-row class="mt-0"> </v-row>
-
-                  <v-row class="mt-0"> </v-row>
-                </v-container>
-              </v-form>
-            </v-card-text>
-          </v-tab-item>
-        </v-tabs-items>
-
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <Button :callBack="pNew" :properties="btnSave" />
-          <Button :callBack="pClose" :properties="btnClose" />
-        </v-card-actions>
-      </v-card>
-    </v-dialog> -->
-  
   </v-app>
 </template>
 
 <script>
 import Button from "@/components/Button.vue";
+import FloatButton from "@/components/FloatButton.vue";
 import Snackbar from "@/components/Snackbar.vue";
 
 export default {
   name: "ListDriver",
   components: {
     Button,
-    Snackbar,
+    FloatButton,
+    Snackbar
   },
   data() {
     return {
       title: "Driver",
-      // dialog: false,
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary",
+        color: "primary"
+      },
+      btnFilter: {
+        icon: "filter_alt",
+        text: "Filter",
+        color: "primary"
       },
       btnNew: {
-        icon: "add_circle_outline",
+        icon: "mdi-plus",
         text: "New",
-        color: "primary",
+        color: "primary"
       },
       btnRefresh: {
         icon: "refresh",
         text: "Refresh",
+        color: "primary"
+      },
+      btnSaveFilter: {
+        icon: "done",
+        text: "Save",
+        color: "primary"
+      },
+      btnCloseFilter: {
+        icon: "close",
+        text: "Close",
         color: "primary",
+        outlined: true
       },
       search: "",
+      filter: {
+        value: false,
+        field: {
+          company: {
+            id: 0,
+            value: "",
+            label: "Company"
+          },
+          location: {
+            id: 0,
+            value: "",
+            label: "Location"
+          },
+          division: {
+            id: 0,
+            value: "",
+            label: "Division"
+          },
+          subdivision: {
+            id: 0,
+            value: "",
+            label: "Subdivision"
+          },
+          idCard: {
+            value: "",
+            label: "ID Card"
+          },
+          fullName: {
+            value: "",
+            label: "Full Name"
+          }
+        }
+      },
       itemDataTable: {
         headers: [
-          { text: "#", value: "action", align: "center", sortable: false, width: "80" },
 
           { text: "ID Card", value: "IDCard" },
           { text: "Full Name", value: "FullName", width: "200" },
-          { text: "Place of Birth", value: "PlaceOfBirth", width: "150"},
-          { text: "Date of Birth ", value: "DateOfBirth", width: "150"},
-          { text: "Gender", value: "Gender", width: "120"},
-          { text: "Blood Type", value: "BloodType", width: "120", align: "center" },
+          { text: "Place of Birth", value: "PlaceOfBirth", width: "150" },
+          { text: "Date of Birth ", value: "DateOfBirth", width: "150" },
+          { text: "Gender", value: "Gender", width: "120" },
+          {
+            text: "Blood Type",
+            value: "BloodType",
+            width: "120",
+            align: "center"
+          },
           { text: "Address", value: "Address", width: "500" },
           { text: "Religion", value: "Religion" },
           { text: "Marital Status", value: "MaritalStatus" },
           { text: "Nationality", value: "Nationality", width: "120" },
           { text: "Occupation", value: "Occupation", width: "180" },
           { text: "Valid Thru", value: "ValidThru", width: "180" },
-          { text: "Card Type", value: "CardType", width: "120" },
+          { text: "Card Type", value: "CardType", width: "180" },
           { text: "Internal Remarks", value: "InternalRemarks", width: "200" },
-          { text: "Status", value: "Status", align: "center" },
+          { text: "Status", value: "Status", align: "center" }
         ],
         data: [
           {
@@ -422,9 +261,9 @@ export default {
             Nationality: "WNI",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "KTP",
+            CardType: "Identity Card",
             InternalRemarks: "",
-            Status: "ACTIVE",
+            Status: "ACTIVE"
           },
           {
             id: 2,
@@ -440,9 +279,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "KTP",
+            CardType: "Identity Card",
             InternalRemarks: "",
-            Status: "IN-ACTIVE",
+            Status: "IN-ACTIVE"
           },
           {
             id: 3,
@@ -458,9 +297,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "KTP",
+            CardType: "Identity Card",
             InternalRemarks: "",
-            Status: "ACTIVE",
+            Status: "ACTIVE"
           },
           {
             id: 4,
@@ -476,9 +315,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "SIM",
+            CardType: "Driving License",
             InternalRemarks: "",
-            Status: "ACTIVE",
+            Status: "ACTIVE"
           },
           {
             id: 5,
@@ -494,9 +333,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "SIM",
+            CardType: "Driving License",
             InternalRemarks: "",
-            Status: "BLACKLIST",
+            Status: "BLACKLIST"
           },
           {
             id: 6,
@@ -512,9 +351,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "SIM",
+            CardType: "Driving License",
             InternalRemarks: "",
-            Status: "ACTIVE",
+            Status: "ACTIVE"
           },
           {
             id: 7,
@@ -530,9 +369,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "KTP",
+            CardType: "Identity Card",
             InternalRemarks: "",
-            Status: "IN-ACTIVE",
+            Status: "IN-ACTIVE"
           },
           {
             id: 8,
@@ -548,9 +387,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "KTP",
+            CardType: "Identity Card",
             InternalRemarks: "",
-            Status: "ACTIVE",
+            Status: "ACTIVE"
           },
           {
             id: 9,
@@ -566,9 +405,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "SIM",
+            CardType: "Driving License",
             InternalRemarks: "",
-            Status: "ACTIVE",
+            Status: "ACTIVE"
           },
           {
             id: 10,
@@ -584,9 +423,9 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "SIM",
+            CardType: "Driving License",
             InternalRemarks: "",
-            Status: "BLACKLIST",
+            Status: "BLACKLIST"
           },
           {
             id: 11,
@@ -602,17 +441,20 @@ export default {
             Nationality: "WNA",
             Occupation: "General Employees",
             ValidThru: "No Expired",
-            CardType: "SIM",
+            CardType: "Driving License",
             InternalRemarks: "",
-            Status: "BLACKLIST",
-          },
-        ],
-      },
+            Status: "BLACKLIST"
+          }
+        ]
+      }
     };
   },
   methods: {
+    pFilter() {
+      this.filter.value = true;
+    },
     pNew() {
-      // this.dialog = true;
+      this.$router.replace({ path: "/driver-detail/0" });
     },
     pView(data) {
       console.log("Press detail " + data);
@@ -629,6 +471,19 @@ export default {
       if (data == "BLACKLIST") return "normal";
       else return "success";
     },
+    pSaveFilter() {
+      console.log(`Company: ${this.filter.field.company.value}`);
+      this.filter.value = false;
+    },
+    pCloseFilter() {
+      this.filter.value = false;
+    }
+  },
+  mounted() {
+    if (this.itemDataTable.data.length == 0) {
+      this.filter.value = true;
+    }
+    // this.filter.value = true;
   },
   computed: {
     tableHeight() {
@@ -644,12 +499,19 @@ export default {
         default:
           return 600;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+/* Container */
+.container {
+  max-width: 100%;
+  max-height: 50%;
+}
+
+/* chip of status */
 .v-chip.v-size--default {
   width: 100px;
   display: inline-block !important;

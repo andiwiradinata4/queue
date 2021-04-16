@@ -1,3 +1,5 @@
+
+
 /* CSS Reset */ 
 html,
 body,
@@ -104,7 +106,8 @@ section {
 }
 
 body {
-  line-height: 1;
+  line-height: 1;  
+  background: #f5f5f5;
 }
 
 ol,
@@ -129,6 +132,10 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+col{
+padding: 0px;
+}
 /* End of CSS Reset */ 
 
 /* Default Style */ 
@@ -141,14 +148,19 @@ table {
  a {
   text-decoration: none;
 }
+
+.v-application--wrap {
+  min-height: 0 !important; 
+}
  /* End of Default Style */ 
 
 
 /* List Title Style */
 .list-title {
-  margin: 10px 0px 18px 20px;
+  /* margin: 10px 0px 18px 20px; */
   color: #566b80;
   font-size: 1.55rem;
+  /* font-size: 1.2rem; */
   font-weight: 500;
 }
 
