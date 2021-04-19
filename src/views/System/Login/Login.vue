@@ -10,7 +10,6 @@
               v-model="field.userId.value"
               :rules="field.userId.rules"
               :placeholder="field.userId.placeHolder"
-              clearable
               :label="field.userId.label"
               required
             ></v-text-field>
@@ -19,7 +18,6 @@
               v-model="field.password.value"
               :rules="field.password.rules"
               :placeholder="field.password.placeHolder"
-              clearable
               :label="field.password.label"
               required
               type="password"
@@ -27,18 +25,17 @@
           </v-col>
 
           <v-row id="forgot-password">
-            <router-link to="#">Forgot Password?</router-link>
+            <v-col cols="12" class="pt-0 pr-5 text-right">
+              <router-link to="#">Forgot Password?</router-link>
+            </v-col>
           </v-row>
         </v-row>
 
         <v-row class="mt-5">
-          <v-col cols="12">
-            <v-btn
-              color="primary"
-              width="100%"
-              height="40px"
-              @click="pLogin"
-            >{{ btnLogin.text }}</v-btn>
+          <v-col cols="12" class="pt-0">
+            <v-btn color="primary" width="100%" height="40px" @click="pLogin">{{
+              btnLogin.text
+            }}</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -58,22 +55,22 @@ export default {
       btnLogin: {
         icon: "add_circle_outline",
         text: "Sign In",
-        color: "primary"
+        color: "primary",
       },
       field: {
         userId: {
           value: "",
-          placeHolder: "User ID",
+          placeHolder: "",
           label: "User ID",
-          rules: [v => !!v || "User ID is required!"]
+          rules: [(v) => !!v || "User ID is required!"],
         },
         password: {
           value: "",
-          placeHolder: "Password",
+          placeHolder: "",
           label: "Password",
-          rules: [v => !!v || "Password is required!"]
-        }
-      }
+          rules: [(v) => !!v || "Password is required!"],
+        },
+      },
     };
   },
   methods: {
@@ -86,10 +83,10 @@ export default {
       Password: [${this.field.password.value}]
       Auth: [${this.$store.getters.getAuthenticate}]
       `);
-      
+
       // console.log(this.$emit("authenticated"));
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -122,7 +119,6 @@ form {
 
 #forgot-password a {
   font-size: 12px;
-  margin-left: 200px;
-  margin-top: 0px;
+  margin-left: 15px;
 }
 </style>
