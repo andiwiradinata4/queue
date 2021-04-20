@@ -24,14 +24,14 @@
             ></v-text-field>
           </v-col>
 
-          <v-row id="forgot-password">
+          <v-row id="forgot-password" class="pt-0">
             <v-col cols="12" class="pt-0 pr-5 text-right">
               <router-link to="#">Forgot Password?</router-link>
             </v-col>
           </v-row>
         </v-row>
 
-        <v-row class="mt-5">
+        <v-row class="mt-6">
           <v-col cols="12" class="pt-0">
             <v-btn color="primary" width="100%" height="40px" @click="pLogin">{{
               btnLogin.text
@@ -119,6 +119,5 @@ form {
 
 #forgot-password a {
   font-size: 12px;
-  margin-left: 15px;
 }
 </style>

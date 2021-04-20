@@ -260,28 +260,28 @@
                             </span>
                           </div>
                         </span>
-                        <v-card color="grey lighten-5">
+                        <v-card color="grey lighten-5" elevation="3">
                           <v-container>
                             <v-row class="pl-3">
                               <v-col
                                 cols="2"
                                 sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
+                                lg="3"
+                                class="pb-0 font-weight-bold pr-0"
                                 >Plat Number</v-col
                               >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
+                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
                                 >: {{ item.PlatNumber }}</v-col
                               >
 
                               <v-col
                                 cols="2"
                                 sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
+                                lg="3"
+                                class="pb-0 font-weight-bold px-0"
                                 >Request Date</v-col
                               >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
+                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
                                 >: {{ item.RequestDate }}
                               </v-col>
                             </v-row>
@@ -289,23 +289,24 @@
                               <v-col
                                 cols="2"
                                 sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
+                                lg="3"
+                                class="pb-0 font-weight-bold pr-0"
                                 >Verified By</v-col
                               >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
+                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
                                 >: {{ item.VerifiedBy }}</v-col
                               >
+
                               <v-col
                                 cols="2"
                                 sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
+                                lg="3"
+                                class="pb-0 font-weight-bold px-0"
                                 >Verified Date</v-col
                               >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: {{ item.VerifiedDate }}</v-col
-                              >
+                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
+                                >: {{ item.VerifiedDate }}
+                              </v-col>
                             </v-row>
 
                             <v-row class="pt-0 pb-0 pl-3">
@@ -719,7 +720,49 @@
                     </v-timeline>
                   </v-container>
                 </v-tab-item>
-                <v-tab-item value="status-history"></v-tab-item>
+                <v-tab-item value="status-history">
+                  <v-container class="pr-5 pl-5" style="max-width: 70%">
+                    <v-timeline>
+                      <v-timeline-item right small
+                        v-for="(item, i) in queueStatus"
+                        :key="i"
+                      >
+                        <span slot="opposite">
+                          <div style="font-size: 20px">
+                            {{ item.Status }}
+                            <span
+                              class="font-weight-light"
+                              style="font-size: 15px"
+                            >
+                              ( {{ item.StatusDate }} )
+                            </span>
+                          </div>
+                        </span>
+                        <v-card color="grey lighten-5" elevation="3">
+                          <v-container>
+                            <v-row class="pl-3">
+                              <v-col cols="3" class="pb-0 font-weight-bold"
+                                >Status By</v-col
+                              >
+                              <v-col cols="9" class="pb-0"
+                                >: {{ item.StatusBy }}</v-col
+                              >
+                            </v-row>
+
+                            <v-row class="pt-0 pb-3 pl-3">
+                              <v-col cols="3" class="pb-0 font-weight-bold"
+                                >Remarks</v-col
+                              >
+                              <v-col cols="9" class="pb-0"
+                                >: {{ item.Remarks }}</v-col
+                              >
+                            </v-row>
+                          </v-container>
+                        </v-card>
+                      </v-timeline-item>
+                    </v-timeline>
+                  </v-container>
+                </v-tab-item>
               </v-tabs-items>
 
               <v-divider></v-divider>
@@ -964,6 +1007,85 @@ export default {
           InternalRemarks: "-",
           color: "primary",
           icon: "",
+        },
+      ],
+      queueStatus: [
+        {
+          ID: "20210419-KM1-0001-011",
+          Status: "Verify Point Check Out",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 15:45",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-010",
+          Status: "Request Point Check Out",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 16:00",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-009",
+          Status: "Verify Point Unloading",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 15:30",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-008",
+          Status: "Request Point Unloading",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 14:00",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-007",
+          Status: "Verify Point Check In",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 13:45",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-006",
+          Status: "Request Point Check In",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 13:15",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-005",
+          Status: "Verify Point Laboratory",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 11:30",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-004",
+          Status: "Request Point Laboratory",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 10:00",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-003",
+          Status: "Verify Point Parking Area",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 09:45",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-002",
+          Status: "Request Point Parking Area",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 09:15",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-001",
+          Status: "Create New Queue",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 16:00",
+          Remarks: "-",
         },
       ],
     };
