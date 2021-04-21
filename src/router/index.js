@@ -9,9 +9,8 @@ import Point from '../views/Master/Point/ListPoint.vue'
 import PointDetail from '../views/Master/Point/PointDetail.vue'
 import PointSub from '../views/Master/PointSub/ListPointSub.vue'
 import PointSubDetail from '../views/Master/PointSub/PointSubDetail.vue'
-
-
-import Template from '../views/Master/Templates/ListTemplate.vue'
+import Timeline from '../views/Master/Timeline/ListTimeline.vue'
+import TimelineDetail from '../views/Master/Timeline/TimelineDetail.vue'
 
 // System
 import Login from '../views/System/Login/Login.vue';
@@ -27,12 +26,6 @@ import Testing from '../views/Testing.vue';
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   redirect: {
-  //     name: "Login"
-  //   }
-  // },
   {
     path: '/testing',
     name: 'Testing',
@@ -79,9 +72,15 @@ const routes = [
     component: PointSubDetail
   },
   {
-    path: '/template',
-    name: 'Template',
-    component: Template
+    path: '/timeline',
+    name: 'Timeline',
+    component: Timeline
+  },
+  {
+    path: '/timeline-detail/:id',
+    props: true,
+    name: 'TimelineDetail',
+    component: TimelineDetail
   },
 
   // System

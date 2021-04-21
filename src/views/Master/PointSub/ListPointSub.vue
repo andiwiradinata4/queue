@@ -86,14 +86,20 @@
                       class="status-chip ma-2"
                       :color="pSetColor(item.Status)"
                       dark
-                    >{{ item.Status }}</v-chip>
+                      >{{ item.Status }}</v-chip
+                    >
                   </template>
 
                   <template v-slot:item.ID="{ item }">
                     <v-menu transition="slide-y-transition" bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn outlined v-bind="attrs" v-on="on" class="pl-2 pr-1">
-                          {{item.ID}}
+                        <v-btn
+                          outlined
+                          v-bind="attrs"
+                          v-on="on"
+                          class="pl-2 pr-1"
+                        >
+                          {{ item.ID }}
                           <v-icon>expand_more</v-icon>
                         </v-btn>
                       </template>
@@ -135,7 +141,7 @@ export default {
   components: {
     Button,
     FloatButton,
-    Snackbar
+    Snackbar,
   },
   data() {
     return {
@@ -143,33 +149,33 @@ export default {
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary"
+        color: "primary",
       },
       btnFilter: {
         icon: "filter_alt",
         text: "Filter",
-        color: "primary"
+        color: "primary",
       },
       btnNew: {
         icon: "mdi-plus",
         text: "New",
-        color: "primary"
+        color: "primary",
       },
       btnRefresh: {
         icon: "refresh",
         text: "Refresh",
-        color: "primary"
+        color: "primary",
       },
       btnSaveFilter: {
         icon: "done",
         text: "Save",
-        color: "primary"
+        color: "primary",
       },
       btnCloseFilter: {
         icon: "close",
         text: "Close",
         color: "primary",
-        outlined: true
+        outlined: true,
       },
       search: "",
       filter: {
@@ -178,19 +184,19 @@ export default {
           company: {
             id: 0,
             value: "",
-            label: "Company"
+            label: "Company",
           },
           location: {
             id: 0,
             value: "",
-            label: "Location"
+            label: "Location",
           },
           point: {
             id: 0,
             value: "",
-            label: "Point"
-          }
-        }
+            label: "Point",
+          },
+        },
       },
       itemDataTable: {
         headers: [
@@ -198,7 +204,7 @@ export default {
             text: "ID",
             value: "ID",
             align: "center",
-            width: "80"
+            width: "80",
           },
           { text: "Company", value: "Company", align: "left" },
           { text: "Location", value: "Location", align: "left" },
@@ -206,77 +212,205 @@ export default {
           {
             text: "Point Sub Description",
             value: "PointSubDescription",
-            align: "left"
+            align: "left",
           },
-          { text: "Status", value: "Status", align: "center" }
+          { text: "Status", value: "Status", align: "center" },
         ],
         data: [
           {
             ID: 1,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Park Area",
-            PointSubDescription: "Park Area 1",
-            Status: "ACTIVE"
+            Point: "Parking Area",
+            PointSubDescription: "Parking Area 1",
+            Status: "ACTIVE",
           },
           {
             ID: 2,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Park Area",
-            PointSubDescription: "Park Area 2",
-            Status: "ACTIVE"
+            Point: "Security",
+            PointSubDescription: "Security 1",
+            Status: "ACTIVE",
           },
           {
             ID: 3,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Security",
-            PointSubDescription: "Security 1",
-            Status: "ACTIVE"
+            Point: "Laboratory / Sampling",
+            PointSubDescription: "Laboratory / Sampling 1",
+            Status: "ACTIVE",
           },
           {
             ID: 4,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Security",
-            PointSubDescription: "Security 2",
-            Status: "ACTIVE"
+            Point: "Laboratory / Sampling",
+            PointSubDescription: "Laboratory / Sampling 2",
+            Status: "ACTIVE",
           },
           {
             ID: 5,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Laboratory",
-            PointSubDescription: "Laboratory 1",
-            Status: "ACTIVE"
+            Point: "Laboratory / Labtest",
+            PointSubDescription: "Laboratory / Labtest 1",
+            Status: "ACTIVE",
           },
           {
             ID: 6,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Laboratory",
-            PointSubDescription: "Laboratory 2",
-            Status: "ACTIVE"
+            Point: "Laboratory / Labtest",
+            PointSubDescription: "Laboratory / Labtest 2",
+            Status: "ACTIVE",
           },
           {
             ID: 7,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Point: "Unloading Station",
-            PointSubDescription: "Unloading Station 1",
-            Status: "ACTIVE"
+            Point: "Weighbridge Check In",
+            PointSubDescription: "Weighbridge Check In 1",
+            Status: "ACTIVE",
           },
           {
             ID: 8,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
+            Point: "Weighbridge Check In",
+            PointSubDescription: "Weighbridge Check In 2",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 9,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 1",
+            Point: "Unloading Station",
+            PointSubDescription: "Unloading Station 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 10,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 1",
             Point: "Unloading Station",
             PointSubDescription: "Unloading Station 2",
-            Status: "ACTIVE"
-          }
-        ]
-      }
+            Status: "ACTIVE",
+          },
+          {
+            ID: 11,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 1",
+            Point: "Weighbridge Check Out",
+            PointSubDescription: "Weighbridge Check Out 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 12,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 1",
+            Point: "Weighbridge Check Out",
+            PointSubDescription: "Weighbridge Check Out 2",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 13,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Parking Area",
+            PointSubDescription: "Parking Area 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 14,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Security",
+            PointSubDescription: "Security 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 15,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Weighbridge Checker",
+            PointSubDescription: "Weighbridge Checker 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 16,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Weighbridge Checker",
+            PointSubDescription: "Weighbridge Checker 2",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 17,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Laboratory / Sampling",
+            PointSubDescription: "Laboratory / Sampling 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 18,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Laboratory / Labtest",
+            PointSubDescription: "Laboratory / Labtest 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 19,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Weighbridge Check In",
+            PointSubDescription: "Weighbridge Check In 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 20,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Weighbridge Check In",
+            PointSubDescription: "Weighbridge Check In 2",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 21,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Unloading Station",
+            PointSubDescription: "Unloading Station 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 22,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Unloading Station",
+            PointSubDescription: "Unloading Station 2",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 23,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Weighbridge Check Out",
+            PointSubDescription: "Weighbridge Check Out 1",
+            Status: "ACTIVE",
+          },
+          {
+            ID: 24,
+            Company: "MUSIM MAS, PT",
+            Location: "MEDAN KIM 2",
+            Point: "Weighbridge Check Out",
+            PointSubDescription: "Weighbridge Check Out 2",
+            Status: "ACTIVE",
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -307,7 +441,7 @@ export default {
     },
     pCloseFilter() {
       this.filter.value = false;
-    }
+    },
   },
   mounted() {
     if (this.itemDataTable.data.length == 0) {
@@ -329,8 +463,8 @@ export default {
         default:
           return 600;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

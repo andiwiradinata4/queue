@@ -69,8 +69,12 @@
                   :items="itemDataTable.data"
                   :search="search"
                   :height="tableHeight"
+                  expanded.sync
+                  :single-expand="false"
+                  show-expand
                   multi-sort
                   fixed-header
+                  item-key="ID"
                 >
                   <template v-slot:item.Status="{ item }">
                     <v-chip
@@ -110,6 +114,9 @@
                       </v-list>
                     </v-menu>
                   </template>
+                  <template v-slot:expanded-item="{ headers, item }">
+                    <td :colspan="headers.length"><b>Point</b> : {{ item.Point }}</td>
+                  </template>
                 </v-data-table>
               </template>
             </v-card>
@@ -136,7 +143,8 @@ export default {
   },
   data() {
     return {
-      title: "Point",
+      title: "Timeline",
+      singleExpand: false,
       snackbar: {
         isActive: false,
         text: "",
@@ -195,113 +203,40 @@ export default {
           },
           { text: "Company", value: "Company", align: "left" },
           { text: "Location", value: "Location", align: "left" },
-          { text: "Description", value: "Description", align: "left" },
+          // { text: "Point", value: "Point", align: "left" },
           { text: "Status", value: "Status", align: "center" },
+          { text: "", value: "data-table-expand" },
         ],
         data: [
           {
             ID: 1,
             Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 1",
-            Description: "Parking Area",
+            Point: [
+              "Parking Area",
+              "Security",
+              "Laboratory / Sampling",
+              "Laboratory / Labtest",
+              "Weighbridge Check In",
+              "Unloading Station",
+              "Weighbridge Check Out" ,
+            ].join('  |  '),
             Status: "ACTIVE",
           },
           {
             ID: 2,
             Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 1",
-            Description: "Security",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 3,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 1",
-            Description: "Laboratory / Sampling",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 4,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 1",
-            Description: "Laboratory / Labtest",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 5,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 1",
-            Description: "Weighbridge Check In",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 6,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 1",
-            Description: "Unloading Station",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 7,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 1",
-            Description: "Weighbridge Check Out",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 8,
-            Company: "MUSIM MAS, PT",
             Location: "MEDAN KIM 2",
-            Description: "Parking Area",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 9,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Security",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 10,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Weighbridge Checker",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 11,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Laboratory / Sampling",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 12,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Laboratory / Labtest",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 13,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Weighbridge Check In",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 14,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Unloading Station",
-            Status: "ACTIVE",
-          },
-          {
-            ID: 15,
-            Company: "MUSIM MAS, PT",
-            Location: "MEDAN KIM 2",
-            Description: "Weighbridge Check Out",
+            Point: [
+              "Parking Area",
+              "Security",
+              "Weighbridge Checker",
+              "Laboratory / Sampling",
+              "Laboratory / Labtest",
+              "Weighbridge Check In",
+              "Unloading Station",
+              "Weighbridge Check Out",
+            ].join('  |  '),
             Status: "ACTIVE",
           },
         ],

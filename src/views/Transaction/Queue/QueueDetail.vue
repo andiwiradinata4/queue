@@ -322,408 +322,15 @@
                           </v-container>
                         </v-card>
                       </v-timeline-item>
-
-                      <!-- <v-timeline-item color="primary" fill-dot>
-                        <span slot="opposite">
-                          <div style="font-size: 25px">
-                            Parking Area
-                            <span
-                              class="font-weight-light"
-                              style="font-size: 18px"
-                            >
-                              ( Parking Area 1 )
-                            </span>
-                          </div>
-                        </span>
-                        <v-card color="grey lighten-5">
-                          <v-container>
-                            <v-row class="pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Plat Number</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: BK1234CC</v-col
-                              >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Request Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 09:15</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified By</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: ADMIN</v-col
-                              >
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 10:00</v-col
-                              >
-                            </v-row>
-
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pb-0 font-weight-bold"
-                                >Internal Remarks</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pt-0"
-                                >Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Aut, nesciunt consequuntur
-                                veniam iure provident alias enim, perferendis
-                                mollitia sit sint dolores illum a modi
-                                distinctio. Sapiente corporis inventore totam
-                                iusto?
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-card>
-                      </v-timeline-item>
-                      <v-timeline-item color="primary" fill-dot>
-                        <span slot="opposite">
-                          <div style="font-size: 25px">
-                            Laboratory
-                            <span
-                              class="font-weight-light"
-                              style="font-size: 18px"
-                            >
-                              ( Laboratory 1 )
-                            </span>
-                          </div>
-                        </span>
-                        <v-card color="grey lighten-5">
-                          <v-container>
-                            <v-row class="pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Plat Number</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: BK1234CC</v-col
-                              >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Request Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 09:15</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified By</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: ADMIN</v-col
-                              >
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 10:00</v-col
-                              >
-                            </v-row>
-
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pb-0 font-weight-bold"
-                                >Internal Remarks</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pt-0"
-                                >Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Aut, nesciunt consequuntur
-                                veniam iure provident alias enim, perferendis
-                                mollitia sit sint dolores illum a modi
-                                distinctio. Sapiente corporis inventore totam
-                                iusto?
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-card>
-                      </v-timeline-item>
-                      <v-timeline-item color="primary" fill-dot>
-                        <span slot="opposite">
-                          <div style="font-size: 25px">
-                            Check In
-                            <span
-                              class="font-weight-light"
-                              style="font-size: 18px"
-                            >
-                              ( Check In 1 )
-                            </span>
-                          </div>
-                        </span>
-                        <v-card color="grey lighten-5">
-                          <v-container>
-                            <v-row class="pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Plat Number</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: BK1234CC</v-col
-                              >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Request Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 09:15</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified By</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: ADMIN</v-col
-                              >
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 10:00</v-col
-                              >
-                            </v-row>
-
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pb-0 font-weight-bold"
-                                >Internal Remarks</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pt-0"
-                                >Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Aut, nesciunt consequuntur
-                                veniam iure provident alias enim, perferendis
-                                mollitia sit sint dolores illum a modi
-                                distinctio. Sapiente corporis inventore totam
-                                iusto?
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-card>
-                      </v-timeline-item>
-                      <v-timeline-item color="primary" fill-dot>
-                        <span slot="opposite">
-                          <div style="font-size: 25px">
-                            Unloading
-                            <span
-                              class="font-weight-light"
-                              style="font-size: 18px"
-                            >
-                              ( Unloading 2 )
-                            </span>
-                          </div>
-                        </span>
-                        <v-card color="grey lighten-5">
-                          <v-container>
-                            <v-row class="pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Plat Number</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: BK1234CC</v-col
-                              >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Request Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 09:15</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified By</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: ADMIN</v-col
-                              >
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 10:00</v-col
-                              >
-                            </v-row>
-
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pb-0 font-weight-bold"
-                                >Internal Remarks</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pt-0"
-                                >Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Aut, nesciunt consequuntur
-                                veniam iure provident alias enim, perferendis
-                                mollitia sit sint dolores illum a modi
-                                distinctio. Sapiente corporis inventore totam
-                                iusto?
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-card>
-                      </v-timeline-item>
-                      <v-timeline-item
-                        color="amber darken-4"
-                        fill-dot
-                        icon="local_shipping"
-                      >
-                        <span slot="opposite">
-                          <div style="font-size: 25px">
-                            Check Out
-                            <span
-                              class="font-weight-light"
-                              style="font-size: 18px"
-                            >
-                              ( Check Out 2 )
-                            </span>
-                          </div>
-                        </span>
-                        <v-card color="grey lighten-5">
-                          <v-container>
-                            <v-row class="pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Plat Number</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: BK1234CC</v-col
-                              >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Request Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 09:15</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified By</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: ADMIN</v-col
-                              >
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="2"
-                                class="pb-0 font-weight-bold"
-                                >Verified Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="4" class="pb-0"
-                                >: 19/04/2021 10:00</v-col
-                              >
-                            </v-row>
-
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pb-0 font-weight-bold"
-                                >Internal Remarks</v-col
-                              >
-                            </v-row>
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pt-0"
-                                >Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Aut, nesciunt consequuntur
-                                veniam iure provident alias enim, perferendis
-                                mollitia sit sint dolores illum a modi
-                                distinctio. Sapiente corporis inventore totam
-                                iusto?
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                        </v-card>
-                      </v-timeline-item> -->
                     </v-timeline>
                   </v-container>
                 </v-tab-item>
                 <v-tab-item value="status-history">
                   <v-container class="pr-5 pl-5" style="max-width: 70%">
                     <v-timeline>
-                      <v-timeline-item right small
+                      <v-timeline-item
+                        right
+                        small
                         v-for="(item, i) in queueStatus"
                         :key="i"
                       >
@@ -769,7 +376,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <Button :callBack="pSave" :properties="btnSave" />
-                <router-link to="/driver">
+                <router-link to="/queue">
                   <Button :callBack="pBack" :properties="btnBack" />
                 </router-link>
               </v-card-actions>
@@ -949,49 +556,85 @@ export default {
       },
       queuePoint: [
         {
-          ID: "20210419-KM1-0001-005",
-          Point: "Check Out",
-          PointSub: "Check Out 1",
+          ID: "20210419-KM1-0001-008",
+          Point: "Weighbridge Check Out",
+          PointSub: "Weighbridge Check Out 1",
           PlatNumber: "BK1234CC",
-          RequestDate: "19-04-2021 15:45",
+          RequestDate: "19-04-2021 14:45",
           VerifiedBy: "ADMIN",
-          VerifiedDate: "19-04-2021 16:00",
+          VerifiedDate: "19-04-2021 15:00",
           InternalRemarks: "-",
           color: "amber darken-4",
           icon: "local_shipping",
         },
         {
-          ID: "20210419-KM1-0001-004",
+          ID: "20210419-KM1-0001-007",
           Point: "Unloading",
           PointSub: "Unloading 2",
           PlatNumber: "BK1234CC",
-          RequestDate: "19-04-2021 14:00",
+          RequestDate: "19-04-2021 13:30",
           VerifiedBy: "ADMIN",
-          VerifiedDate: "19-04-2021 15:30",
+          VerifiedDate: "19-04-2021 14:30",
+          InternalRemarks: "-",
+          color: "primary",
+          icon: "",
+        },
+        {
+          ID: "20210419-KM1-0001-006",
+          Point: "Check In",
+          PointSub: "Check In 2",
+          PlatNumber: "BK1234CC",
+          RequestDate: "19-04-2021 13:10",
+          VerifiedBy: "ADMIN",
+          VerifiedDate: "19-04-2021 13:20",
+          InternalRemarks: "-",
+          color: "primary",
+          icon: "",
+        },
+        {
+          ID: "20210419-KM1-0001-005",
+          Point: "Laboratory / Labtest",
+          PointSub: "Laboratory / Labtest 1",
+          PlatNumber: "BK1234CC",
+          RequestDate: "19-04-2021 11:15",
+          VerifiedBy: "ADMIN",
+          VerifiedDate: "19-04-2021 11:50",
+          InternalRemarks: "-",
+          color: "primary",
+          icon: "",
+        },
+        {
+          ID: "20210419-KM1-0001-004",
+          Point: "Laboratory / Sampling",
+          PointSub: "Laboratory / Sampling 1",
+          PlatNumber: "BK1234CC",
+          RequestDate: "19-04-2021 10:30",
+          VerifiedBy: "ADMIN",
+          VerifiedDate: "19-04-2021 11:00",
           InternalRemarks: "-",
           color: "primary",
           icon: "",
         },
         {
           ID: "20210419-KM1-0001-003",
-          Point: "Check In",
-          PointSub: "Check In 2",
+          Point: "Weighbridge Checker",
+          PointSub: "Weighbridge Checker 1",
           PlatNumber: "BK1234CC",
-          RequestDate: "19-04-2021 13:15",
+          RequestDate: "19-04-2021 10:00",
           VerifiedBy: "ADMIN",
-          VerifiedDate: "19-04-2021 13:45",
+          VerifiedDate: "19-04-2021 10:15",
           InternalRemarks: "-",
           color: "primary",
           icon: "",
         },
         {
           ID: "20210419-KM1-0001-002",
-          Point: "Laboratory",
-          PointSub: "Laboratory 1",
+          Point: "Security",
+          PointSub: "Security 1",
           PlatNumber: "BK1234CC",
-          RequestDate: "19-04-2021 10:00",
+          RequestDate: "19-04-2021 09:15",
           VerifiedBy: "ADMIN",
-          VerifiedDate: "19-04-2021 11:30",
+          VerifiedDate: "19-04-2021 09:45",
           InternalRemarks: "-",
           color: "primary",
           icon: "",
@@ -1001,9 +644,9 @@ export default {
           Point: "Parking Area",
           PointSub: "Parking Area 1",
           PlatNumber: "BK1234CC",
-          RequestDate: "19-04-2021 09:15",
-          VerifiedBy: "ADMIN",
-          VerifiedDate: "19-04-2021 19:45",
+          RequestDate: "19-04-2021 08:00",
+          VerifiedBy: null,
+          VerifiedDate: null,
           InternalRemarks: "-",
           color: "primary",
           icon: "",
@@ -1011,80 +654,115 @@ export default {
       ],
       queueStatus: [
         {
-          ID: "20210419-KM1-0001-011",
-          Status: "Verify Point Check Out",
+          ID: "20210419-KM1-0001-016",
+          Status: "Verify Check Out 1",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 15:45",
+          StatusDate: "19-04-2021 15:00",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-015",
+          Status: "Request Check Out 1",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 14:45",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-014",
+          Status: "Verify Unloading 2",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 14:30",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-013",
+          Status: "Request Unloading 2",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 13:30",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-012",
+          Status: "Verify Check In 2",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 13:20",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-011",
+          Status: "Request Check In 2",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 13:10",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-010",
-          Status: "Request Point Check Out",
+          Status: "Verify Laboratory / Labtest 1",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 16:00",
+          StatusDate: "19-04-2021 11:50",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-009",
-          Status: "Verify Point Unloading",
+          Status: "Request Laboratory / Labtest 1",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 15:30",
+          StatusDate: "19-04-2021 11:15",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-008",
-          Status: "Request Point Unloading",
+          Status: "Verify Laboratory / Sampling 1",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 14:00",
+          StatusDate: "19-04-2021 11:00",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-007",
-          Status: "Verify Point Check In",
+          Status: "Request Laboratory / Sampling 1",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 13:45",
+          StatusDate: "19-04-2021 10:30",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-006",
-          Status: "Request Point Check In",
+          Status: "Verify Weighbridge Checker 1",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 13:15",
+          StatusDate: "19-04-2021 10:15",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-005",
-          Status: "Verify Point Laboratory",
-          StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 11:30",
-          Remarks: "-",
-        },
-        {
-          ID: "20210419-KM1-0001-004",
-          Status: "Request Point Laboratory",
+          Status: "Request Weighbridge Checker 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 10:00",
           Remarks: "-",
         },
         {
-          ID: "20210419-KM1-0001-003",
-          Status: "Verify Point Parking Area",
+          ID: "20210419-KM1-0001-004",
+          Status: "Verify Security 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 09:45",
           Remarks: "-",
         },
         {
-          ID: "20210419-KM1-0001-002",
-          Status: "Request Point Parking Area",
+          ID: "20210419-KM1-0001-003",
+          Status: "Request Security 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 09:15",
+          Remarks: "-",
+        },
+        {
+          ID: "20210419-KM1-0001-002",
+          Status: "Request Parking Area",
+          StatusBy: "ADMIN",
+          StatusDate: "19-04-2021 08:00",
           Remarks: "-",
         },
         {
           ID: "20210419-KM1-0001-001",
           Status: "Create New Queue",
           StatusBy: "ADMIN",
-          StatusDate: "19-04-2021 16:00",
+          StatusDate: "19-04-2021 08:15",
           Remarks: "-",
         },
       ],

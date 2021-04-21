@@ -116,13 +116,13 @@ export default {
         title: "Point Sub",
         icon: "place",
         route: "/pointsub"
+      },
+      {
+        id: 4,
+        title: "Timeline",
+        icon: "table_chart",
+        route: "/timeline"
       }
-      // {
-      //   id: 4,
-      //   title: "Template",
-      //   icon: "table_chart",
-      //   route: "/template"
-      // }
     ],
     menuTransaction: [
       { id: 1, title: "Queue", icon: "queue", route: "/queue" }
