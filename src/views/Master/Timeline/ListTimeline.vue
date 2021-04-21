@@ -220,7 +220,7 @@ export default {
               "Weighbridge Check In",
               "Unloading Station",
               "Weighbridge Check Out" ,
-            ].join('  |  '),
+            ].join('  ->  '),
             Status: "ACTIVE",
           },
           {
@@ -236,7 +236,7 @@ export default {
               "Weighbridge Check In",
               "Unloading Station",
               "Weighbridge Check Out",
-            ].join('  |  '),
+            ].join('  ->  '),
             Status: "ACTIVE",
           },
         ],
@@ -248,7 +248,7 @@ export default {
       this.filter.value = true;
     },
     pNew() {
-      this.$router.replace({ path: "/point-detail/0" });
+      this.$router.replace({ path: "/timeline-detail/0" });
     },
     pView(data) {
       console.log("Press detail " + data);
