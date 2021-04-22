@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-container>
-      <div v-if="id == 0" class="list-title ml-5 pb-5 mt-2">{{ title }}</div>
-      <div v-else class="list-title ml-5 pb-5 mt-2">View Point Sub [ ID : {{ id }} ]</div>
+      <div v-if="id == 0" class="list-title ml-5 pb-6 mt-2 pt-1">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-6 mt-2 pt-1">View Point Sub [ ID : {{ id }} ]</div>
 
       <v-row class="pt-0">
         <v-col cols="12" class="pt-0">
