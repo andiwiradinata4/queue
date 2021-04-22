@@ -102,22 +102,31 @@
                   multi-sort
                   fixed-header
                 >
-                  <template v-slot:item.IsCompleted="{item}">
-                    <v-simple-checkbox v-model="item.IsCompleted" disabled></v-simple-checkbox>
+                  <template v-slot:item.IsCompleted="{ item }">
+                    <v-simple-checkbox
+                      v-model="item.IsCompleted"
+                      disabled
+                    ></v-simple-checkbox>
                   </template>
                   <template v-slot:item.Status="{ item }">
                     <v-chip
                       class="status-chip ma-2"
                       :color="pSetColor(item.Status)"
                       dark
-                    >{{ item.Status }}</v-chip>
+                      >{{ item.Status }}</v-chip
+                    >
                   </template>
 
                   <template v-slot:item.ID="{ item }">
                     <v-menu transition="slide-y-transition" bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn outlined v-bind="attrs" v-on="on" class="pl-2 pr-1">
-                          {{item.ID}}
+                        <v-btn
+                          outlined
+                          v-bind="attrs"
+                          v-on="on"
+                          class="pl-2 pr-1"
+                        >
+                          {{ item.ID }}
                           <v-icon>expand_more</v-icon>
                         </v-btn>
                       </template>
@@ -132,6 +141,11 @@
                         <v-list-item link to="#">
                           <v-list-item-title>
                             <v-icon class="mr-5">delete</v-icon>Delete
+                          </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item link :to="'/queue-position/' + item.ID">
+                          <v-list-item-title>
+                            <v-icon class="mr-5">place</v-icon>Queue Position
                           </v-list-item-title>
                         </v-list-item>
                       </v-list>
@@ -158,7 +172,7 @@ export default {
   components: {
     Button,
     FloatButton,
-    Snackbar
+    Snackbar,
   },
   data() {
     return {
@@ -166,38 +180,38 @@ export default {
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary"
+        color: "primary",
       },
       btnFilter: {
         icon: "filter_alt",
         text: "Filter",
-        color: "primary"
+        color: "primary",
       },
       btnNew: {
         icon: "mdi-plus",
         text: "New",
-        color: "primary"
+        color: "primary",
       },
       btnDetail: {
         icon: "mode_edit",
         text: "Edit",
-        color: "primary"
+        color: "primary",
       },
       btnRefresh: {
         icon: "refresh",
         text: "Refresh",
-        color: "primary"
+        color: "primary",
       },
       btnSaveFilter: {
         icon: "done",
         text: "Save",
-        color: "primary"
+        color: "primary",
       },
       btnCloseFilter: {
         icon: "close",
         text: "Close",
         color: "primary",
-        outlined: true
+        outlined: true,
       },
       search: "",
       filter: {
@@ -206,32 +220,32 @@ export default {
           company: {
             id: 0,
             value: "",
-            label: "Company"
+            label: "Company",
           },
           location: {
             id: 0,
             value: "",
-            label: "Location"
+            label: "Location",
           },
           division: {
             id: 0,
             value: "",
-            label: "Division"
+            label: "Division",
           },
           subdivision: {
             id: 0,
             value: "",
-            label: "Subdivision"
+            label: "Subdivision",
           },
           dateFrom: {
             value: "",
-            label: "Date From"
+            label: "Date From",
           },
           dateTo: {
             value: "",
-            label: "Date To"
-          }
-        }
+            label: "Date To",
+          },
+        },
       },
       itemDataTable: {
         headers: [
@@ -240,19 +254,19 @@ export default {
             text: "Queue Number",
             value: "QueueNumber",
             width: "150",
-            align: "center"
+            align: "center",
           },
           {
             text: "Queue Date",
             value: "QueueDate",
-            width: "150"
+            width: "150",
           },
           { text: "Plat Number", value: "PlatNumber", width: "150" },
           { text: "Driver", value: "Driver", width: "180" },
           {
             text: "SPB Number",
             value: "SPBNumber",
-            width: "180"
+            width: "180",
           },
           { text: "RFID", value: "RFID", width: "150" },
           { text: "Arrival ID", value: "ArrivalID", width: "150" },
@@ -260,27 +274,27 @@ export default {
           {
             text: "Queue Position Detail",
             value: "QueuePositionDetail",
-            width: "200"
+            width: "200",
           },
           { text: "Unloading Slot", value: "UnloadingSlot", width: "200" },
           {
             text: "Completed By",
             value: "CompletedBy",
-            width: "150"
+            width: "150",
           },
           {
             text: "Completed Date",
             value: "CompletedDate",
-            width: "150"
+            width: "150",
           },
           {
             text: "IsCompleted",
             value: "IsCompleted",
             width: "120",
-            align: "center"
+            align: "center",
           },
           { text: "Remarks", value: "Remarks", width: "200" },
-          { text: "Status", value: "Status", align: "center" }
+          { text: "Status", value: "Status", align: "center" },
         ],
         data: [
           {
@@ -300,7 +314,7 @@ export default {
             CompletedDate: "12/04/2021",
             IsCompleted: false,
             Remarks: "",
-            Status: "On Progress"
+            Status: "On Progress",
           },
           {
             ID: "20210401-KM1-0002",
@@ -319,7 +333,7 @@ export default {
             CompletedDate: "12/04/2021",
             IsCompleted: false,
             Remarks: "",
-            Status: "On Progress"
+            Status: "On Progress",
           },
           {
             ID: "20210401-KM1-0003",
@@ -338,7 +352,7 @@ export default {
             CompletedDate: "12/04/2021",
             IsCompleted: false,
             Remarks: "",
-            Status: "On Progress"
+            Status: "On Progress",
           },
           {
             ID: "20210401-KM1-0004",
@@ -357,7 +371,7 @@ export default {
             CompletedDate: "12/04/2021",
             IsCompleted: false,
             Remarks: "",
-            Status: "On Progress"
+            Status: "On Progress",
           },
           {
             ID: "20210401-KM1-0005",
@@ -376,7 +390,7 @@ export default {
             CompletedDate: "12/04/2021",
             IsCompleted: false,
             Remarks: "",
-            Status: "On Progress"
+            Status: "On Progress",
           },
           {
             ID: "20210401-KM1-0006",
@@ -395,10 +409,10 @@ export default {
             CompletedDate: "12/04/2021",
             IsCompleted: true,
             Remarks: "",
-            Status: "Closed"
-          }
-        ]
-      }
+            Status: "Closed",
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -426,7 +440,7 @@ export default {
     },
     pCloseFilter() {
       this.filter.value = false;
-    }
+    },
   },
   computed: {
     tableHeight() {
@@ -442,8 +456,8 @@ export default {
         default:
           return 600;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

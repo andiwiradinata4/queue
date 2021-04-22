@@ -18,6 +18,7 @@ import Login from '../views/System/Login/Login.vue';
 // Transaction
 import Queue from '../views/Transaction/Queue/ListQueue.vue'
 import QueueDetail from '../views/Transaction/Queue/QueueDetail.vue'
+import QueuePosition from '../views/Transaction/Queue/QueuePosition.vue'
 
 // Testing
 import Testing from '../views/Testing.vue';
@@ -102,7 +103,12 @@ const routes = [
     name: 'QueueDetail',
     component: QueueDetail
   },
-
+  {
+    path: '/queue-position/:id',
+    props: true,
+    name: 'QueuePosition',
+    component: QueuePosition
+  },
 
 
   {

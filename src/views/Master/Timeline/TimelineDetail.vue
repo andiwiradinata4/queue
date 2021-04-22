@@ -16,7 +16,7 @@
                 <v-form v-model="field.isValid" lazy-validation>
                   <v-container fluid>
                     <v-row class="mb-0 mt-0">
-                      <v-col cols="9" class="pt-0">
+                      <v-col cols="9" sm="8" class="pt-0">
                         <v-row class="mb-0 mt-0">
                           <v-col cols="6">
                             <v-select
@@ -47,7 +47,6 @@
                         <v-timeline dense class="pt-0">
                           <v-slide-x-reverse-transition group hide-on-leave>
                             <v-timeline-item
-                              right
                               small
                               v-for="(item, i) in field.point.value"
                               :key="i"
@@ -73,10 +72,7 @@
                           </v-slide-x-reverse-transition>
                         </v-timeline>
                       </v-col>
-                      <!-- <v-col cols="1" class="pt-4 ma-0">
-                        <Button :callBack="pSave" :properties="btnRefreshPoint" />
-                      </v-col> -->
-                      <v-col>
+                      <v-col cols="3" sm="4">
                         <v-row class="ml-1">
                           <v-col>
                             <v-spacer></v-spacer>
@@ -86,11 +82,12 @@
                             />
                           </v-col>
                         </v-row>
-                        <div v-for="item in itemsPoint" :key="item.ID">
+                        <div v-for="(item, i) in itemsPoint" :key="item.ID">
                           <v-card
                             class="ma-3"
                             color="teal lighten-5"
                             elevation="2"
+                            :key="i"
                           >
                             <v-card-text>
                               <v-row class="pa-0">
@@ -153,8 +150,7 @@
           <v-divider></v-divider>
           <v-card-text
             class="py-3 text-h6 font-weight-regular"
-            style="background-color: w
-            hite"
+            style="background-color: w hite"
           >
             {{ MessageBox.text }}
           </v-card-text>
@@ -222,6 +218,36 @@ export default {
         color: "normal",
         outlined: true,
       },
+      allItemPoint: [
+        {
+          id: 1,
+          name: "Parking Area",
+        },
+        {
+          id: 2,
+          name: "Security",
+        },
+        {
+          id: 3,
+          name: "Laboratory / Sampling",
+        },
+        {
+          id: 4,
+          name: "Laboratory / labtest",
+        },
+        {
+          id: 5,
+          name: "Weighbridge Check In",
+        },
+        {
+          id: 6,
+          name: "Unloading Station",
+        },
+        {
+          id: 7,
+          name: "Weighbridge Check Out",
+        },
+      ],
       itemsPoint: [
         // {
         //   id: 1,
@@ -329,47 +355,27 @@ export default {
       console.log(this.field.point.value);
     },
     pRefreshPoint() {
-      if (this.field.company.value.id == "") {
+      if (
+        this.field.company.value.id == "" &&
+        this.field.location.value.id == ""
+      ) {
+        this.MessageBox.title = "Message";
+        this.MessageBox.text = "Please choose company and location first";
+        this.MessageBox.value = true;
+      } else if (this.field.company.value.id == "") {
         this.MessageBox.title = "Message";
         this.MessageBox.text = "Please choose company first";
         this.MessageBox.value = true;
-        // this.snackbar.isActive = true;
-        // this.snackbar.text = "Please choose company first";
+      } else if (this.field.location.value.id == "") {
+        this.MessageBox.title = "Message";
+        this.MessageBox.text = "Please choose location first";
+        this.MessageBox.value = true;
       } else {
-        this.itemsPoint = [
-          {
-            id: 1,
-            name: "Parking Area",
-          },
-          {
-            id: 2,
-            name: "Security",
-          },
-          {
-            id: 3,
-            name: "Laboratory / Sampling",
-          },
-          {
-            id: 4,
-            name: "Laboratory / labtest",
-          },
-          {
-            id: 5,
-            name: "Weighbridge Check In",
-          },
-          {
-            id: 6,
-            name: "Weighbridge Check In",
-          },
-          {
-            id: 7,
-            name: "Unloading Station",
-          },
-          {
-            id: 8,
-            name: "Weighbridge Check Out",
-          },
-        ];
+        this.itemsPoint = this.allItemPoint;
+        // this.allItemPoint.forEach((e) => {
+        //   this.itemsPoint.push(e);
+        // });
+        console.log(this.itemsPoint);
       }
     },
     pCloseMessageBox() {

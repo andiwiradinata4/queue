@@ -258,6 +258,7 @@
                             >
                               ( {{ item.PointSub }} )
                             </span>
+
                           </div>
                         </span>
                         <v-card color="grey lighten-5" elevation="3">
