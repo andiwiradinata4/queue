@@ -4,6 +4,7 @@
     class="custom-btn"
     :color="properties.color"
     :outlined="properties.outlined"
+    :disabled="properties.disabled"
   >
     <v-icon class="btn-icon mr-2">
       {{ properties.icon }}

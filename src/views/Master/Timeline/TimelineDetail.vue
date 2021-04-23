@@ -233,7 +233,7 @@ export default {
         },
         {
           id: 4,
-          name: "Laboratory / labtest",
+          name: "Laboratory / Labtest",
         },
         {
           id: 5,

@@ -258,67 +258,49 @@
                             >
                               ( {{ item.PointSub }} )
                             </span>
-
                           </div>
                         </span>
-                        <v-card color="grey lighten-5" elevation="3">
+                        <v-card color="grey lighten-4" elevation="3">
                           <v-container>
                             <v-row class="pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="3"
-                                class="pb-0 font-weight-bold pr-0"
-                                >Plat Number</v-col
+                              <v-col cols="3" class="pb-0 font-weight-bold pr-0"
+                                >Requested By
+                                <div class="font-weight-regular">
+                                  {{ item.VerifiedBy }}
+                                </div></v-col
                               >
-                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
-                                >: {{ item.PlatNumber }}</v-col
+                              <v-col cols="3" class="pb-0 font-weight-bold px-0"
+                                >Requested Date
+                                <div class="font-weight-regular">
+                                  {{ item.RequestDate }}
+                                </div></v-col
                               >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="3"
-                                class="pb-0 font-weight-bold px-0"
-                                >Request Date</v-col
+                              <v-col cols="3" class="pb-0 font-weight-bold pr-0"
+                                >Verified By
+                                <div class="font-weight-regular">
+                                  {{ item.VerifiedBy }}
+                                </div></v-col
                               >
-                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
-                                >: {{ item.RequestDate }}
-                              </v-col>
-                            </v-row>
-                            <v-row class="pt-0 pl-3">
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="3"
-                                class="pb-0 font-weight-bold pr-0"
-                                >Verified By</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
-                                >: {{ item.VerifiedBy }}</v-col
-                              >
-
-                              <v-col
-                                cols="2"
-                                sm="4"
-                                lg="3"
-                                class="pb-0 font-weight-bold px-0"
-                                >Verified Date</v-col
-                              >
-                              <v-col cols="4" sm="8" lg="3" class="pb-0 px-0"
-                                >: {{ item.VerifiedDate }}
-                              </v-col>
-                            </v-row>
-
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pb-0 font-weight-bold"
-                                >Internal Remarks</v-col
+                              <v-col cols="3" class="pb-0 font-weight-bold px-0"
+                                >Verified Date
+                                <div class="font-weight-regular">
+                                  {{ item.VerifiedDate }}
+                                </div></v-col
                               >
                             </v-row>
-                            <v-row class="pt-0 pb-0 pl-3">
-                              <v-col cols="12" class="pt-0"
-                                >{{ item.InternalRemarks }}
-                              </v-col>
+                            <v-row class="pt-0 pb-3 pl-3">
+                              <v-col cols="3" class="pb-0 font-weight-bold"
+                                >Plat Number
+                                <div class="font-weight-regular">
+                                  {{ item.PlatNumber }}
+                                </div></v-col
+                              >
+                              <v-col cols="3" class="pb-0 font-weight-bold pl-0"
+                                >Internal Remarks
+                                <div class="font-weight-regular">
+                                  {{ item.InternalRemarks }}
+                                </div></v-col
+                              >
                             </v-row>
                           </v-container>
                         </v-card>
@@ -349,21 +331,18 @@
                         <v-card color="grey lighten-5" elevation="3">
                           <v-container>
                             <v-row class="pl-3">
-                              <v-col cols="3" class="pb-0 font-weight-bold"
-                                >Status By</v-col
-                              >
-                              <v-col cols="9" class="pb-0"
-                                >: {{ item.StatusBy }}</v-col
-                              >
-                            </v-row>
-
-                            <v-row class="pt-0 pb-3 pl-3">
-                              <v-col cols="3" class="pb-0 font-weight-bold"
-                                >Remarks</v-col
-                              >
-                              <v-col cols="9" class="pb-0"
-                                >: {{ item.Remarks }}</v-col
-                              >
+                              <v-col class="pb-0 font-weight-bold"
+                                >Status By
+                                <div class="font-weight-regular">
+                                  {{ item.StatusBy }}
+                                </div>
+                              </v-col>
+                              <v-col class="font-weight-bold"
+                                >Remarks
+                                <div class="font-weight-regular">
+                                  {{ item.Remarks }}
+                                </div>
+                              </v-col>
                             </v-row>
                           </v-container>
                         </v-card>
