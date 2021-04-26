@@ -100,7 +100,7 @@
                       </template>
 
                       <v-list>
-                        <v-list-item link :to="'/point-detail/' + item.ID">
+                        <v-list-item link :to="'/timeline-detail/' + item.ID">
                           <v-list-item-title>
                             <v-icon class="mr-5">edit</v-icon>Detail
                           </v-list-item-title>
@@ -203,7 +203,6 @@ export default {
           },
           { text: "Company", value: "Company", align: "left" },
           { text: "Location", value: "Location", align: "left" },
-          // { text: "Point", value: "Point", align: "left" },
           { text: "Status", value: "Status", align: "center" },
           { text: "", value: "data-table-expand" },
         ],

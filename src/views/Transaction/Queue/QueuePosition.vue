@@ -135,6 +135,33 @@
           </template>
         </v-col>
       </v-row>
+
+      <v-dialog
+        transition="dialog-top-transition"
+        persistent
+        max-width="600px"
+        scrollable
+        v-model="isRequest"
+      >
+        <v-card>
+          <v-card-title class="pt-5 pb-0">
+            <div class="headline">Request Queue Position</div>
+            <v-card-text>
+              <v-container fluid>
+                <v-row class="pt-0">
+                  <v-col cols="12" class="pb-0 pt-1">
+                    <v-text-field
+                      v-model="filter.field.PointID.value"
+                      clearable
+                      :label="filter.field.PointID.label"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card-title>
+        </v-card>
+      </v-dialog>
     </v-container>
     <Snackbar v-bind:properties="snackbar" />
   </v-app>
@@ -152,6 +179,8 @@ export default {
   data() {
     return {
       title: "Create New Queue",
+      isRequested: false,
+      isVerified: false,
       btnVerify: {
         icon: "done",
         text: "Verify",
@@ -188,8 +217,8 @@ export default {
           RequestedBy: "ADMIN",
           RequestDate: "23/04/2021 08:05",
           IsVerified: true,
-          VerifiedBy: "",
-          VerifiedDate: "",
+          VerifiedBy: "ADMIN",
+          VerifiedDate: "23/04/2021 08:10",
           InternalRemarks: "",
         },
         {
@@ -200,10 +229,10 @@ export default {
           PointSubID: "0",
           PointSubDescription: "",
           PlatNumber: "",
-          IsRequested: true,
+          IsRequested: false,
           RequestedBy: "",
           RequestDate: "",
-          IsVerified: true,
+          IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
           InternalRemarks: "",
@@ -289,6 +318,52 @@ export default {
           InternalRemarks: "",
         },
       ],
+      field: {
+        QueueID: { value: "", label: "Queue ID" },
+        PointID: { ID: 0, value: "", label: "Point" },
+        PointSubDetailID: {
+          ID: 0,
+          value: "",
+          label: "Pointsub",
+          rules: [(v) => !!v || "Pointsub is required!"],
+        },
+        PlatNumber: {
+          ID: 0,
+          value: "",
+          label: "Plat Number",
+          rules: [(v) => !!v || "Plat Number is required!"],
+        },
+        IsEditPlatNumber: {
+          value: false,
+          label: "Is Edit Plat Number",
+        },
+        ImagePathPlatNumber: {
+          value: "",
+          label: "Image Path Plat Number",
+          rules: [(v) => !!v || "Image Path Plat Number is required!"],
+        },
+        IsRequested: {
+          value: false,
+        },
+        RequestedBy: {
+          value: "",
+        },
+        RequestedDate: {
+          value: "",
+        },
+        IsVerified: {
+          value: false,
+        },
+        VerifiedBy: {
+          value: "",
+        },
+        VerifiedDate: {
+          value: "",
+        },
+        InternalRemarks: {
+          value: "",
+        },
+      },
     };
   },
   methods: {
@@ -333,6 +408,14 @@ export default {
         return false;
       }
     },
+    pSetRequest(item) {
+      this.field.PointID.value = item.PointID;
+      this.IsRequested = true;
+    },
+    pSaveRequest(item) {
+      this.field.PointID.value = item.PointID;
+      this.IsRequested = true;
+    }
   },
   computed: {},
 };

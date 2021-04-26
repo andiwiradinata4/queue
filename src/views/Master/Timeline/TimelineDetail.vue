@@ -227,24 +227,28 @@ export default {
           id: 2,
           name: "Security",
         },
-        {
+                {
           id: 3,
-          name: "Laboratory / Sampling",
+          name: "Weighbridge Checker",
         },
         {
           id: 4,
-          name: "Laboratory / Labtest",
+          name: "Laboratory / Sampling",
         },
         {
           id: 5,
-          name: "Weighbridge Check In",
+          name: "Laboratory / Labtest",
         },
         {
           id: 6,
-          name: "Unloading Station",
+          name: "Weighbridge Check In",
         },
         {
           id: 7,
+          name: "Unloading Station",
+        },
+        {
+          id: 8,
           name: "Weighbridge Check Out",
         },
       ],
