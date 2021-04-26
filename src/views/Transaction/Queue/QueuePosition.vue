@@ -50,33 +50,33 @@
                             <v-divider></v-divider>
                             <v-container class="ma-0">
                               <v-card-text class="pa-0">
-                                <v-row class="mb-2">
-                                  <v-col cols="1" class="font-weight-bold ml-2">
+                                <v-row>
+                                  <v-col class="font-weight-bold ml-2">
                                     Plat Number
                                     <div class="font-weight-regular">
                                       {{ item.PlatNumber }}
                                     </div>
                                   </v-col>
-                                  <v-col cols="1" class="font-weight-bold">
+                                  <v-col class="font-weight-bold">
                                     Requested By
                                     <div class="font-weight-regular">
                                       {{ item.RequestedBy }}
                                     </div>
                                   </v-col>
-                                  <v-col cols="1" class="font-weight-bold">
+                                  <v-col class="font-weight-bold">
                                     Requested Date
                                     <div class="font-weight-regular">
-                                      {{ item.RequestDate }}
+                                      {{ item.RequestedDate }}
                                     </div>
                                   </v-col>
 
-                                  <v-col cols="1" class="font-weight-bold">
+                                  <v-col class="font-weight-bold">
                                     Verified By
                                     <div class="font-weight-regular">
                                       {{ item.VerifiedBy }}
                                     </div>
                                   </v-col>
-                                  <v-col cols="1" class="font-weight-bold">
+                                  <v-col class="font-weight-bold">
                                     Verified Date
                                     <div class="font-weight-regular">
                                       {{ item.VerifiedDate }}
@@ -91,39 +91,63 @@
                                   </v-col>
                                 </v-row>
                               </v-card-text>
-                              <v-divider></v-divider>
-                              <v-card-actions class="pb-0">
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                  @click="pSave"
-                                  class="custom-btn"
-                                  :color="btnRequest.color"
-                                  :outlined="btnRequest.outlined"
-                                  :disabled="pDisabledRequested(i, item)"
-                                >
-                                  <v-icon class="btn-icon mr-2">
-                                    {{ btnRequest.icon }}
-                                  </v-icon>
-                                  {{ btnRequest.text }}
-                                </v-btn>
-                                <v-btn
-                                  @click="pSave"
-                                  class="custom-btn"
-                                  :color="btnVerify.color"
-                                  :outlined="btnVerify.outlined"
-                                  :disabled="
-                                    item.IsRequested == false
-                                      ? true
-                                      : item.IsVerified
-                                  "
-                                >
-                                  <v-icon class="btn-icon mr-2">
-                                    {{ btnVerify.icon }}
-                                  </v-icon>
-                                  {{ btnVerify.text }}
-                                </v-btn>
-                              </v-card-actions>
                             </v-container>
+                            <v-divider></v-divider>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                @click="pSaveVerify()"
+                                class="custom-btn"
+                                :color="btnAdd.color"
+                              >
+                                <v-icon class="btn-icon mr-2" color="white">
+                                  {{ btnAdd.icon }}
+                                </v-icon>
+                                <span class="white--text">{{
+                                  btnAdd.text
+                                }}</span>
+                              </v-btn>
+                              <v-btn
+                                @click="pSaveVerify()"
+                                class="custom-btn"
+                                :color="btnChange.color"
+                              >
+                                <v-icon class="btn-icon mr-2" color="white">
+                                  {{ btnChange.icon }}
+                                </v-icon>
+                                <span class="white--text">{{
+                                  btnChange.text
+                                }}</span>
+                              </v-btn>
+                              <v-btn
+                                @click="pSetRequest(item)"
+                                class="custom-btn"
+                                :color="btnRequest.color"
+                                :outlined="btnRequest.outlined"
+                                :disabled="pDisabledRequested(i, item)"
+                              >
+                                <v-icon class="btn-icon mr-2">
+                                  {{ btnRequest.icon }}
+                                </v-icon>
+                                {{ btnRequest.text }}
+                              </v-btn>
+                              <v-btn
+                                @click="pSetVerify(item)"
+                                class="custom-btn"
+                                :color="btnVerify.color"
+                                :outlined="btnVerify.outlined"
+                                :disabled="
+                                  item.IsRequested == false
+                                    ? true
+                                    : item.IsVerified
+                                "
+                              >
+                                <v-icon class="btn-icon mr-2">
+                                  {{ btnVerify.icon }}
+                                </v-icon>
+                                {{ btnVerify.text }}
+                              </v-btn>
+                            </v-card-actions>
                           </v-card>
                         </v-timeline-item>
                       </div>
@@ -136,30 +160,165 @@
         </v-col>
       </v-row>
 
+      <!-- Request -->
       <v-dialog
         transition="dialog-top-transition"
         persistent
         max-width="600px"
         scrollable
-        v-model="isRequest"
+        v-model="IsRequested"
       >
         <v-card>
-          <v-card-title class="pt-5 pb-0">
+          <v-card-title class="pt-5 pb-3">
             <div class="headline">Request Queue Position</div>
-            <v-card-text>
-              <v-container fluid>
-                <v-row class="pt-0">
-                  <v-col cols="12" class="pb-0 pt-1">
-                    <v-text-field
-                      v-model="filter.field.PointID.value"
-                      clearable
-                      :label="filter.field.PointID.label"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
           </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container fluid>
+              <v-row class="pt-4">
+                <v-col class="pt-0 pl-0">
+                  <v-text-field
+                    v-model="field.PointID.value"
+                    :label="field.PointID.label"
+                    readonly
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="py-0 mt-2">
+                <v-col class="py-0 pl-0">
+                  <v-select
+                    v-model="field.PointSubDetailID.ID"
+                    :items="GetSubPoint"
+                    item-text="name"
+                    item-value="id"
+                    :rules="field.PointSubDetailID.rules"
+                    :label="field.PointSubDetailID.label"
+                    outlined
+                    required
+                  ></v-select>
+                </v-col>
+              </v-row>
+              <v-row class="pt-0 mt-0">
+                <v-col class="pt-0 pl-0">
+                  <v-text-field
+                    v-model="field.PlatNumber.value"
+                    :label="field.PlatNumber.label"
+                    :rules="field.PlatNumber.rules"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="pSaveRequest()"
+              class="custom-btn"
+              :color="btnSaveRequest.color"
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnSaveRequest.icon }}
+              </v-icon>
+              {{ btnSaveRequest.text }}
+            </v-btn>
+            <v-btn
+              @click="pCloseRequest()"
+              class="custom-btn"
+              :color="btnCloseRequest.color"
+              outlined
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnCloseRequest.icon }}
+              </v-icon>
+              {{ btnCloseRequest.text }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Verify -->
+      <v-dialog
+        transition="dialog-top-transition"
+        persistent
+        max-width="600px"
+        scrollable
+        v-model="IsVerified"
+      >
+        <v-card>
+          <v-card-title class="pt-5 pb-3">
+            <div class="headline">Verify Queue Position</div>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container fluid>
+              <v-row class="pt-4">
+                <v-col class="pt-0 pl-0">
+                  <v-text-field
+                    v-model="field.PointID.value"
+                    :label="field.PointID.label"
+                    readonly
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="py-0 mt-2">
+                <v-col class="py-0 pl-0">
+                  <v-text-field
+                    v-model="field.PointSubDetailID.value"
+                    :label="field.PointSubDetailID.label"
+                    readonly
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="pt-4 mt-2">
+                <v-col class="py-0 pl-0">
+                  <v-text-field
+                    v-model="field.PlatNumber.value"
+                    :label="field.PlatNumber.label"
+                    :rules="field.PlatNumber.rules"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="pt-4 mt-2">
+                <v-col class="pt-0 pl-0">
+                  <v-textarea
+                    v-model="field.InternalRemarks.value"
+                    :label="field.InternalRemarks.label"
+                    :rules="field.InternalRemarks.rules"
+                    outlined
+                    counter="250"
+                    rows="3"
+                    auto-grow
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="pSaveVerify()"
+              class="custom-btn"
+              :color="btnSaveRequest.color"
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnSaveRequest.icon }}
+              </v-icon>
+              {{ btnSaveRequest.text }}
+            </v-btn>
+            <v-btn
+              @click="IsVerified = false"
+              class="custom-btn"
+              :color="btnCloseRequest.color"
+              outlined
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnCloseRequest.icon }}
+              </v-icon>
+              {{ btnCloseRequest.text }}
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-dialog>
     </v-container>
@@ -179,8 +338,8 @@ export default {
   data() {
     return {
       title: "Create New Queue",
-      isRequested: false,
-      isVerified: false,
+      IsRequested: false,
+      IsVerified: false,
       btnVerify: {
         icon: "done",
         text: "Verify",
@@ -193,11 +352,25 @@ export default {
         color: "primary",
         disabled: true,
       },
+      btnSaveRequest: {
+        icon: "done",
+        text: "Save",
+        color: "primary",
+      },
+      btnCloseRequest: {
+        icon: "close",
+        text: "Close",
+        color: "normal",
+      },
       btnChange: {
         icon: "edit",
-        text: "Change Point",
-        color: "normal",
-        outlined: true,
+        text: "Change",
+        color: "blue-grey darken-3",
+      },
+      btnAdd: {
+        icon: "mdi-plus",
+        text: "Add Point",
+        color: "orange darken-4",
       },
       snackbar: {
         isActive: false,
@@ -208,14 +381,14 @@ export default {
         {
           ID: "20210419-KM1-0001-001",
           QueueID: "20210419-KM1-0001",
-          PointID: "1",
+          PointID: 1,
           PointDescription: "Parking Area",
-          PointSubID: "1",
+          PointSubID: 1,
           PointSubDescription: "Parking Area 1",
           PlatNumber: "BK1234CC",
           IsRequested: true,
           RequestedBy: "ADMIN",
-          RequestDate: "23/04/2021 08:05",
+          RequestedDate: "23/04/2021 08:05",
           IsVerified: true,
           VerifiedBy: "ADMIN",
           VerifiedDate: "23/04/2021 08:10",
@@ -224,14 +397,14 @@ export default {
         {
           ID: "20210419-KM1-0001-002",
           QueueID: "20210419-KM1-0001",
-          PointID: "2",
+          PointID: 2,
           PointDescription: "Security",
-          PointSubID: "0",
+          PointSubID: 0,
           PointSubDescription: "",
           PlatNumber: "",
           IsRequested: false,
           RequestedBy: "",
-          RequestDate: "",
+          RequestedDate: "",
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
@@ -247,7 +420,7 @@ export default {
           PlatNumber: "",
           IsRequested: false,
           RequestedBy: "",
-          RequestDate: "",
+          RequestedDate: "",
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
@@ -263,7 +436,7 @@ export default {
           PlatNumber: "",
           IsRequested: false,
           RequestedBy: "",
-          RequestDate: "",
+          RequestedDate: "",
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
@@ -279,7 +452,7 @@ export default {
           PlatNumber: "",
           IsRequested: false,
           RequestedBy: "",
-          RequestDate: "",
+          RequestedDate: "",
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
@@ -295,7 +468,7 @@ export default {
           PlatNumber: "",
           IsRequested: false,
           RequestedBy: "",
-          RequestDate: "",
+          RequestedDate: "",
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
@@ -311,14 +484,233 @@ export default {
           PlatNumber: "",
           IsRequested: false,
           RequestedBy: "",
-          RequestDate: "",
+          RequestedDate: "",
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
           InternalRemarks: "",
         },
       ],
+      ListPointSub: [
+        {
+          id: 1,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 1,
+          PointDescription: "Parking Area",
+          name: "Parking Area 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 2,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 2,
+          PointDescription: "Security",
+          name: "Security 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 3,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 3,
+          PointDescription: "Laboratory / Sampling",
+          name: "Laboratory / Sampling 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 4,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 3,
+          PointDescription: "Laboratory / Sampling",
+          name: "Laboratory / Sampling 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 5,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 4,
+          PointDescription: "Laboratory / Labtest",
+          name: "Laboratory / Labtest 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 6,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 4,
+          PointDescription: "Laboratory / Labtest",
+          name: "Laboratory / Labtest 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 7,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 5,
+          PointDescription: "Weighbridge Check In",
+          name: "Weighbridge Check In 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 8,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 5,
+          PointDescription: "Weighbridge Check In",
+          name: "Weighbridge Check In 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 9,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 6,
+          PointDescription: "Unloading Station",
+          name: "Unloading Station 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 10,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 6,
+          PointDescription: "Unloading Station",
+          name: "Unloading Station 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 11,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 7,
+          PointDescription: "Weighbridge Check Out",
+          name: "Weighbridge Check Out 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 12,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 1",
+          PointID: 7,
+          PointDescription: "Weighbridge Check Out",
+          name: "Weighbridge Check Out 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 13,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 8,
+          PointDescription: "Parking Area",
+          name: "Parking Area 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 14,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 9,
+          PointDescription: "Security",
+          name: "Security 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 15,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 10,
+          PointDescription: "Weighbridge Checker",
+          name: "Weighbridge Checker 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 16,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 10,
+          PointDescription: "Weighbridge Checker",
+          name: "Weighbridge Checker 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 17,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 11,
+          PointDescription: "Laboratory / Sampling",
+          name: "Laboratory / Sampling 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 18,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 12,
+          PointDescription: "Laboratory / Labtest",
+          name: "Laboratory / Labtest 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 19,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 13,
+          PointDescription: "Weighbridge Check In",
+          name: "Weighbridge Check In 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 20,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 13,
+          PointDescription: "Weighbridge Check In",
+          name: "Weighbridge Check In 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 21,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 14,
+          PointDescription: "Unloading Station",
+          name: "Unloading Station 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 22,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 14,
+          PointDescription: "Unloading Station",
+          name: "Unloading Station 2",
+          Status: "ACTIVE",
+        },
+        {
+          id: 23,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 15,
+          PointDescription: "Weighbridge Check Out",
+          name: "Weighbridge Check Out 1",
+          Status: "ACTIVE",
+        },
+        {
+          id: 24,
+          Company: "MUSIM MAS, PT",
+          Location: "MEDAN KIM 2",
+          PointID: 15,
+          PointDescription: "Weighbridge Check Out",
+          name: "Weighbridge Check Out 2",
+          Status: "ACTIVE",
+        },
+      ],
       field: {
+        ID: { value: "", label: "ID" },
         QueueID: { value: "", label: "Queue ID" },
         PointID: { ID: 0, value: "", label: "Point" },
         PointSubDetailID: {
@@ -328,7 +720,6 @@ export default {
           rules: [(v) => !!v || "Pointsub is required!"],
         },
         PlatNumber: {
-          ID: 0,
           value: "",
           label: "Plat Number",
           rules: [(v) => !!v || "Plat Number is required!"],
@@ -362,6 +753,12 @@ export default {
         },
         InternalRemarks: {
           value: "",
+          label: "Internal Remarks",
+          rules: [
+            (v) =>
+              v.length <= 250 ||
+              "Character of internal remarks must below or be equal of 250!",
+          ],
         },
       },
     };
@@ -409,15 +806,70 @@ export default {
       }
     },
     pSetRequest(item) {
-      this.field.PointID.value = item.PointID;
+      this.field.ID.value = item.ID;
+      this.field.QueueID.value = item.QueueID;
+      this.field.PointID.ID = item.PointID;
+      this.field.PointID.value = item.PointDescription;
+      this.field.PlatNumber.value = "";
+      this.field.IsRequested.value = false;
+      this.field.RequestedBy.value = "";
+      this.field.InternalRemarks.value = "";
       this.IsRequested = true;
     },
-    pSaveRequest(item) {
-      this.field.PointID.value = item.PointID;
-      this.IsRequested = true;
-    }
+    pSaveRequest() {
+      this.queuePoint.map((e) => {
+        if (e.ID == this.field.ID.value) {
+          let date = new Date();
+          let dateWithFormat = date.toJSON().slice(0, 10).replace(/-/g, "/");
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+
+          e.PointSubID = this.field.PointSubDetailID.ID;
+          e.PointSubDescription = this.GetSubPoint[0].name;
+          e.PlatNumber = this.field.PlatNumber.value;
+          e.IsRequested = true;
+          e.RequestedBy = "ADMIN";
+          e.RequestedDate = dateWithFormat + " " + hour + ":" + minute;
+          console.log(e);
+          console.log(this.GetSubPoint);
+        }
+      });
+      this.IsRequested = false;
+    },
+    pCloseRequest() {
+      this.IsRequested = false;
+    },
+    pSetVerify(item) {
+      console.log(item);
+      this.field.ID.value = item.ID;
+      this.field.QueueID.value = item.QueueID;
+      this.field.PointID.ID = item.PointID;
+      this.field.PointID.value = item.PointDescription;
+      this.field.PointSubDetailID.value = item.PointSubDescription;
+      this.IsVerified = true;
+    },
+    pSaveVerify() {
+      this.queuePoint.map((e) => {
+        if (e.ID == this.field.ID.value) {
+          let date = new Date();
+          let dateWithFormat = date.toJSON().slice(0, 10).replace(/-/g, "/");
+          let hour = date.getHours();
+          let minute = date.getMinutes();
+          e.PlatNumber = this.field.PlatNumber.value;
+          e.IsVerified = true;
+          e.VerifiedBy = "ADMIN";
+          e.VerifiedDate = dateWithFormat + " " + hour + ":" + minute;
+          e.InternalRemarks = this.field.InternalRemarks.value;
+        }
+      });
+      this.IsVerified = false;
+    },
   },
-  computed: {},
+  computed: {
+    GetSubPoint() {
+      return this.ListPointSub.filter((e) => e.id == this.field.PointID.ID);
+    },
+  },
 };
 </script>
 
