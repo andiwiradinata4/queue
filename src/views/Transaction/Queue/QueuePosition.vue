@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container id="queue-detail">
+    <v-container id="queue-position">
       <div class="list-title ml-5 pb-5 my-2">
         Queue Position [ ID : {{ id }} ]
       </div>
@@ -108,7 +108,7 @@
                                 }}</span>
                               </v-btn>
                               <v-btn
-                                @click="pSaveVerify()"
+                                @click="pSetChange(item)"
                                 class="custom-btn"
                                 :color="btnChange.color"
                               >
@@ -188,7 +188,7 @@
                 <v-col class="py-0 pl-0">
                   <v-select
                     v-model="field.PointSubDetailID.ID"
-                    :items="GetSubPoint"
+                    :items="GetListSubPoint"
                     item-text="name"
                     item-value="id"
                     :rules="field.PointSubDetailID.rules"
@@ -321,6 +321,101 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Change -->
+      <v-dialog
+        transition="dialog-top-transition"
+        persistent
+        max-width="600px"
+        scrollable
+        v-model="IsChanged"
+      >
+        <v-card>
+          <v-card-title class="pt-5 pb-3">
+            <div class="headline">Change Queue Position</div>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container fluid>
+              <v-row class="pt-4">
+                <v-col class="pt-0 pl-0">
+                  <v-select
+                    v-model="field.PointID.ID"
+                    :items="ListPoint"
+                    item-text="Description"
+                    item-value="ID"
+                    :rules="field.PointID.rules"
+                    :label="field.PointID.label"
+                    outlined
+                    required
+                  ></v-select>
+                </v-col>
+              </v-row>
+              <v-row class="py-0 mt-2">
+                <v-col class="py-0 pl-0">
+                  <v-select
+                    v-model="field.PointSubDetailID.ID"
+                    :items="GetListSubPoint"
+                    item-text="name"
+                    item-value="id"
+                    :rules="field.PointSubDetailID.rules"
+                    :label="field.PointSubDetailID.label"
+                    outlined
+                    required
+                  ></v-select>
+                </v-col>
+              </v-row>
+              <v-row class="pt-4 mt-2">
+                <v-col class="py-0 pl-0">
+                  <v-text-field
+                    v-model="field.PlatNumber.value"
+                    :label="field.PlatNumber.label"
+                    :rules="field.PlatNumber.rules"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="pt-4 mt-2">
+                <v-col class="pt-0 pl-0">
+                  <v-textarea
+                    v-model="field.InternalRemarks.value"
+                    :label="field.InternalRemarks.label"
+                    :rules="field.InternalRemarks.rules"
+                    outlined
+                    counter="250"
+                    rows="3"
+                    auto-grow
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="pChange()"
+              class="custom-btn"
+              :color="btnSaveRequest.color"
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnSaveRequest.icon }}
+              </v-icon>
+              {{ btnSaveRequest.text }}
+            </v-btn>
+            <v-btn
+              @click="IsChanged = false"
+              class="custom-btn"
+              :color="btnCloseRequest.color"
+              outlined
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnCloseRequest.icon }}
+              </v-icon>
+              {{ btnCloseRequest.text }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
     <Snackbar v-bind:properties="snackbar" />
   </v-app>
@@ -340,6 +435,7 @@ export default {
       title: "Create New Queue",
       IsRequested: false,
       IsVerified: false,
+      IsChanged: false,
       btnVerify: {
         icon: "done",
         text: "Verify",
@@ -365,12 +461,12 @@ export default {
       btnChange: {
         icon: "edit",
         text: "Change",
-        color: "blue-grey darken-3",
+        color: "orange darken-4",
       },
       btnAdd: {
         icon: "mdi-plus",
         text: "Add Point",
-        color: "orange darken-4",
+        color: "blue-grey darken-4",
       },
       snackbar: {
         isActive: false,
@@ -489,6 +585,36 @@ export default {
           VerifiedBy: "",
           VerifiedDate: "",
           InternalRemarks: "",
+        },
+      ],
+      ListPoint: [
+        {
+          ID: 1,
+          Description: "Parking Area",
+        },
+        {
+          ID: 2,
+          Description: "Security",
+        },
+        {
+          ID: 3,
+          Description: "Laboratory / Sampling",
+        },
+        {
+          ID: 4,
+          Description: "Laboratory / Labtest",
+        },
+        {
+          ID: 5,
+          Description: "Weighbridge Check In",
+        },
+        {
+          ID: 6,
+          Description: "Unloading Station",
+        },
+        {
+          ID: 7,
+          Description: "Weighbridge Check Out",
         },
       ],
       ListPointSub: [
@@ -712,7 +838,12 @@ export default {
       field: {
         ID: { value: "", label: "ID" },
         QueueID: { value: "", label: "Queue ID" },
-        PointID: { ID: 0, value: "", label: "Point" },
+        PointID: {
+          ID: 0,
+          value: "",
+          label: "Point",
+          rules: [(v) => !!v || "Point is required!"],
+        },
         PointSubDetailID: {
           ID: 0,
           value: "",
@@ -864,17 +995,53 @@ export default {
       });
       this.IsVerified = false;
     },
+    pSetChange(item) {
+      // console.log(item);
+      this.field.ID.value = item.ID;
+      this.field.QueueID.value = item.QueueID;
+      this.field.PointID.ID = item.PointID;
+      this.field.PointID.value = item.PointDescription;
+      this.field.PointSubDetailID.ID = item.PointSubID;
+      this.field.PointSubDetailID.value = item.PointSubDescription;
+      this.field.PlatNumber.value = item.PlatNumber;
+      this.field.InternalRemarks.value = item.InternalRemarks;
+      this.IsChanged = true;
+      // console.log(this.field);
+    },
+    pChange() {
+      this.queuePoint.map((e) => {
+        if (e.ID == this.field.ID.value) {
+          e.PointID = this.field.PointID.ID;
+          e.PointDescription = this.GetPoint[0].Description;
+          e.PointSubID = this.field.PointSubDetailID.ID;
+          e.PointSubDescription = this.GetSubPoint[0].name;
+          e.PlatNumber = this.field.PlatNumber.value;
+          e.InternalRemarks = this.field.InternalRemarks.value;
+        }
+      });
+      this.IsChanged = false;
+    },
   },
   computed: {
+    GetPoint() {
+      return this.ListPoint.filter((e) => e.ID == this.field.PointID.ID);
+    },
     GetSubPoint() {
-      return this.ListPointSub.filter((e) => e.id == this.field.PointID.ID);
+      return this.ListPointSub.filter(
+        (e) => e.PointID == this.field.PointID.ID
+      );
+    },
+    GetListSubPoint() {
+      return this.ListPointSub.filter(
+        (e) => e.PointID == this.field.PointID.ID
+      );
     },
   },
 };
 </script>
 
 <style scoped>
-#queue-detail {
+#queue-position {
   max-width: 100%;
   padding: 0 !important;
 }
