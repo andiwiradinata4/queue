@@ -94,9 +94,40 @@
                             </v-container>
                             <v-divider></v-divider>
                             <v-card-actions>
+                              <v-speed-dial
+                                class="ml-5"
+                                v-model="fab"
+                                right="true"
+                                direction="right"
+                                open-on-hover="true"
+                                transition="slide-x-reverse-transition"
+                              >
+                                <template v-slot:activator>
+                                  <v-btn
+                                    v-model="fab"
+                                    color="teal darken-3"
+                                    dark
+                                    fab
+                                    small
+                                  >
+                                    <v-icon v-if="fab"> mdi-close </v-icon>
+                                    <v-icon v-else> app_registration </v-icon>
+                                  </v-btn>
+                                </template>
+
+                                <v-btn fab dark small color="indigo">
+                                  <v-icon>mdi-plus</v-icon>
+                                </v-btn>
+                                <v-btn fab dark small color="green">
+                                  <v-icon>mdi-pencil</v-icon>
+                                </v-btn>
+                                <v-btn fab dark small color="red">
+                                  <v-icon>mdi-delete</v-icon>
+                                </v-btn>
+                              </v-speed-dial>
                               <v-spacer></v-spacer>
                               <v-btn
-                                @click="pSaveVerify()"
+                                @click="pSetAddPoint(i + 1)"
                                 class="custom-btn"
                                 :color="btnAdd.color"
                               >
@@ -106,6 +137,17 @@
                                 <span class="white--text">{{
                                   btnAdd.text
                                 }}</span>
+                              </v-btn>
+                              <v-btn
+                                @click="pDeletePoint(i)"
+                                class="custom-btn"
+                                :color="btnDelete.color"
+                                outlined
+                              >
+                                <v-icon class="btn-icon mr-2">
+                                  {{ btnDelete.icon }}
+                                </v-icon>
+                                <span>{{ btnDelete.text }}</span>
                               </v-btn>
                               <v-btn
                                 @click="pSetChange(item)"
@@ -132,6 +174,17 @@
                                 {{ btnRequest.text }}
                               </v-btn>
                               <v-btn
+                                @click="pCancelRequest(item.ID)"
+                                class="custom-btn"
+                                :color="btnCancelRequest.color"
+                                outlined
+                              >
+                                <v-icon class="btn-icon mr-2">
+                                  {{ btnCancelRequest.icon }}
+                                </v-icon>
+                                {{ btnCancelRequest.text }}
+                              </v-btn>
+                              <v-btn
                                 @click="pSetVerify(item)"
                                 class="custom-btn"
                                 :color="btnVerify.color"
@@ -146,6 +199,17 @@
                                   {{ btnVerify.icon }}
                                 </v-icon>
                                 {{ btnVerify.text }}
+                              </v-btn>
+                              <v-btn
+                                @click="pCancelVerify(item.ID)"
+                                class="custom-btn"
+                                :color="btnCancelVerify.color"
+                                outlined
+                              >
+                                <v-icon class="btn-icon mr-2">
+                                  {{ btnCancelVerify.icon }}
+                                </v-icon>
+                                {{ btnCancelVerify.text }}
                               </v-btn>
                             </v-card-actions>
                           </v-card>
@@ -416,6 +480,65 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Add Point -->
+      <v-dialog
+        transition="dialog-top-transition"
+        persistent
+        max-width="600px"
+        scrollable
+        v-model="IsAddPoint"
+      >
+        <v-card>
+          <v-card-title class="pt-5 pb-3">
+            <div class="headline">Add New Point</div>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container fluid>
+              <v-row class="pt-4">
+                <v-col class="pt-0 pl-0">
+                  <v-select
+                    v-model="field.PointID.ID"
+                    :items="ListPoint"
+                    item-text="Description"
+                    item-value="ID"
+                    :rules="field.PointID.rules"
+                    :label="field.PointID.label"
+                    outlined
+                    required
+                  ></v-select>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="pAddPoint()"
+              class="custom-btn"
+              :color="btnSaveRequest.color"
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnSaveRequest.icon }}
+              </v-icon>
+              {{ btnSaveRequest.text }}
+            </v-btn>
+            <v-btn
+              @click="IsAddPoint = false"
+              class="custom-btn"
+              :color="btnCloseRequest.color"
+              outlined
+            >
+              <v-icon class="btn-icon mr-2">
+                {{ btnCloseRequest.icon }}
+              </v-icon>
+              {{ btnCloseRequest.text }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
     <Snackbar v-bind:properties="snackbar" />
   </v-app>
@@ -432,20 +555,34 @@ export default {
   props: { id: String },
   data() {
     return {
+      fab: false,
       title: "Create New Queue",
       IsRequested: false,
       IsVerified: false,
       IsChanged: false,
+      IsAddPoint: false,
       btnVerify: {
         icon: "done",
         text: "Verify",
         color: "success",
         disabled: false,
       },
+      btnCancelVerify: {
+        icon: "close",
+        text: "Cancel Verify",
+        color: "normal",
+        disabled: true,
+      },
       btnRequest: {
         icon: "near_me",
         text: "Request",
         color: "primary",
+        disabled: true,
+      },
+      btnCancelRequest: {
+        icon: "near_me_disabled",
+        text: "Cancel Request",
+        color: "normal",
         disabled: true,
       },
       btnSaveRequest: {
@@ -466,6 +603,11 @@ export default {
       btnAdd: {
         icon: "mdi-plus",
         text: "Add Point",
+        color: "blue-grey darken-4",
+      },
+      btnDelete: {
+        icon: "delete",
+        text: "Delete Point",
         color: "blue-grey darken-4",
       },
       snackbar: {
@@ -835,7 +977,9 @@ export default {
           Status: "ACTIVE",
         },
       ],
+
       field: {
+        Index: 0,
         ID: { value: "", label: "ID" },
         QueueID: { value: "", label: "Queue ID" },
         PointID: {
@@ -970,6 +1114,18 @@ export default {
     pCloseRequest() {
       this.IsRequested = false;
     },
+    pCancelRequest(ID) {
+      this.queuePoint.map((e) => {
+        if (e.ID == ID) {
+          e.PointSubID = 0;
+          e.PointSubDescription = "";
+          e.PlatNumber = "";
+          e.IsRequested = false;
+          e.RequestedBy = "";
+          e.RequestedDate = "";
+        }
+      });
+    },
     pSetVerify(item) {
       console.log(item);
       this.field.ID.value = item.ID;
@@ -995,8 +1151,16 @@ export default {
       });
       this.IsVerified = false;
     },
+    pCancelVerify(ID) {
+      this.queuePoint.map((e) => {
+        if (e.ID == ID) {
+          e.IsVerified = false;
+          e.VerifiedBy = "";
+          e.VerifiedDate = "";
+        }
+      });
+    },
     pSetChange(item) {
-      // console.log(item);
       this.field.ID.value = item.ID;
       this.field.QueueID.value = item.QueueID;
       this.field.PointID.ID = item.PointID;
@@ -1006,7 +1170,6 @@ export default {
       this.field.PlatNumber.value = item.PlatNumber;
       this.field.InternalRemarks.value = item.InternalRemarks;
       this.IsChanged = true;
-      // console.log(this.field);
     },
     pChange() {
       this.queuePoint.map((e) => {
@@ -1020,6 +1183,35 @@ export default {
         }
       });
       this.IsChanged = false;
+    },
+    pSetAddPoint(i) {
+      this.field.Index = i;
+      this.field.ID.value = "";
+      this.field.QueueID.value = "";
+      this.field.PointID.ID = 0;
+      this.IsAddPoint = true;
+    },
+    pAddPoint() {
+      this.queuePoint.splice(this.field.Index, 0, {
+        ID: "20210419-KM1-0001-00" + this.field.Index,
+        QueueID: "20210419-KM1-0001",
+        PointID: this.field.PointID.ID,
+        PointDescription: this.GetPoint[0].Description,
+        PointSubID: 0,
+        PointSubDescription: "",
+        PlatNumber: "",
+        IsRequested: false,
+        RequestedBy: "",
+        RequestedDate: "",
+        IsVerified: false,
+        VerifiedBy: "",
+        VerifiedDate: "",
+        InternalRemarks: "",
+      });
+      this.IsAddPoint = false;
+    },
+    pDeletePoint(i) {
+      this.queuePoint.splice(i, 1);
     },
   },
   computed: {

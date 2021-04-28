@@ -227,7 +227,7 @@ export default {
           id: 2,
           name: "Security",
         },
-                {
+        {
           id: 3,
           name: "Weighbridge Checker",
         },
@@ -351,12 +351,9 @@ export default {
         Idx: this.idx++,
         PointName: point.name,
       });
-      console.log(this.field.point.value);
     },
     pDelete(i) {
-      console.log(i);
       this.field.point.value.splice(i, 1);
-      console.log(this.field.point.value);
     },
     pRefreshPoint() {
       if (
