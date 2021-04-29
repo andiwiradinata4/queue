@@ -3,6 +3,17 @@
     <v-container id="queue-position">
       <div class="list-title ml-5 pb-5 my-2">
         Queue Position [ ID : {{ id }} ]
+        <span v-if="queuePoint.length == 0" class="ml-2">
+          <v-btn 
+            @click="pSetAddPoint(i + 1)"
+            fab
+            dark
+            small
+            :color="btnAdd.color"
+          >
+            <v-icon>{{ btnAdd.icon }}</v-icon>
+          </v-btn></span
+        >
       </div>
 
       <v-row class="pt-0">
@@ -46,6 +57,56 @@
                                   ( {{ item.PointSubDescription }} )
                                 </span>
                               </span>
+
+                              <!-- Button Add, Edit, Delete -->
+                              <v-speed-dial
+                                class="ml-8 my-1"
+                                v-model="item.Fab"
+                                right
+                                direction="right"
+                                transition="slide-x-transition"
+                              >
+                                <template v-slot:activator>
+                                  <v-btn
+                                    v-model="item.Fab"
+                                    color="light-blue darken-4"
+                                    dark
+                                    fab
+                                    small
+                                  >
+                                    <v-icon v-if="item.Fab"> mdi-close </v-icon>
+                                    <v-icon v-else> app_registration </v-icon>
+                                  </v-btn>
+                                </template>
+
+                                <v-btn
+                                  @click="pSetAddPoint(i + 1)"
+                                  fab
+                                  dark
+                                  small
+                                  :color="btnAdd.color"
+                                >
+                                  <v-icon>{{ btnAdd.icon }}</v-icon>
+                                </v-btn>
+                                <v-btn
+                                  @click="pSetChange(item)"
+                                  fab
+                                  dark
+                                  small
+                                  :color="btnChange.color"
+                                >
+                                  <v-icon>{{ btnChange.icon }}</v-icon>
+                                </v-btn>
+                                <v-btn
+                                  @click="pDeletePoint(i)"
+                                  fab
+                                  dark
+                                  small
+                                  :color="btnDelete.color"
+                                >
+                                  <v-icon>{{ btnDelete.icon }}</v-icon>
+                                </v-btn>
+                              </v-speed-dial>
                             </v-card-title>
                             <v-divider></v-divider>
                             <v-container class="ma-0">
@@ -94,73 +155,7 @@
                             </v-container>
                             <v-divider></v-divider>
                             <v-card-actions>
-                              <v-speed-dial
-                                class="ml-5"
-                                v-model="fab"
-                                right="true"
-                                direction="right"
-                                open-on-hover="true"
-                                transition="slide-x-reverse-transition"
-                              >
-                                <template v-slot:activator>
-                                  <v-btn
-                                    v-model="fab"
-                                    color="teal darken-3"
-                                    dark
-                                    fab
-                                    small
-                                  >
-                                    <v-icon v-if="fab"> mdi-close </v-icon>
-                                    <v-icon v-else> app_registration </v-icon>
-                                  </v-btn>
-                                </template>
-
-                                <v-btn fab dark small color="indigo">
-                                  <v-icon>mdi-plus</v-icon>
-                                </v-btn>
-                                <v-btn fab dark small color="green">
-                                  <v-icon>mdi-pencil</v-icon>
-                                </v-btn>
-                                <v-btn fab dark small color="red">
-                                  <v-icon>mdi-delete</v-icon>
-                                </v-btn>
-                              </v-speed-dial>
                               <v-spacer></v-spacer>
-                              <v-btn
-                                @click="pSetAddPoint(i + 1)"
-                                class="custom-btn"
-                                :color="btnAdd.color"
-                              >
-                                <v-icon class="btn-icon mr-2" color="white">
-                                  {{ btnAdd.icon }}
-                                </v-icon>
-                                <span class="white--text">{{
-                                  btnAdd.text
-                                }}</span>
-                              </v-btn>
-                              <v-btn
-                                @click="pDeletePoint(i)"
-                                class="custom-btn"
-                                :color="btnDelete.color"
-                                outlined
-                              >
-                                <v-icon class="btn-icon mr-2">
-                                  {{ btnDelete.icon }}
-                                </v-icon>
-                                <span>{{ btnDelete.text }}</span>
-                              </v-btn>
-                              <v-btn
-                                @click="pSetChange(item)"
-                                class="custom-btn"
-                                :color="btnChange.color"
-                              >
-                                <v-icon class="btn-icon mr-2" color="white">
-                                  {{ btnChange.icon }}
-                                </v-icon>
-                                <span class="white--text">{{
-                                  btnChange.text
-                                }}</span>
-                              </v-btn>
                               <v-btn
                                 @click="pSetRequest(item)"
                                 class="custom-btn"
@@ -555,7 +550,6 @@ export default {
   props: { id: String },
   data() {
     return {
-      fab: false,
       title: "Create New Queue",
       IsRequested: false,
       IsVerified: false,
@@ -596,19 +590,19 @@ export default {
         color: "normal",
       },
       btnChange: {
-        icon: "edit",
+        icon: "mdi-pencil",
         text: "Change",
-        color: "orange darken-4",
+        color: "warning",
       },
       btnAdd: {
         icon: "mdi-plus",
         text: "Add Point",
-        color: "blue-grey darken-4",
+        color: "indigo",
       },
       btnDelete: {
-        icon: "delete",
+        icon: "mdi-delete",
         text: "Delete Point",
-        color: "blue-grey darken-4",
+        color: "error",
       },
       snackbar: {
         isActive: false,
@@ -617,6 +611,7 @@ export default {
       },
       queuePoint: [
         {
+          Fab: false,
           ID: "20210419-KM1-0001-001",
           QueueID: "20210419-KM1-0001",
           PointID: 1,
@@ -633,6 +628,7 @@ export default {
           InternalRemarks: "",
         },
         {
+          Fab: false,
           ID: "20210419-KM1-0001-002",
           QueueID: "20210419-KM1-0001",
           PointID: 2,
@@ -649,6 +645,7 @@ export default {
           InternalRemarks: "",
         },
         {
+          Fab: false,
           ID: "20210419-KM1-0001-003",
           QueueID: "20210419-KM1-0001",
           PointID: "3",
@@ -665,6 +662,7 @@ export default {
           InternalRemarks: "",
         },
         {
+          Fab: false,
           ID: "20210419-KM1-0001-004",
           QueueID: "20210419-KM1-0001",
           PointID: "4",
@@ -681,6 +679,7 @@ export default {
           InternalRemarks: "",
         },
         {
+          Fab: false,
           ID: "20210419-KM1-0001-005",
           QueueID: "20210419-KM1-0001",
           PointID: "5",
@@ -697,6 +696,7 @@ export default {
           InternalRemarks: "",
         },
         {
+          Fab: false,
           ID: "20210419-KM1-0001-006",
           QueueID: "20210419-KM1-0001",
           PointID: "6",
@@ -713,6 +713,7 @@ export default {
           InternalRemarks: "",
         },
         {
+          Fab: false,
           ID: "20210419-KM1-0001-007",
           QueueID: "20210419-KM1-0001",
           PointID: "7",
@@ -1193,6 +1194,7 @@ export default {
     },
     pAddPoint() {
       this.queuePoint.splice(this.field.Index, 0, {
+        Fab: false,
         ID: "20210419-KM1-0001-00" + this.field.Index,
         QueueID: "20210419-KM1-0001",
         PointID: this.field.PointID.ID,
@@ -1210,8 +1212,8 @@ export default {
       });
       this.IsAddPoint = false;
     },
-    pDeletePoint(i) {
-      this.queuePoint.splice(i, 1);
+    pDeletePoint(index) {
+      this.queuePoint.splice(index, 1);
     },
   },
   computed: {
