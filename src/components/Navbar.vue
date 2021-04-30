@@ -1,14 +1,12 @@
 <template>
   <nav>
     <v-app-bar color="teal darken-2" dark app permanent>
-      <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Queue Management System</v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- User -->
       <v-chip class="ma-2" color="transparent" text-color="white">
-        <v-avatar left>
-          <v-icon>mdi-account-circle</v-icon>
-        </v-avatar>S1704029
+        <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>S1704029
       </v-chip>
 
       <!-- Logout -->
@@ -17,7 +15,13 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app @transitionend="collapseItems">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      @transitionend="collapseItems"
+      absolute
+      temporary
+    >
       <v-list>
         <!-- Dashboard -->
         <v-list-item
@@ -39,7 +43,7 @@
         </v-list-item>
 
         <!-- Master -->
-        <v-list-group :value="group" active-class="grey--text">
+        <v-list-group :value="group" active-class="black--text teal lighten-5">
           <template v-slot:activator>
             <v-icon class="mr-5">source</v-icon>
 
@@ -54,7 +58,7 @@
             active-class="white--text teal darken-2"
             @click="scrollToTop"
           >
-            <v-list-item-icon>
+            <v-list-item-icon class="sub-icon">
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -62,7 +66,7 @@
         </v-list-group>
 
         <!-- Transaction -->
-        <v-list-group :value="group" active-class="grey--text">
+        <v-list-group :value="group" active-class="black--text teal lighten-5">
           <template v-slot:activator>
             <v-icon class="mr-5">sticky_note_2</v-icon>
 
@@ -77,7 +81,7 @@
             active-class="white--text teal darken-2"
             @click="scrollToTop"
           >
-            <v-list-item-icon>
+            <v-list-item-icon class="sub-icon">
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -100,8 +104,8 @@ export default {
         id: 1,
         title: "Dashboard",
         icon: "mdi-view-dashboard",
-        route: "/"
-      }
+        route: "/",
+      },
     ],
     menuMaster: [
       { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
@@ -109,50 +113,171 @@ export default {
         id: 2,
         title: "Point",
         icon: "place",
-        route: "/point"
+        route: "/point",
       },
       {
         id: 3,
         title: "Point Sub",
         icon: "place",
-        route: "/pointsub"
+        route: "/pointsub",
       },
       {
         id: 4,
         title: "Timeline",
         icon: "table_chart",
-        route: "/timeline"
-      }
+        route: "/timeline",
+      },
+
+
+      // { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
+      // {
+      //   id: 2,
+      //   title: "Point Point Point Point",
+      //   icon: "place",
+      //   route: "/point",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Point Sub",
+      //   icon: "place",
+      //   route: "/pointsub",
+      // },
+      // {
+      //   id: 4,
+      //   title: "Timeline",
+      //   icon: "table_chart",
+      //   route: "/timeline",
+      // },
+
+      // { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
+      // {
+      //   id: 2,
+      //   title: "Point",
+      //   icon: "place",
+      //   route: "/point",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Point Sub",
+      //   icon: "place",
+      //   route: "/pointsub",
+      // },
+      // {
+      //   id: 4,
+      //   title: "Timeline",
+      //   icon: "table_chart",
+      //   route: "/timeline",
+      // },
+
+      // { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
+      // {
+      //   id: 2,
+      //   title: "Point",
+      //   icon: "place",
+      //   route: "/point",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Point Sub",
+      //   icon: "place",
+      //   route: "/pointsub",
+      // },
+      // {
+      //   id: 4,
+      //   title: "Timeline",
+      //   icon: "table_chart",
+      //   route: "/timeline",
+      // },
+
+      // { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
+      // {
+      //   id: 2,
+      //   title: "Point",
+      //   icon: "place",
+      //   route: "/point",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Point Sub",
+      //   icon: "place",
+      //   route: "/pointsub",
+      // },
+      // {
+      //   id: 4,
+      //   title: "Timeline",
+      //   icon: "table_chart",
+      //   route: "/timeline",
+      // },
+
+      // { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
+      // {
+      //   id: 2,
+      //   title: "Point",
+      //   icon: "place",
+      //   route: "/point",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Point Sub",
+      //   icon: "place",
+      //   route: "/pointsub",
+      // },
+      // {
+      //   id: 4,
+      //   title: "Timeline",
+      //   icon: "table_chart",
+      //   route: "/timeline",
+      // },
+
+      // { id: 1, title: "Driver", icon: "mdi-account", route: "/driver" },
+      // {
+      //   id: 2,
+      //   title: "Point",
+      //   icon: "place",
+      //   route: "/point",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Point Sub",
+      //   icon: "place",
+      //   route: "/pointsub",
+      // },
+      // {
+      //   id: 4,
+      //   title: "Timeline",
+      //   icon: "table_chart",
+      //   route: "/timeline",
+      // },
     ],
     menuTransaction: [
-      { id: 1, title: "Queue", icon: "queue", route: "/queue" }
+      { id: 1, title: "Queue", icon: "queue", route: "/queue" },
     ],
     items: [
       {
         id: 1,
         title: "Dashboard",
         icon: "mdi-view-dashboard",
-        route: "/"
+        route: "/",
       },
       {
         id: 2,
         title: "Driver",
         icon: "mdi-account",
-        route: "/driver"
+        route: "/driver",
       },
       {
         id: 3,
         title: "Queue",
         icon: "queue",
-        route: "/queue"
+        route: "/queue",
       },
       {
         id: 4,
         title: "Template",
         icon: "table_chart",
-        route: "/template"
-      }
-    ]
+        route: "/template",
+      },
+    ],
   }),
   methods: {
     scrollToTop() {
@@ -160,9 +285,12 @@ export default {
     },
     collapseItems() {
       this.group = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
+.sub-icon {
+  margin-left: 15px;
+}
 </style>

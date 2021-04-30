@@ -4,7 +4,7 @@
       <div class="list-title ml-5 pb-5 my-2">
         Queue Position [ ID : {{ id }} ]
         <span v-if="queuePoint.length == 0" class="ml-2">
-          <v-btn 
+          <v-btn
             @click="pSetAddPoint(i + 1)"
             fab
             dark
@@ -24,192 +24,196 @@
                 <v-row>
                   <v-col>
                     <v-timeline align-top dense>
-                      <div v-for="(item, i) in queuePoint" :key="i">
-                        <v-timeline-item
-                          left
-                          :color="
-                            item.IsRequested && item.IsVerified
-                              ? 'success'
-                              : pIsOnProgress(i, item) == true
-                              ? 'amber darken-4'
-                              : 'primary'
-                          "
-                          :icon="
-                            pIsOnProgress(i, item) == true
-                              ? 'local_shipping'
-                              : ''
-                          "
-                        >
-                          <v-card
-                            color="teal lighten-5"
-                            elevation="3"
-                            class="mb-5"
+                      <v-slide-x-reverse-transition group hide-on-leave>
+                        <div v-for="(item, i) in queuePoint" :key="i">
+                          <v-timeline-item
+                            left
+                            :color="
+                              item.IsRequested && item.IsVerified
+                                ? 'success'
+                                : pIsOnProgress(i, item) == true
+                                ? 'amber darken-4'
+                                : 'primary'
+                            "
+                            :icon="
+                              pIsOnProgress(i, item) == true
+                                ? 'local_shipping'
+                                : ''
+                            "
                           >
-                            <v-card-title class="pa-2">
-                              <span class="ml-2">
-                                <v-icon color="error">place</v-icon>
-                                {{ item.PointDescription }}
-                                <span
-                                  v-if="item.IsRequested"
-                                  class="font-weight-light"
-                                  style="font-size: 18px"
-                                >
-                                  ( {{ item.PointSubDescription }} )
-                                </span>
-                              </span>
-
-                              <!-- Button Add, Edit, Delete -->
-                              <v-speed-dial
-                                class="ml-8 my-1"
-                                v-model="item.Fab"
-                                right
-                                direction="right"
-                                transition="slide-x-transition"
-                              >
-                                <template v-slot:activator>
-                                  <v-btn
-                                    v-model="item.Fab"
-                                    color="light-blue darken-4"
-                                    dark
-                                    fab
-                                    small
+                            <v-card
+                              color="teal lighten-5"
+                              elevation="3"
+                              class="mb-5"
+                            >
+                              <v-card-title class="pa-2">
+                                <span class="ml-2">
+                                  <v-icon color="error">place</v-icon>
+                                  {{ item.PointDescription }}
+                                  <span
+                                    v-if="item.IsRequested"
+                                    class="font-weight-light"
+                                    style="font-size: 18px"
                                   >
-                                    <v-icon v-if="item.Fab"> mdi-close </v-icon>
-                                    <v-icon v-else> app_registration </v-icon>
+                                    ( {{ item.PointSubDescription }} )
+                                  </span>
+                                </span>
+
+                                <!-- Button Add, Edit, Delete -->
+                                <v-speed-dial
+                                  class="ml-8 my-1"
+                                  v-model="item.Fab"
+                                  right
+                                  direction="right"
+                                  transition="slide-x-transition"
+                                >
+                                  <template v-slot:activator>
+                                    <v-btn
+                                      v-model="item.Fab"
+                                      color="light-blue darken-4"
+                                      dark
+                                      fab
+                                      small
+                                    >
+                                      <v-icon v-if="item.Fab">
+                                        mdi-close
+                                      </v-icon>
+                                      <v-icon v-else> app_registration </v-icon>
+                                    </v-btn>
+                                  </template>
+
+                                  <v-btn
+                                    @click="pSetAddPoint(i + 1)"
+                                    fab
+                                    dark
+                                    small
+                                    :color="btnAdd.color"
+                                  >
+                                    <v-icon>{{ btnAdd.icon }}</v-icon>
                                   </v-btn>
-                                </template>
+                                  <v-btn
+                                    @click="pSetChange(item)"
+                                    fab
+                                    dark
+                                    small
+                                    :color="btnChange.color"
+                                  >
+                                    <v-icon>{{ btnChange.icon }}</v-icon>
+                                  </v-btn>
+                                  <v-btn
+                                    @click="pDeletePoint(i)"
+                                    fab
+                                    dark
+                                    small
+                                    :color="btnDelete.color"
+                                  >
+                                    <v-icon>{{ btnDelete.icon }}</v-icon>
+                                  </v-btn>
+                                </v-speed-dial>
+                              </v-card-title>
+                              <v-divider></v-divider>
+                              <v-container class="ma-0">
+                                <v-card-text class="pa-0">
+                                  <v-row>
+                                    <v-col class="font-weight-bold ml-2">
+                                      Plat Number
+                                      <div class="font-weight-regular">
+                                        {{ item.PlatNumber }}
+                                      </div>
+                                    </v-col>
+                                    <v-col class="font-weight-bold">
+                                      Requested By
+                                      <div class="font-weight-regular">
+                                        {{ item.RequestedBy }}
+                                      </div>
+                                    </v-col>
+                                    <v-col class="font-weight-bold">
+                                      Requested Date
+                                      <div class="font-weight-regular">
+                                        {{ item.RequestedDate }}
+                                      </div>
+                                    </v-col>
 
+                                    <v-col class="font-weight-bold">
+                                      Verified By
+                                      <div class="font-weight-regular">
+                                        {{ item.VerifiedBy }}
+                                      </div>
+                                    </v-col>
+                                    <v-col class="font-weight-bold">
+                                      Verified Date
+                                      <div class="font-weight-regular">
+                                        {{ item.VerifiedDate }}
+                                      </div>
+                                    </v-col>
+
+                                    <v-col class="font-weight-bold">
+                                      Internal Remarks
+                                      <div class="font-weight-regular">
+                                        {{ item.InternalRemarks }}
+                                      </div>
+                                    </v-col>
+                                  </v-row>
+                                </v-card-text>
+                              </v-container>
+                              <v-divider></v-divider>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
                                 <v-btn
-                                  @click="pSetAddPoint(i + 1)"
-                                  fab
-                                  dark
-                                  small
-                                  :color="btnAdd.color"
+                                  @click="pSetRequest(item)"
+                                  class="custom-btn"
+                                  :color="btnRequest.color"
+                                  :outlined="btnRequest.outlined"
+                                  :disabled="pDisabledRequested(i, item)"
                                 >
-                                  <v-icon>{{ btnAdd.icon }}</v-icon>
+                                  <v-icon class="btn-icon mr-2">
+                                    {{ btnRequest.icon }}
+                                  </v-icon>
+                                  {{ btnRequest.text }}
                                 </v-btn>
                                 <v-btn
-                                  @click="pSetChange(item)"
-                                  fab
-                                  dark
-                                  small
-                                  :color="btnChange.color"
+                                  @click="pCancelRequest(item.ID)"
+                                  class="custom-btn"
+                                  :color="btnCancelRequest.color"
+                                  outlined
                                 >
-                                  <v-icon>{{ btnChange.icon }}</v-icon>
+                                  <v-icon class="btn-icon mr-2">
+                                    {{ btnCancelRequest.icon }}
+                                  </v-icon>
+                                  {{ btnCancelRequest.text }}
                                 </v-btn>
                                 <v-btn
-                                  @click="pDeletePoint(i)"
-                                  fab
-                                  dark
-                                  small
-                                  :color="btnDelete.color"
+                                  @click="pSetVerify(item)"
+                                  class="custom-btn"
+                                  :color="btnVerify.color"
+                                  :outlined="btnVerify.outlined"
+                                  :disabled="
+                                    item.IsRequested == false
+                                      ? true
+                                      : item.IsVerified
+                                  "
                                 >
-                                  <v-icon>{{ btnDelete.icon }}</v-icon>
+                                  <v-icon class="btn-icon mr-2">
+                                    {{ btnVerify.icon }}
+                                  </v-icon>
+                                  {{ btnVerify.text }}
                                 </v-btn>
-                              </v-speed-dial>
-                            </v-card-title>
-                            <v-divider></v-divider>
-                            <v-container class="ma-0">
-                              <v-card-text class="pa-0">
-                                <v-row>
-                                  <v-col class="font-weight-bold ml-2">
-                                    Plat Number
-                                    <div class="font-weight-regular">
-                                      {{ item.PlatNumber }}
-                                    </div>
-                                  </v-col>
-                                  <v-col class="font-weight-bold">
-                                    Requested By
-                                    <div class="font-weight-regular">
-                                      {{ item.RequestedBy }}
-                                    </div>
-                                  </v-col>
-                                  <v-col class="font-weight-bold">
-                                    Requested Date
-                                    <div class="font-weight-regular">
-                                      {{ item.RequestedDate }}
-                                    </div>
-                                  </v-col>
-
-                                  <v-col class="font-weight-bold">
-                                    Verified By
-                                    <div class="font-weight-regular">
-                                      {{ item.VerifiedBy }}
-                                    </div>
-                                  </v-col>
-                                  <v-col class="font-weight-bold">
-                                    Verified Date
-                                    <div class="font-weight-regular">
-                                      {{ item.VerifiedDate }}
-                                    </div>
-                                  </v-col>
-
-                                  <v-col class="font-weight-bold">
-                                    Internal Remarks
-                                    <div class="font-weight-regular">
-                                      {{ item.InternalRemarks }}
-                                    </div>
-                                  </v-col>
-                                </v-row>
-                              </v-card-text>
-                            </v-container>
-                            <v-divider></v-divider>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                @click="pSetRequest(item)"
-                                class="custom-btn"
-                                :color="btnRequest.color"
-                                :outlined="btnRequest.outlined"
-                                :disabled="pDisabledRequested(i, item)"
-                              >
-                                <v-icon class="btn-icon mr-2">
-                                  {{ btnRequest.icon }}
-                                </v-icon>
-                                {{ btnRequest.text }}
-                              </v-btn>
-                              <v-btn
-                                @click="pCancelRequest(item.ID)"
-                                class="custom-btn"
-                                :color="btnCancelRequest.color"
-                                outlined
-                              >
-                                <v-icon class="btn-icon mr-2">
-                                  {{ btnCancelRequest.icon }}
-                                </v-icon>
-                                {{ btnCancelRequest.text }}
-                              </v-btn>
-                              <v-btn
-                                @click="pSetVerify(item)"
-                                class="custom-btn"
-                                :color="btnVerify.color"
-                                :outlined="btnVerify.outlined"
-                                :disabled="
-                                  item.IsRequested == false
-                                    ? true
-                                    : item.IsVerified
-                                "
-                              >
-                                <v-icon class="btn-icon mr-2">
-                                  {{ btnVerify.icon }}
-                                </v-icon>
-                                {{ btnVerify.text }}
-                              </v-btn>
-                              <v-btn
-                                @click="pCancelVerify(item.ID)"
-                                class="custom-btn"
-                                :color="btnCancelVerify.color"
-                                outlined
-                              >
-                                <v-icon class="btn-icon mr-2">
-                                  {{ btnCancelVerify.icon }}
-                                </v-icon>
-                                {{ btnCancelVerify.text }}
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-timeline-item>
-                      </div>
+                                <v-btn
+                                  @click="pCancelVerify(item.ID)"
+                                  class="custom-btn"
+                                  :color="btnCancelVerify.color"
+                                  outlined
+                                >
+                                  <v-icon class="btn-icon mr-2">
+                                    {{ btnCancelVerify.icon }}
+                                  </v-icon>
+                                  {{ btnCancelVerify.text }}
+                                </v-btn>
+                              </v-card-actions>
+                            </v-card>
+                          </v-timeline-item>
+                        </div>
+                      </v-slide-x-reverse-transition>
                     </v-timeline>
                   </v-col>
                 </v-row>
