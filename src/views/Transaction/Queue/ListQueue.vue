@@ -453,9 +453,9 @@ export default {
         case "md":
           return 300;
         case "lg":
-          return 350;
+          return 400;
         default:
-          return 600;
+          return 700;
       }
     }
   }
