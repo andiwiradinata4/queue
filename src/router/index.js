@@ -19,6 +19,7 @@ import Login from '../views/System/Login/Login.vue';
 import Queue from '../views/Transaction/Queue/ListQueue.vue'
 import QueueDetail from '../views/Transaction/Queue/QueueDetail.vue'
 import QueuePosition from '../views/Transaction/Queue/QueuePosition.vue'
+import QueueArrangement from '../views/Transaction/Queue/QueueArrangement.vue'
 
 // Testing
 import Testing from '../views/Testing.vue';
@@ -109,8 +110,11 @@ const routes = [
     name: 'QueuePosition',
     component: QueuePosition
   },
-
-
+  {
+    path: '/queue-arrangement',
+    name: 'QueueArrangement',
+    component: QueueArrangement
+  },
   {
     path: '/about',
     name: 'About',

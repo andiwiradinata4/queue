@@ -251,6 +251,7 @@ export default {
     ],
     menuTransaction: [
       { id: 1, title: "Queue", icon: "queue", route: "/queue" },
+      { id: 2, title: "Queue Arrangement", icon: "queue", route: "/queue-arrangement" },
     ],
     items: [
       {

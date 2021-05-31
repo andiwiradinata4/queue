@@ -1,10 +1,15 @@
 <template>
   <v-app>
     <v-container id="queue-detail">
-      <div v-if="id == 0" class="list-title ml-5 pb-5 mt-2">{{ title }}</div>
-      <div v-else class="list-title ml-5 pb-5 mt-2">
-        View Queue [ ID : {{ id }} ]
-      </div>
+      <div v-if="id == 0" class="list-title ml-5 pb-0 mt-2">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-0 mt-2">View Queue [ ID : {{ id }} ]</div>
+
+      <!-- Bread Crumbs -->
+      <v-breadcrumbs :items="breadcrumbsItem" class="pt-3 pb-5 pl-5" large>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
 
       <v-row class="pt-0">
         <v-col cols="12" class="pt-0">
@@ -14,6 +19,7 @@
                 <v-tabs v-model="tab" left background-color="transparent">
                   <v-tabs-slider color="teal darken-3"></v-tabs-slider>
                   <v-tab href="#information">Information</v-tab>
+                  <v-tab href="#default-point">Default Point</v-tab>
                   <v-tab href="#point-history">Point History</v-tab>
                   <v-tab href="#status-history">Status History</v-tab>
                 </v-tabs>
@@ -173,9 +179,6 @@
                               :placeholder="field.RFID.placeHolder"
                               :rules="field.RFID.rules"
                               :label="field.RFID.label"
-                              append-icon="search"
-                              @click:append="pGetPlatNumber"
-                              readonly
                               outlined
                               required
                             ></v-text-field>
@@ -240,6 +243,75 @@
                     </v-form>
                   </v-card-text>
                 </v-tab-item>
+
+                <v-tab-item value="default-point">
+                  <v-container fluid>
+                    <v-row>
+                      <!-- Default Point -->
+                      <v-col>
+                        <h1 class="text-h6 ml-2">List Default Point</h1>
+                        <v-timeline dense class="pt-0">
+                          <v-slide-x-reverse-transition group hide-on-leave>
+                            <v-timeline-item
+                              small
+                              v-for="(item, i) in field.DefaultPoint.value"
+                              :key="i"
+                            >
+                              <v-col cols="12" class="pb-0 text-h6">
+                                <div class="mb-2">
+                                  {{ i + 1 }}. {{ item.PointName }}
+                                  <span class="ml-2">
+                                    <v-btn
+                                      @click="pDeleteDefaultPoint(i)"
+                                      fab
+                                      small
+                                      :color="btnDeleteDefaultPoint.color"
+                                    >
+                                      <v-icon>{{ btnDeleteDefaultPoint.icon }}</v-icon>
+                                    </v-btn>
+                                  </span>
+                                </div>
+                              </v-col>
+                            </v-timeline-item>
+                          </v-slide-x-reverse-transition>
+                        </v-timeline>
+                      </v-col>
+
+                      <!-- List of Master Timeline -->
+                      <v-col cols="3" sm="4">
+                        <h1 class="text-h6 ml-3">Master Point</h1>
+                        <div v-for="(item, i) in allItemPoint" :key="item.ID">
+                          <v-card class="ma-3" color="teal lighten-5" elevation="2" :key="i">
+                            <v-card-text>
+                              <v-row class="pa-0">
+                                <v-col cols="12">
+                                  <div class="caption">
+                                    Point
+                                    <h1 class="text-h6">
+                                      {{ item.name }}
+                                      <span class="ml-2">
+                                        <v-btn
+                                          @click="pAddDefaultPoint(item)"
+                                          fab
+                                          small
+                                          :color="btnAddDefaultPoint.color"
+                                          class="mb-1"
+                                        >
+                                          <v-icon>{{ btnAddDefaultPoint.icon }}</v-icon>
+                                        </v-btn>
+                                      </span>
+                                    </h1>
+                                  </div>
+                                </v-col>
+                              </v-row>
+                            </v-card-text>
+                          </v-card>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-tab-item>
+
                 <v-tab-item value="point-history">
                   <v-container class="pr-5 pl-5" style="max-width: 100%">
                     <v-timeline reverse>
@@ -255,52 +327,38 @@
                             <span
                               class="font-weight-light"
                               style="font-size: 18px"
-                            >
-                              ( {{ item.PointSub }} )
-                            </span>
+                            >( {{ item.PointSub }} )</span>
                           </div>
                         </span>
                         <v-card color="grey lighten-4" elevation="3">
                           <v-container>
                             <v-row class="pl-3">
-                              <v-col cols="3" class="pb-0 font-weight-bold pr-0"
-                                >Requested By
-                                <div class="font-weight-regular">
-                                  {{ item.VerifiedBy }}
-                                </div></v-col
-                              >
-                              <v-col cols="3" class="pb-0 font-weight-bold px-0"
-                                >Requested Date
-                                <div class="font-weight-regular">
-                                  {{ item.RequestDate }}
-                                </div></v-col
-                              >
-                              <v-col cols="3" class="pb-0 font-weight-bold pr-0"
-                                >Verified By
-                                <div class="font-weight-regular">
-                                  {{ item.VerifiedBy }}
-                                </div></v-col
-                              >
-                              <v-col cols="3" class="pb-0 font-weight-bold px-0"
-                                >Verified Date
-                                <div class="font-weight-regular">
-                                  {{ item.VerifiedDate }}
-                                </div></v-col
-                              >
+                              <v-col cols="3" class="pb-0 font-weight-bold pr-0">
+                                Requested By
+                                <div class="font-weight-regular">{{ item.VerifiedBy }}</div>
+                              </v-col>
+                              <v-col cols="3" class="pb-0 font-weight-bold px-0">
+                                Requested Date
+                                <div class="font-weight-regular">{{ item.RequestDate }}</div>
+                              </v-col>
+                              <v-col cols="3" class="pb-0 font-weight-bold pr-0">
+                                Verified By
+                                <div class="font-weight-regular">{{ item.VerifiedBy }}</div>
+                              </v-col>
+                              <v-col cols="3" class="pb-0 font-weight-bold px-0">
+                                Verified Date
+                                <div class="font-weight-regular">{{ item.VerifiedDate }}</div>
+                              </v-col>
                             </v-row>
                             <v-row class="pt-0 pb-3 pl-3">
-                              <v-col cols="3" class="pb-0 font-weight-bold"
-                                >Plat Number
-                                <div class="font-weight-regular">
-                                  {{ item.PlatNumber }}
-                                </div></v-col
-                              >
-                              <v-col cols="3" class="pb-0 font-weight-bold pl-0"
-                                >Internal Remarks
-                                <div class="font-weight-regular">
-                                  {{ item.InternalRemarks }}
-                                </div></v-col
-                              >
+                              <v-col cols="3" class="pb-0 font-weight-bold">
+                                Plat Number
+                                <div class="font-weight-regular">{{ item.PlatNumber }}</div>
+                              </v-col>
+                              <v-col cols="3" class="pb-0 font-weight-bold pl-0">
+                                Internal Remarks
+                                <div class="font-weight-regular">{{ item.InternalRemarks }}</div>
+                              </v-col>
                             </v-row>
                           </v-container>
                         </v-card>
@@ -311,37 +369,26 @@
                 <v-tab-item value="status-history">
                   <v-container class="pr-5 pl-5" style="max-width: 70%">
                     <v-timeline>
-                      <v-timeline-item
-                        right
-                        small
-                        v-for="(item, i) in queueStatus"
-                        :key="i"
-                      >
+                      <v-timeline-item right small v-for="(item, i) in queueStatus" :key="i">
                         <span slot="opposite">
                           <div style="font-size: 20px">
                             {{ item.Status }}
                             <span
                               class="font-weight-light"
                               style="font-size: 15px"
-                            >
-                              ( {{ item.StatusDate }} )
-                            </span>
+                            >( {{ item.StatusDate }} )</span>
                           </div>
                         </span>
                         <v-card color="grey lighten-5" elevation="3">
                           <v-container>
                             <v-row class="pl-3">
-                              <v-col class="pb-0 font-weight-bold"
-                                >Status By
-                                <div class="font-weight-regular">
-                                  {{ item.StatusBy }}
-                                </div>
+                              <v-col class="pb-0 font-weight-bold">
+                                Status By
+                                <div class="font-weight-regular">{{ item.StatusBy }}</div>
                               </v-col>
-                              <v-col class="font-weight-bold"
-                                >Remarks
-                                <div class="font-weight-regular">
-                                  {{ item.Remarks }}
-                                </div>
+                              <v-col class="font-weight-bold">
+                                Remarks
+                                <div class="font-weight-regular">{{ item.Remarks }}</div>
                               </v-col>
                             </v-row>
                           </v-container>
@@ -377,7 +424,7 @@ export default {
   name: "QueueDetail",
   components: {
     Button,
-    Snackbar,
+    Snackbar
   },
   props: { id: String },
   data() {
@@ -386,153 +433,208 @@ export default {
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary",
+        color: "primary"
       },
       btnSave: {
         icon: "done",
         text: "Save",
-        color: "primary",
+        color: "primary"
       },
       btnBack: {
         icon: "arrow_back",
         text: "Back",
         color: "primary",
-        outlined: true,
+        outlined: true
+      },
+      btnRefreshPoint: {
+        icon: "refresh",
+        text: "Refresh",
+        color: "primary"
+      },
+      btnAddDefaultPoint: {
+        icon: "mdi-plus",
+        text: "Add",
+        color: "primary"
+      },
+      btnDeleteDefaultPoint: {
+        icon: "delete",
+        text: "Delete",
+        color: "error"
       },
       tab: null,
       itemsStatus: [
         { id: 3, name: "DRAFT" },
         { id: 4, name: "ON PROGRESS" },
-        { id: 5, name: "CLOSED" },
+        { id: 5, name: "CLOSED" }
       ],
       itemsCompany: [
         { id: "MM", name: "MUSIM MAS, PT" },
         { id: "AGR", name: "AGROWIRATAMA, PT" },
-        { id: "GIN", name: "GUNTUNG IDAMANNUSA, PT." },
+        { id: "GIN", name: "GUNTUNG IDAMANNUSA, PT." }
       ],
       itemsLocation: [
         { id: "MDN-KIM1", name: "MEDAN KIM 1" },
         { id: "MDN-KIM2", name: "MEDAN KIM 2" },
         { id: "MDN-KIM3", name: "MEDAN KIM 3" },
-        { id: "BTG-KB-PEL", name: "BITUNG KB PELABUHAN" },
+        { id: "BTG-KB-PEL", name: "BITUNG KB PELABUHAN" }
+      ],
+      itemsPoint: [],
+      allItemPoint: [
+        {
+          id: 1,
+          name: "Parking Area"
+        },
+        {
+          id: 2,
+          name: "Security"
+        },
+        {
+          id: 3,
+          name: "Weighbridge Checker"
+        },
+        {
+          id: 4,
+          name: "Laboratory / Sampling"
+        },
+        {
+          id: 5,
+          name: "Laboratory / Labtest"
+        },
+        {
+          id: 6,
+          name: "Weighbridge Check In"
+        },
+        {
+          id: 7,
+          name: "Unloading Station"
+        },
+        {
+          id: 8,
+          name: "Weighbridge Check Out"
+        }
       ],
       field: {
         isValid: true,
         ID: {
           value: "Auto-Generate",
           placeHolder: "ID Queue",
-          label: "ID Queue",
+          label: "ID Queue"
         },
         Company: {
           value: { id: 0, name: "" },
           label: "Company",
-          rules: [(v) => !!v || "Company is required!"],
+          rules: [v => !!v || "Company is required!"]
         },
         Location: {
           value: { id: 0, name: "" },
           label: "Location",
-          rules: [(v) => !!v || "Location is required!"],
+          rules: [v => !!v || "Location is required!"]
         },
         QueueNumber: {
           value: "Auto-Generate",
           placeHolder: "Queue number",
-          label: "Queue Number",
+          label: "Queue Number"
         },
         QueueDate: {
           value: "16-04-2021",
           placeHolder: "Queue date",
-          label: "Queue Date",
+          label: "Queue Date"
         },
         PlatNumber: {
           value: "",
           label: "Plat Number",
-          rules: [(v) => !!v || "Plat number is required!"],
+          rules: [v => !!v || "Plat number is required!"]
         },
         Driver: {
           value: { id: 0, name: "" },
           label: "Driver",
-          rules: [(v) => !!v || "Driver is required!"],
+          rules: [v => !!v || "Driver is required!"]
         },
         StatusID: {
           value: { id: 4, name: "DRAFT" },
           label: "Status",
-          rules: [(v) => !!v || "Status is required!"],
+          rules: [v => !!v || "Status is required!"]
         },
         SPBNumber: {
           value: "",
           placeHolder: "SPB Number",
           label: "SPB Number",
           rules: [
-            (v) =>
+            v =>
               v.length <= 150 ||
-              "Character of SPB Number must below or be equal of 150!",
-          ],
+              "Character of SPB Number must below or be equal of 150!"
+          ]
         },
         RFID: {
           value: "",
           placeHolder: "RFID",
           label: "RFID",
           rules: [
-            (v) =>
+            v =>
               v.length <= 20 ||
-              "Character of RFID must below or be equal of 20!",
-          ],
+              "Character of RFID must below or be equal of 20!"
+          ]
         },
         ArrivalID: {
           value: "",
           placeHolder: "Arrival ID",
           label: "Arrival ID",
           rules: [
-            (v) =>
+            v =>
               v.length <= 10 ||
-              "Character of Arrival ID must below or be equal of 10!",
-          ],
+              "Character of Arrival ID must below or be equal of 10!"
+          ]
         },
         UnloadingSlot: {
           value: { id: 0, name: "" },
           placeHolder: "Unloading Slot",
           label: "Unloading Slot",
           rules: [
-            (v) =>
+            v =>
               v.length <= 10 ||
-              "Character of Unloading Slot must below or be equal of 10!",
-          ],
+              "Character of Unloading Slot must below or be equal of 10!"
+          ]
         },
         IsCompleted: {
           value: false,
           placeHolder: "Complete?",
-          label: "Complete?",
+          label: "Complete?"
         },
         CompletedBy: {
           value: "-",
           placeHolder: "Completed By",
-          label: "Completed By",
+          label: "Completed By"
         },
         CompletedDate: {
           value: "-",
           placeHolder: "Completed Date",
-          label: "Completed Date",
+          label: "Completed Date"
         },
         Remarks: {
           value: "",
           placeHolder: "Remarks",
           label: "Remarks",
           rules: [
-            (v) =>
+            v =>
               v.length <= 250 ||
-              "Character of remarks must below or be equal of 250!",
-          ],
+              "Character of remarks must below or be equal of 250!"
+          ]
         },
         InternalRemarks: {
           value: "",
           placeHolder: "Internal remarks",
           label: "Internal Remarks",
           rules: [
-            (v) =>
+            v =>
               v.length <= 250 ||
-              "Character of internal remarks must below or be equal of 250!",
-          ],
+              "Character of internal remarks must below or be equal of 250!"
+          ]
         },
+        DefaultPoint: {
+          value: [],
+          label: "Default Point",
+          rules: [v => v.id != 0 || "Default Point is required!"]
+        }
       },
       queuePoint: [
         {
@@ -545,7 +647,7 @@ export default {
           VerifiedDate: "19-04-2021 15:00",
           InternalRemarks: "-",
           color: "amber darken-4",
-          icon: "local_shipping",
+          icon: "local_shipping"
         },
         {
           ID: "20210419-KM1-0001-007",
@@ -557,7 +659,7 @@ export default {
           VerifiedDate: "19-04-2021 14:30",
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
+          icon: ""
         },
         {
           ID: "20210419-KM1-0001-006",
@@ -569,7 +671,7 @@ export default {
           VerifiedDate: "19-04-2021 13:20",
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
+          icon: ""
         },
         {
           ID: "20210419-KM1-0001-005",
@@ -581,7 +683,7 @@ export default {
           VerifiedDate: "19-04-2021 11:50",
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
+          icon: ""
         },
         {
           ID: "20210419-KM1-0001-004",
@@ -593,7 +695,7 @@ export default {
           VerifiedDate: "19-04-2021 11:00",
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
+          icon: ""
         },
         {
           ID: "20210419-KM1-0001-003",
@@ -605,7 +707,7 @@ export default {
           VerifiedDate: "19-04-2021 10:15",
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
+          icon: ""
         },
         {
           ID: "20210419-KM1-0001-002",
@@ -617,7 +719,7 @@ export default {
           VerifiedDate: "19-04-2021 09:45",
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
+          icon: ""
         },
         {
           ID: "20210419-KM1-0001-001",
@@ -629,8 +731,8 @@ export default {
           VerifiedDate: null,
           InternalRemarks: "-",
           color: "primary",
-          icon: "",
-        },
+          icon: ""
+        }
       ],
       queueStatus: [
         {
@@ -638,114 +740,126 @@ export default {
           Status: "Verify Check Out 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 15:00",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-015",
           Status: "Request Check Out 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 14:45",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-014",
           Status: "Verify Unloading 2",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 14:30",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-013",
           Status: "Request Unloading 2",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 13:30",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-012",
           Status: "Verify Check In 2",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 13:20",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-011",
           Status: "Request Check In 2",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 13:10",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-010",
           Status: "Verify Laboratory / Labtest 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 11:50",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-009",
           Status: "Request Laboratory / Labtest 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 11:15",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-008",
           Status: "Verify Laboratory / Sampling 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 11:00",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-007",
           Status: "Request Laboratory / Sampling 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 10:30",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-006",
           Status: "Verify Weighbridge Checker 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 10:15",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-005",
           Status: "Request Weighbridge Checker 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 10:00",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-004",
           Status: "Verify Security 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 09:45",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-003",
           Status: "Request Security 1",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 09:15",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-002",
           Status: "Request Parking Area",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 08:00",
-          Remarks: "-",
+          Remarks: "-"
         },
         {
           ID: "20210419-KM1-0001-001",
           Status: "Create New Queue",
           StatusBy: "ADMIN",
           StatusDate: "19-04-2021 08:15",
-          Remarks: "-",
-        },
+          Remarks: "-"
+        }
       ],
+      breadcrumbsItem: [
+        {
+          text: "Queue",
+          disabled: false,
+          to: "/queue"
+        },
+        {
+          text: "Queue Detail",
+          disabled: true,
+          to: ""
+        }
+      ]
     };
   },
   methods: {
@@ -756,8 +870,21 @@ export default {
     pGetPlatNumber() {
       alert("Press Get Plat Number");
     },
+    pRefreshPoint() {
+      this.itemsPoint = this.allItemPoint;
+    },
+    pAddDefaultPoint(point) {
+      this.field.DefaultPoint.value.push({
+        PointID: point.id,
+        Idx: this.idx++,
+        PointName: point.name
+      });
+    },
+    pDeleteDefaultPoint(i) {
+      this.field.DefaultPoint.value.splice(i, 1);
+    }
   },
-  computed: {},
+  computed: {}
 };
 </script>
 
@@ -781,4 +908,6 @@ export default {
   line-height: inherit;
   padding-top: 8px;
 }
+
+
 </style>

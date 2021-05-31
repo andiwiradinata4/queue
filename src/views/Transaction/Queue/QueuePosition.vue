@@ -1,20 +1,23 @@
 <template>
   <v-app>
     <v-container id="queue-position">
-      <div class="list-title ml-5 pb-5 my-2">
+      <div class="list-title ml-5 pb-0 my-2">
         Queue Position [ ID : {{ id }} ]
         <span v-if="queuePoint.length == 0" class="ml-2">
-          <v-btn
-            @click="pSetAddPoint(i + 1)"
-            fab
-            dark
-            small
-            :color="btnAdd.color"
-          >
+          <v-btn @click="pSetAddPoint(i + 1)" fab dark small :color="btnAdd.color">
             <v-icon>{{ btnAdd.icon }}</v-icon>
-          </v-btn></span
-        >
+          </v-btn>
+        </span>
       </div>
+
+      <!-- Bread Crumbs -->
+      <v-breadcrumbs :items="breadcrumbsItem" class="pt-1 pb-5 pl-5" large>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+
+      <v-divider></v-divider>
 
       <v-row class="pt-0">
         <v-col cols="12" class="pt-0">
@@ -41,11 +44,7 @@
                                 : ''
                             "
                           >
-                            <v-card
-                              color="teal lighten-5"
-                              elevation="3"
-                              class="mb-5"
-                            >
+                            <v-card color="teal lighten-5" elevation="3" class="mb-5">
                               <v-card-title class="pa-2">
                                 <span class="ml-2">
                                   <v-icon color="error">place</v-icon>
@@ -54,9 +53,7 @@
                                     v-if="item.IsRequested"
                                     class="font-weight-light"
                                     style="font-size: 18px"
-                                  >
-                                    ( {{ item.PointSubDescription }} )
-                                  </span>
+                                  >( {{ item.PointSubDescription }} )</span>
                                 </span>
 
                                 <!-- Button Add, Edit, Delete -->
@@ -75,10 +72,8 @@
                                       fab
                                       small
                                     >
-                                      <v-icon v-if="item.Fab">
-                                        mdi-close
-                                      </v-icon>
-                                      <v-icon v-else> app_registration </v-icon>
+                                      <v-icon v-if="item.Fab">mdi-close</v-icon>
+                                      <v-icon v-else>app_registration</v-icon>
                                     </v-btn>
                                   </template>
 
@@ -117,41 +112,29 @@
                                   <v-row>
                                     <v-col class="font-weight-bold ml-2">
                                       Plat Number
-                                      <div class="font-weight-regular">
-                                        {{ item.PlatNumber }}
-                                      </div>
+                                      <div class="font-weight-regular">{{ item.PlatNumber }}</div>
                                     </v-col>
                                     <v-col class="font-weight-bold">
                                       Requested By
-                                      <div class="font-weight-regular">
-                                        {{ item.RequestedBy }}
-                                      </div>
+                                      <div class="font-weight-regular">{{ item.RequestedBy }}</div>
                                     </v-col>
                                     <v-col class="font-weight-bold">
                                       Requested Date
-                                      <div class="font-weight-regular">
-                                        {{ item.RequestedDate }}
-                                      </div>
+                                      <div class="font-weight-regular">{{ item.RequestedDate }}</div>
                                     </v-col>
 
                                     <v-col class="font-weight-bold">
                                       Verified By
-                                      <div class="font-weight-regular">
-                                        {{ item.VerifiedBy }}
-                                      </div>
+                                      <div class="font-weight-regular">{{ item.VerifiedBy }}</div>
                                     </v-col>
                                     <v-col class="font-weight-bold">
                                       Verified Date
-                                      <div class="font-weight-regular">
-                                        {{ item.VerifiedDate }}
-                                      </div>
+                                      <div class="font-weight-regular">{{ item.VerifiedDate }}</div>
                                     </v-col>
 
                                     <v-col class="font-weight-bold">
                                       Internal Remarks
-                                      <div class="font-weight-regular">
-                                        {{ item.InternalRemarks }}
-                                      </div>
+                                      <div class="font-weight-regular">{{ item.InternalRemarks }}</div>
                                     </v-col>
                                   </v-row>
                                 </v-card-text>
@@ -164,11 +147,9 @@
                                   class="custom-btn"
                                   :color="btnRequest.color"
                                   :outlined="btnRequest.outlined"
-                                  :disabled="pDisabledRequested(i, item)"
                                 >
-                                  <v-icon class="btn-icon mr-2">
-                                    {{ btnRequest.icon }}
-                                  </v-icon>
+                                  <!-- :disabled="pDisabledRequested(i, item)" -->
+                                  <v-icon class="btn-icon mr-2">{{ btnRequest.icon }}</v-icon>
                                   {{ btnRequest.text }}
                                 </v-btn>
                                 <v-btn
@@ -177,9 +158,7 @@
                                   :color="btnCancelRequest.color"
                                   outlined
                                 >
-                                  <v-icon class="btn-icon mr-2">
-                                    {{ btnCancelRequest.icon }}
-                                  </v-icon>
+                                  <v-icon class="btn-icon mr-2">{{ btnCancelRequest.icon }}</v-icon>
                                   {{ btnCancelRequest.text }}
                                 </v-btn>
                                 <v-btn
@@ -187,15 +166,13 @@
                                   class="custom-btn"
                                   :color="btnVerify.color"
                                   :outlined="btnVerify.outlined"
-                                  :disabled="
+                                >
+                                  <!-- :disabled="
                                     item.IsRequested == false
                                       ? true
                                       : item.IsVerified
-                                  "
-                                >
-                                  <v-icon class="btn-icon mr-2">
-                                    {{ btnVerify.icon }}
-                                  </v-icon>
+                                  "-->
+                                  <v-icon class="btn-icon mr-2">{{ btnVerify.icon }}</v-icon>
                                   {{ btnVerify.text }}
                                 </v-btn>
                                 <v-btn
@@ -204,9 +181,7 @@
                                   :color="btnCancelVerify.color"
                                   outlined
                                 >
-                                  <v-icon class="btn-icon mr-2">
-                                    {{ btnCancelVerify.icon }}
-                                  </v-icon>
+                                  <v-icon class="btn-icon mr-2">{{ btnCancelVerify.icon }}</v-icon>
                                   {{ btnCancelVerify.text }}
                                 </v-btn>
                               </v-card-actions>
@@ -240,11 +215,7 @@
             <v-container fluid>
               <v-row class="pt-4">
                 <v-col class="pt-0 pl-0">
-                  <v-text-field
-                    v-model="field.PointID.value"
-                    :label="field.PointID.label"
-                    readonly
-                  ></v-text-field>
+                  <v-text-field v-model="field.PointID.value" :label="field.PointID.label" readonly></v-text-field>
                 </v-col>
               </v-row>
               <v-row class="py-0 mt-2">
@@ -275,14 +246,8 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              @click="pSaveRequest()"
-              class="custom-btn"
-              :color="btnSaveRequest.color"
-            >
-              <v-icon class="btn-icon mr-2">
-                {{ btnSaveRequest.icon }}
-              </v-icon>
+            <v-btn @click="pSaveRequest()" class="custom-btn" :color="btnSaveRequest.color">
+              <v-icon class="btn-icon mr-2">{{ btnSaveRequest.icon }}</v-icon>
               {{ btnSaveRequest.text }}
             </v-btn>
             <v-btn
@@ -291,9 +256,7 @@
               :color="btnCloseRequest.color"
               outlined
             >
-              <v-icon class="btn-icon mr-2">
-                {{ btnCloseRequest.icon }}
-              </v-icon>
+              <v-icon class="btn-icon mr-2">{{ btnCloseRequest.icon }}</v-icon>
               {{ btnCloseRequest.text }}
             </v-btn>
           </v-card-actions>
@@ -317,11 +280,7 @@
             <v-container fluid>
               <v-row class="pt-4">
                 <v-col class="pt-0 pl-0">
-                  <v-text-field
-                    v-model="field.PointID.value"
-                    :label="field.PointID.label"
-                    readonly
-                  ></v-text-field>
+                  <v-text-field v-model="field.PointID.value" :label="field.PointID.label" readonly></v-text-field>
                 </v-col>
               </v-row>
               <v-row class="py-0 mt-2">
@@ -360,14 +319,8 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              @click="pSaveVerify()"
-              class="custom-btn"
-              :color="btnSaveRequest.color"
-            >
-              <v-icon class="btn-icon mr-2">
-                {{ btnSaveRequest.icon }}
-              </v-icon>
+            <v-btn @click="pSaveVerify()" class="custom-btn" :color="btnSaveRequest.color">
+              <v-icon class="btn-icon mr-2">{{ btnSaveRequest.icon }}</v-icon>
               {{ btnSaveRequest.text }}
             </v-btn>
             <v-btn
@@ -376,9 +329,7 @@
               :color="btnCloseRequest.color"
               outlined
             >
-              <v-icon class="btn-icon mr-2">
-                {{ btnCloseRequest.icon }}
-              </v-icon>
+              <v-icon class="btn-icon mr-2">{{ btnCloseRequest.icon }}</v-icon>
               {{ btnCloseRequest.text }}
             </v-btn>
           </v-card-actions>
@@ -455,14 +406,8 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              @click="pChange()"
-              class="custom-btn"
-              :color="btnSaveRequest.color"
-            >
-              <v-icon class="btn-icon mr-2">
-                {{ btnSaveRequest.icon }}
-              </v-icon>
+            <v-btn @click="pChange()" class="custom-btn" :color="btnSaveRequest.color">
+              <v-icon class="btn-icon mr-2">{{ btnSaveRequest.icon }}</v-icon>
               {{ btnSaveRequest.text }}
             </v-btn>
             <v-btn
@@ -471,9 +416,7 @@
               :color="btnCloseRequest.color"
               outlined
             >
-              <v-icon class="btn-icon mr-2">
-                {{ btnCloseRequest.icon }}
-              </v-icon>
+              <v-icon class="btn-icon mr-2">{{ btnCloseRequest.icon }}</v-icon>
               {{ btnCloseRequest.text }}
             </v-btn>
           </v-card-actions>
@@ -514,14 +457,8 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              @click="pAddPoint()"
-              class="custom-btn"
-              :color="btnSaveRequest.color"
-            >
-              <v-icon class="btn-icon mr-2">
-                {{ btnSaveRequest.icon }}
-              </v-icon>
+            <v-btn @click="pAddPoint()" class="custom-btn" :color="btnSaveRequest.color">
+              <v-icon class="btn-icon mr-2">{{ btnSaveRequest.icon }}</v-icon>
               {{ btnSaveRequest.text }}
             </v-btn>
             <v-btn
@@ -530,9 +467,7 @@
               :color="btnCloseRequest.color"
               outlined
             >
-              <v-icon class="btn-icon mr-2">
-                {{ btnCloseRequest.icon }}
-              </v-icon>
+              <v-icon class="btn-icon mr-2">{{ btnCloseRequest.icon }}</v-icon>
               {{ btnCloseRequest.text }}
             </v-btn>
           </v-card-actions>
@@ -549,12 +484,12 @@ import Snackbar from "@/components/Snackbar.vue";
 export default {
   name: "QueuePosition",
   components: {
-    Snackbar,
+    Snackbar
   },
   props: { id: String },
   data() {
     return {
-      title: "Create New Queue",
+      title: "Queue Position",
       IsRequested: false,
       IsVerified: false,
       IsChanged: false,
@@ -563,55 +498,55 @@ export default {
         icon: "done",
         text: "Verify",
         color: "success",
-        disabled: false,
+        disabled: false
       },
       btnCancelVerify: {
         icon: "close",
         text: "Cancel Verify",
         color: "normal",
-        disabled: true,
+        disabled: true
       },
       btnRequest: {
         icon: "near_me",
         text: "Request",
         color: "primary",
-        disabled: true,
+        disabled: true
       },
       btnCancelRequest: {
         icon: "near_me_disabled",
         text: "Cancel Request",
         color: "normal",
-        disabled: true,
+        disabled: true
       },
       btnSaveRequest: {
         icon: "done",
         text: "Save",
-        color: "primary",
+        color: "primary"
       },
       btnCloseRequest: {
         icon: "close",
         text: "Close",
-        color: "normal",
+        color: "normal"
       },
       btnChange: {
         icon: "mdi-pencil",
         text: "Change",
-        color: "warning",
+        color: "warning"
       },
       btnAdd: {
         icon: "mdi-plus",
         text: "Add Point",
-        color: "indigo",
+        color: "indigo"
       },
       btnDelete: {
         icon: "mdi-delete",
         text: "Delete Point",
-        color: "error",
+        color: "error"
       },
       snackbar: {
         isActive: false,
         text: "",
-        color: "primary",
+        color: "primary"
       },
       queuePoint: [
         {
@@ -629,7 +564,7 @@ export default {
           IsVerified: true,
           VerifiedBy: "ADMIN",
           VerifiedDate: "23/04/2021 08:10",
-          InternalRemarks: "",
+          InternalRemarks: ""
         },
         {
           Fab: false,
@@ -646,7 +581,7 @@ export default {
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
-          InternalRemarks: "",
+          InternalRemarks: ""
         },
         {
           Fab: false,
@@ -663,7 +598,7 @@ export default {
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
-          InternalRemarks: "",
+          InternalRemarks: ""
         },
         {
           Fab: false,
@@ -680,7 +615,7 @@ export default {
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
-          InternalRemarks: "",
+          InternalRemarks: ""
         },
         {
           Fab: false,
@@ -697,7 +632,7 @@ export default {
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
-          InternalRemarks: "",
+          InternalRemarks: ""
         },
         {
           Fab: false,
@@ -714,7 +649,7 @@ export default {
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
-          InternalRemarks: "",
+          InternalRemarks: ""
         },
         {
           Fab: false,
@@ -731,38 +666,38 @@ export default {
           IsVerified: false,
           VerifiedBy: "",
           VerifiedDate: "",
-          InternalRemarks: "",
-        },
+          InternalRemarks: ""
+        }
       ],
       ListPoint: [
         {
           ID: 1,
-          Description: "Parking Area",
+          Description: "Parking Area"
         },
         {
           ID: 2,
-          Description: "Security",
+          Description: "Security"
         },
         {
           ID: 3,
-          Description: "Laboratory / Sampling",
+          Description: "Laboratory / Sampling"
         },
         {
           ID: 4,
-          Description: "Laboratory / Labtest",
+          Description: "Laboratory / Labtest"
         },
         {
           ID: 5,
-          Description: "Weighbridge Check In",
+          Description: "Weighbridge Check In"
         },
         {
           ID: 6,
-          Description: "Unloading Station",
+          Description: "Unloading Station"
         },
         {
           ID: 7,
-          Description: "Weighbridge Check Out",
-        },
+          Description: "Weighbridge Check Out"
+        }
       ],
       ListPointSub: [
         {
@@ -772,7 +707,7 @@ export default {
           PointID: 1,
           PointDescription: "Parking Area",
           name: "Parking Area 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 2,
@@ -781,7 +716,7 @@ export default {
           PointID: 2,
           PointDescription: "Security",
           name: "Security 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 3,
@@ -790,7 +725,7 @@ export default {
           PointID: 3,
           PointDescription: "Laboratory / Sampling",
           name: "Laboratory / Sampling 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 4,
@@ -799,7 +734,7 @@ export default {
           PointID: 3,
           PointDescription: "Laboratory / Sampling",
           name: "Laboratory / Sampling 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 5,
@@ -808,7 +743,7 @@ export default {
           PointID: 4,
           PointDescription: "Laboratory / Labtest",
           name: "Laboratory / Labtest 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 6,
@@ -817,7 +752,7 @@ export default {
           PointID: 4,
           PointDescription: "Laboratory / Labtest",
           name: "Laboratory / Labtest 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 7,
@@ -826,7 +761,7 @@ export default {
           PointID: 5,
           PointDescription: "Weighbridge Check In",
           name: "Weighbridge Check In 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 8,
@@ -835,7 +770,7 @@ export default {
           PointID: 5,
           PointDescription: "Weighbridge Check In",
           name: "Weighbridge Check In 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 9,
@@ -844,7 +779,7 @@ export default {
           PointID: 6,
           PointDescription: "Unloading Station",
           name: "Unloading Station 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 10,
@@ -853,7 +788,7 @@ export default {
           PointID: 6,
           PointDescription: "Unloading Station",
           name: "Unloading Station 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 11,
@@ -862,7 +797,7 @@ export default {
           PointID: 7,
           PointDescription: "Weighbridge Check Out",
           name: "Weighbridge Check Out 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 12,
@@ -871,7 +806,7 @@ export default {
           PointID: 7,
           PointDescription: "Weighbridge Check Out",
           name: "Weighbridge Check Out 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 13,
@@ -880,7 +815,7 @@ export default {
           PointID: 8,
           PointDescription: "Parking Area",
           name: "Parking Area 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 14,
@@ -889,7 +824,7 @@ export default {
           PointID: 9,
           PointDescription: "Security",
           name: "Security 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 15,
@@ -898,7 +833,7 @@ export default {
           PointID: 10,
           PointDescription: "Weighbridge Checker",
           name: "Weighbridge Checker 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 16,
@@ -907,7 +842,7 @@ export default {
           PointID: 10,
           PointDescription: "Weighbridge Checker",
           name: "Weighbridge Checker 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 17,
@@ -916,7 +851,7 @@ export default {
           PointID: 11,
           PointDescription: "Laboratory / Sampling",
           name: "Laboratory / Sampling 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 18,
@@ -925,7 +860,7 @@ export default {
           PointID: 12,
           PointDescription: "Laboratory / Labtest",
           name: "Laboratory / Labtest 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 19,
@@ -934,7 +869,7 @@ export default {
           PointID: 13,
           PointDescription: "Weighbridge Check In",
           name: "Weighbridge Check In 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 20,
@@ -943,7 +878,7 @@ export default {
           PointID: 13,
           PointDescription: "Weighbridge Check In",
           name: "Weighbridge Check In 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 21,
@@ -952,7 +887,7 @@ export default {
           PointID: 14,
           PointDescription: "Unloading Station",
           name: "Unloading Station 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 22,
@@ -961,7 +896,7 @@ export default {
           PointID: 14,
           PointDescription: "Unloading Station",
           name: "Unloading Station 2",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 23,
@@ -970,7 +905,7 @@ export default {
           PointID: 15,
           PointDescription: "Weighbridge Check Out",
           name: "Weighbridge Check Out 1",
-          Status: "ACTIVE",
+          Status: "ACTIVE"
         },
         {
           id: 24,
@@ -979,8 +914,8 @@ export default {
           PointID: 15,
           PointDescription: "Weighbridge Check Out",
           name: "Weighbridge Check Out 2",
-          Status: "ACTIVE",
-        },
+          Status: "ACTIVE"
+        }
       ],
 
       field: {
@@ -991,56 +926,68 @@ export default {
           ID: 0,
           value: "",
           label: "Point",
-          rules: [(v) => !!v || "Point is required!"],
+          rules: [v => !!v || "Point is required!"]
         },
         PointSubDetailID: {
           ID: 0,
           value: "",
           label: "Pointsub",
-          rules: [(v) => !!v || "Pointsub is required!"],
+          rules: [v => !!v || "Pointsub is required!"]
         },
         PlatNumber: {
           value: "",
           label: "Plat Number",
-          rules: [(v) => !!v || "Plat Number is required!"],
+          rules: [v => !!v || "Plat Number is required!"]
         },
         IsEditPlatNumber: {
           value: false,
-          label: "Is Edit Plat Number",
+          label: "Is Edit Plat Number"
         },
         ImagePathPlatNumber: {
           value: "",
           label: "Image Path Plat Number",
-          rules: [(v) => !!v || "Image Path Plat Number is required!"],
+          rules: [v => !!v || "Image Path Plat Number is required!"]
         },
         IsRequested: {
-          value: false,
+          value: false
         },
         RequestedBy: {
-          value: "",
+          value: ""
         },
         RequestedDate: {
-          value: "",
+          value: ""
         },
         IsVerified: {
-          value: false,
+          value: false
         },
         VerifiedBy: {
-          value: "",
+          value: ""
         },
         VerifiedDate: {
-          value: "",
+          value: ""
         },
         InternalRemarks: {
           value: "",
           label: "Internal Remarks",
           rules: [
-            (v) =>
+            v =>
               v.length <= 250 ||
-              "Character of internal remarks must below or be equal of 250!",
-          ],
-        },
+              "Character of internal remarks must below or be equal of 250!"
+          ]
+        }
       },
+      breadcrumbsItem: [
+        {
+          text: "Queue",
+          disabled: false,
+          to: "/queue"
+        },
+        {
+          text: "Queue Position",
+          disabled: true,
+          to: ""
+        }
+      ]
     };
   },
   methods: {
@@ -1097,10 +1044,13 @@ export default {
       this.IsRequested = true;
     },
     pSaveRequest() {
-      this.queuePoint.map((e) => {
+      this.queuePoint.map(e => {
         if (e.ID == this.field.ID.value) {
           let date = new Date();
-          let dateWithFormat = date.toJSON().slice(0, 10).replace(/-/g, "/");
+          let dateWithFormat = date
+            .toJSON()
+            .slice(0, 10)
+            .replace(/-/g, "/");
           let hour = date.getHours();
           let minute = date.getMinutes();
 
@@ -1120,7 +1070,7 @@ export default {
       this.IsRequested = false;
     },
     pCancelRequest(ID) {
-      this.queuePoint.map((e) => {
+      this.queuePoint.map(e => {
         if (e.ID == ID) {
           e.PointSubID = 0;
           e.PointSubDescription = "";
@@ -1141,10 +1091,13 @@ export default {
       this.IsVerified = true;
     },
     pSaveVerify() {
-      this.queuePoint.map((e) => {
+      this.queuePoint.map(e => {
         if (e.ID == this.field.ID.value) {
           let date = new Date();
-          let dateWithFormat = date.toJSON().slice(0, 10).replace(/-/g, "/");
+          let dateWithFormat = date
+            .toJSON()
+            .slice(0, 10)
+            .replace(/-/g, "/");
           let hour = date.getHours();
           let minute = date.getMinutes();
           e.PlatNumber = this.field.PlatNumber.value;
@@ -1157,7 +1110,7 @@ export default {
       this.IsVerified = false;
     },
     pCancelVerify(ID) {
-      this.queuePoint.map((e) => {
+      this.queuePoint.map(e => {
         if (e.ID == ID) {
           e.IsVerified = false;
           e.VerifiedBy = "";
@@ -1177,7 +1130,7 @@ export default {
       this.IsChanged = true;
     },
     pChange() {
-      this.queuePoint.map((e) => {
+      this.queuePoint.map(e => {
         if (e.ID == this.field.ID.value) {
           e.PointID = this.field.PointID.ID;
           e.PointDescription = this.GetPoint[0].Description;
@@ -1212,29 +1165,25 @@ export default {
         IsVerified: false,
         VerifiedBy: "",
         VerifiedDate: "",
-        InternalRemarks: "",
+        InternalRemarks: ""
       });
       this.IsAddPoint = false;
     },
     pDeletePoint(index) {
       this.queuePoint.splice(index, 1);
-    },
+    }
   },
   computed: {
     GetPoint() {
-      return this.ListPoint.filter((e) => e.ID == this.field.PointID.ID);
+      return this.ListPoint.filter(e => e.ID == this.field.PointID.ID);
     },
     GetSubPoint() {
-      return this.ListPointSub.filter(
-        (e) => e.PointID == this.field.PointID.ID
-      );
+      return this.ListPointSub.filter(e => e.PointID == this.field.PointID.ID);
     },
     GetListSubPoint() {
-      return this.ListPointSub.filter(
-        (e) => e.PointID == this.field.PointID.ID
-      );
-    },
-  },
+      return this.ListPointSub.filter(e => e.PointID == this.field.PointID.ID);
+    }
+  }
 };
 </script>
 

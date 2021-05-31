@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-container class="pa-0 ml-0 mr-0">
-      <!-- <div class="list-title ml-5 mb-2 pb-0 mt-2">{{ title }}</div> -->
     </v-container>
   </v-app>
 </template>
@@ -119,3 +118,4 @@ export default {
   text-align: center;
 }
 </style>
+

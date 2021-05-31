@@ -1,8 +1,15 @@
 <template>
   <v-app>
     <v-container>
-      <div v-if="id == 0" class="list-title ml-5 pb-6 mt-2 pt-1">{{ title }}</div>
-      <div v-else class="list-title ml-5 pb-6 mt-2 pt-1">View Point Sub [ ID : {{ id }} ]</div>
+      <div v-if="id == 0" class="list-title ml-5 pb-0 mt-2 pt-1">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-0 mt-2 pt-1">View Point Sub [ ID : {{ id }} ]</div>
+
+      <!-- Bread Crumbs -->
+      <v-breadcrumbs :items="breadcrumbsItem" class="pt-3 pb-5 pl-5" large>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
 
       <v-row class="pt-0">
         <v-col cols="12" class="pt-0">
@@ -226,7 +233,19 @@ export default {
           label: "Status",
           rules: [v => !!v || "Status is required!"]
         }
-      }
+      },
+      breadcrumbsItem: [
+        {
+          text: "Point Sub",
+          disabled: false,
+          to: "/pointsub"
+        },
+        {
+          text: "Point Sub Detail",
+          disabled: true,
+          to: ""
+        }
+      ]
     };
   },
   methods: {

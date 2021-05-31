@@ -1,12 +1,19 @@
 <template>
   <v-app>
     <v-container>
-      <div v-if="id == 0" class="list-title ml-5 pb-6 mt-2 pt-1">
+      <div v-if="id == 0" class="list-title ml-5 pb-0 mt-2 pt-1">
         {{ title }}
       </div>
-      <div v-else class="list-title ml-5 pb-6 mt-2 pt-1">
+      <div v-else class="list-title ml-5 pb-0 mt-2 pt-1">
         View Timeline [ ID : {{ id }} ]
       </div>
+
+      <!-- Bread Crumbs -->
+      <v-breadcrumbs :items="breadcrumbsItem" class="pt-3 pb-5 pl-5" large>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
 
       <v-row class="pt-0">
         <v-col cols="12" class="pt-0">
@@ -253,38 +260,6 @@ export default {
         },
       ],
       itemsPoint: [
-        // {
-        //   id: 1,
-        //   name: "Parking Area",
-        // },
-        // {
-        //   id: 2,
-        //   name: "Security",
-        // },
-        // {
-        //   id: 3,
-        //   name: "Laboratory / Sampling",
-        // },
-        // {
-        //   id: 4,
-        //   name: "Laboratory / labtest",
-        // },
-        // {
-        //   id: 5,
-        //   name: "Weighbridge Check In",
-        // },
-        // {
-        //   id: 6,
-        //   name: "Weighbridge Check In",
-        // },
-        // {
-        //   id: 7,
-        //   name: "Unloading Station",
-        // },
-        // {
-        //   id: 8,
-        //   name: "Weighbridge Check Out",
-        // },
       ],
       itemsStatus: [
         { id: 0, name: "ACTIVE" },
@@ -342,6 +317,18 @@ export default {
           rules: [(v) => !!v || "Status is required!"],
         },
       },
+            breadcrumbsItem: [
+        {
+          text: "Timeline",
+          disabled: false,
+          to: "/timeline"
+        },
+        {
+          text: "Timeline Detail",
+          disabled: true,
+          to: ""
+        }
+      ]
     };
   },
   methods: {
@@ -373,9 +360,6 @@ export default {
         this.MessageBox.value = true;
       } else {
         this.itemsPoint = this.allItemPoint;
-        // this.allItemPoint.forEach((e) => {
-        //   this.itemsPoint.push(e);
-        // });
         console.log(this.itemsPoint);
       }
     },

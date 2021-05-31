@@ -24,17 +24,93 @@
             <v-container fluid>
               <v-row class="pt-0">
                 <v-col cols="6" class="pb-0 pt-1">
-                  <v-text-field
-                    v-model="filter.field.company.value"
-                    clearable
+                  <Company
+                    :dialog="filter.field.company.dialog"
+                    :id="filter.field.company.id"
+                    :value="filter.field.company.value"
                     :label="filter.field.company.label"
-                  ></v-text-field>
+                  />
+
+                  <!-- <v-dialog
+                    ref="dialog"
+                    v-model="filter.field.company.dialog"
+                    :return-value.sync="filter.field.company.value"
+                    width="800px"
+                  >
+                    <template v-slot:activator="{on, attrs}">
+                      <v-text-field
+                        v-model="filter.field.company.value"
+                        clearable
+                        :label="filter.field.company.label"
+                        append-icon="search"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+
+                    <v-card>
+                      <v-card-title class="pt-0 pb-2">
+                        <v-text-field
+                          v-model="filter.field.company.search"
+                          append-icon="mdi-magnify"
+                          placeholder="Search"
+                          hide-details
+                        ></v-text-field>
+                      </v-card-title>
+
+                      <template>
+                        <v-data-table
+                          :height="tableHeight"
+                          :headers="itemDataTable.headers"
+                          :items="itemDataTable.data"
+                          :search="search"
+                          fixed-header
+                          multi-sort
+                        >
+                          <template v-slot:item.Status="{ item }">
+                            <v-chip
+                              class="status-chip ma-2"
+                              :color="pSetColor(item.Status)"
+                              dark
+                            >{{ item.Status }}</v-chip>
+                          </template>
+
+                          <template v-slot:item.IDCard="{ item }">
+                            <v-menu transition="slide-y-transition" bottom>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn outlined v-bind="attrs" v-on="on" class="pl-2 pr-1">
+                                  {{item.IDCard}}
+                                  <v-icon>expand_more</v-icon>
+                                </v-btn>
+                              </template>
+
+                              <v-list>
+                                <v-list-item link :to="'/driver-detail/' + item.id">
+                                  <v-list-item-title>
+                                    <v-icon class="mr-5">edit</v-icon>Detail
+                                  </v-list-item-title>
+                                </v-list-item>
+
+                                <v-list-item link to="#">
+                                  <v-list-item-title>
+                                    <v-icon class="mr-5">delete</v-icon>Delete
+                                  </v-list-item-title>
+                                </v-list-item>
+                              </v-list>
+                            </v-menu>
+                          </template>
+                        </v-data-table>
+                      </template>
+                    </v-card>
+                  </v-dialog> -->
                 </v-col>
                 <v-col cols="6" class="pb-0 pt-1">
                   <v-text-field
                     v-model="filter.field.location.value"
                     clearable
                     :label="filter.field.location.label"
+                    append-icon="search"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -44,6 +120,7 @@
                     v-model="filter.field.division.value"
                     clearable
                     :label="filter.field.division.label"
+                    append-icon="search"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6" class="pb-0 pt-1">
@@ -51,6 +128,7 @@
                     v-model="filter.field.subdivision.value"
                     clearable
                     :label="filter.field.subdivision.label"
+                    append-icon="search"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -113,20 +191,24 @@
                   <template v-slot:item.IDCard="{ item }">
                     <v-menu transition="slide-y-transition" bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn outlined v-bind="attrs" v-on="on"  class="pl-2 pr-1">
+                        <v-btn outlined v-bind="attrs" v-on="on" class="pl-2 pr-1">
                           {{item.IDCard}}
                           <v-icon>expand_more</v-icon>
                         </v-btn>
                       </template>
 
                       <v-list>
-                      <v-list-item link :to="'/driver-detail/' + item.id">
-                        <v-list-item-title><v-icon class="mr-5">edit</v-icon>Detail</v-list-item-title>
-                      </v-list-item>
+                        <v-list-item link :to="'/driver-detail/' + item.id">
+                          <v-list-item-title>
+                            <v-icon class="mr-5">edit</v-icon>Detail
+                          </v-list-item-title>
+                        </v-list-item>
 
-                      <v-list-item link to="#">
-                        <v-list-item-title><v-icon class="mr-5">delete</v-icon>Delete</v-list-item-title>
-                      </v-list-item>
+                        <v-list-item link to="#">
+                          <v-list-item-title>
+                            <v-icon class="mr-5">delete</v-icon>Delete
+                          </v-list-item-title>
+                        </v-list-item>
                       </v-list>
                     </v-menu>
                   </template>
@@ -146,13 +228,15 @@
 import Button from "@/components/Button.vue";
 import FloatButton from "@/components/FloatButton.vue";
 import Snackbar from "@/components/Snackbar.vue";
+import Company from "@/components/Company.vue";
 
 export default {
   name: "ListDriver",
   components: {
     Button,
     FloatButton,
-    Snackbar
+    Snackbar,
+    Company
   },
   data() {
     return {
@@ -193,9 +277,11 @@ export default {
         value: false,
         field: {
           company: {
-            id: 0,
+            id: "",
             value: "",
-            label: "Company"
+            label: "Company",
+            dialog: false,
+            search: ""
           },
           location: {
             id: 0,
@@ -224,7 +310,6 @@ export default {
       },
       itemDataTable: {
         headers: [
-
           { text: "ID Card", value: "IDCard" },
           { text: "Full Name", value: "FullName", width: "200" },
           { text: "Place of Birth", value: "PlaceOfBirth", width: "150" },
@@ -472,7 +557,7 @@ export default {
       else return "success";
     },
     pSaveFilter() {
-      console.log(`Company: ${this.filter.field.company.value}`);
+      console.log(`Company: ${this.filter.field.company.id} | ${this.filter.field.company.value}`);
       this.filter.value = false;
     },
     pCloseFilter() {

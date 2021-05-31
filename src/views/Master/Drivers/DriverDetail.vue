@@ -1,8 +1,15 @@
 <template>
   <v-app>
     <v-container>
-      <div v-if="id == 0" class="list-title ml-5 pb-6 mt-2 pt-1">{{ title }}</div>
-      <div v-else class="list-title ml-5 pb-6 mt-2 pt-1">View Driver [ ID : {{ id }} ]</div>
+      <div v-if="id == 0" class="list-title ml-5 pb-0 mt-2 pt-1">{{ title }}</div>
+      <div v-else class="list-title ml-5 pb-0 mt-2 pt-1">View Driver [ ID : {{ id }} ]</div>
+
+      <!-- Bread Crumbs -->
+      <v-breadcrumbs :items="breadcrumbsItem" class="pt-3 pb-5 pl-5" large>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
 
       <v-row class="pt-0">
         <v-col cols="12" class="pt-0">
@@ -46,7 +53,7 @@
                           </v-col>
                         </v-row>
 
-                        <v-row class="mt-0">
+                        <v-row class="mb-0 mt-0">
                           <v-col cols="4" class="pt-0">
                             <v-text-field
                               v-model="field.placeOfBirth.value"
@@ -58,15 +65,15 @@
                               required
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="4" class="pt-0">
-                            <v-text-field
-                              v-model="field.birthDate.value"
-                              :rules="field.birthDate.rules"
-                              :placeholder="field.birthDate.placeHolder"
-                              outlined
+                          <v-col cols="2" class="pt-0">
+                            <AppDateTimePicker
+                              :value="field.birthDate.value"
                               :label="field.birthDate.label"
-                              required
-                            ></v-text-field>
+                              :placeHolder="field.birthDate.placeHolder"
+                              :outlined="true"
+                              :required="true"
+                              :rules="field.birthDate.rules"
+                            />
                           </v-col>
                           <v-col cols="2" class="pt-0">
                             <v-select
@@ -92,22 +99,6 @@
                               required
                             ></v-select>
                           </v-col>
-                        </v-row>
-
-                        <v-row class="mt-0">
-                          <v-col cols="4" class="pt-0">
-                            <v-textarea
-                              v-model="field.address.value"
-                              :rules="field.address.rules"
-                              :placeholder="field.address.placeHolder"
-                              outlined
-                              :label="field.address.label"
-                              counter="250"
-                              rows="1"
-                              auto-grow
-                              required
-                            ></v-textarea>
-                          </v-col>
 
                           <v-col cols="2" class="pt-0">
                             <v-select
@@ -120,6 +111,22 @@
                               outlined
                               required
                             ></v-select>
+                          </v-col>
+                        </v-row>
+
+                        <v-row class="mb-0 mt-0">
+                          <v-col cols="4" class="pt-0">
+                            <v-textarea
+                              v-model="field.address.value"
+                              :rules="field.address.rules"
+                              :placeholder="field.address.placeHolder"
+                              outlined
+                              :label="field.address.label"
+                              counter="250"
+                              rows="1"
+                              auto-grow
+                              required
+                            ></v-textarea>
                           </v-col>
 
                           <v-col cols="2" class="pt-0">
@@ -148,7 +155,7 @@
                             ></v-select>
                           </v-col>
 
-                          <v-col cols="2" class="pt-0">
+                          <v-col cols="4" class="pt-0">
                             <v-text-field
                               v-model="field.occuption.value"
                               :rules="field.occuption.rules"
@@ -161,7 +168,7 @@
                           </v-col>
                         </v-row>
 
-                        <v-row class="mt-0">
+                        <v-row class="mb-0 mt-0">
                           <v-col cols="4" class="pt-0">
                             <v-text-field
                               v-model="field.validThru.value"
@@ -201,7 +208,7 @@
                           </v-col>
                         </v-row>
 
-                        <v-row class="mt-0">
+                        <v-row class="mb-0 mt-0">
                           <v-col cols="4" class="pt-0">
                             <v-textarea
                               v-model="field.remarks.value"
@@ -352,12 +359,14 @@
 <script>
 import Button from "@/components/Button.vue";
 import Snackbar from "@/components/Snackbar.vue";
+import AppDateTimePicker from "@/components/App/AppDateTimePicker.vue";
 
 export default {
   name: "DriverDetail",
   components: {
     Button,
-    Snackbar
+    Snackbar,
+    AppDateTimePicker
   },
   props: { id: String },
   data() {
@@ -451,7 +460,7 @@ export default {
         },
 
         birthDate: {
-          value: "31/01/1992",
+          value: "1992-01-31",
           placeHolder: "Date of birth driver",
           label: "Date of Birth",
           rules: [v => !!v || "Birth of birth is required!"]
@@ -577,7 +586,19 @@ export default {
           value: null,
           errorImage: "url of an image to use to indicate an error"
         }
-      }
+      },
+      breadcrumbsItem: [
+        {
+          text: "Driver",
+          disabled: false,
+          to: "/driver"
+        },
+        {
+          text: "Driver Detail",
+          disabled: true,
+          to: ""
+        }
+      ]
     };
   },
   methods: {
